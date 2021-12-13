@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -6,7 +7,11 @@ public class Controller {
 	Connection db;
 	LoginFrame lf;
 	MainFrame mf;
-	public Controller()
+	public static void main(String[] args) throws IOException 
+	{
+		new Controller();
+	}
+	public Controller() throws IOException
 	{
 		lf = new LoginFrame(this);
 		mf = new MainFrame(this);
@@ -30,5 +35,7 @@ public class Controller {
 	public void logout() throws SQLException
 	{
 		db.close();
+		mf.setVisible(false);
+		lf.setVisible(true);
 	}
 }

@@ -14,4 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>res</name>
+			<value>file:/C:/Users/Giuseppe/OneDrive%20-%20Universit%C3%A0%20di%20Napoli%20Federico%20II/Programmi%20Java/Sistema%20bibliografie/res</value>
+		</variable>
+	</variableList>
 </projectDescription>
