@@ -28,35 +28,36 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class MainFrame extends JFrame {
 
-	private JPanel MainPane;
+	private JPanel mainPane;
 	private Controller c;
-	private JTextField textField;
+	private JTextField searchField;
 	public MainFrame(Controller c) throws IOException 
 	{
 		setResizable(false);
 		this.c = c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 768);
-		MainPane = new JPanel();
-		MainPane.setBackground(UIManager.getColor("Button.background"));
-		MainPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(MainPane);
+		mainPane = new JPanel();
+		mainPane.setBackground(UIManager.getColor("Button.background"));
+		mainPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(mainPane);
 		
 		
 		
-		JPanel SidePanel = new JPanel();
+		JPanel sidePanel = new JPanel();
 		
-		MainPane.add(SidePanel, BorderLayout.WEST);
+		mainPane.add(sidePanel, BorderLayout.WEST);
 		
-		JLabel UserLabel = new JLabel("[Cognome,Nome]");
-		UserLabel.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
-		UserLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel userLabel = new JLabel("[Cognome,Nome]");
+		userLabel.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 13));
+		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JButton LogoutButton = new JButton("Logout");
-		LogoutButton.addActionListener(new ActionListener() {
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					c.logout();
@@ -66,33 +67,33 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		GroupLayout gl_SidePanel = new GroupLayout(SidePanel);
-		gl_SidePanel.setHorizontalGroup(
-			gl_SidePanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(LogoutButton, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-				.addComponent(UserLabel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+		GroupLayout gl_sidePanel = new GroupLayout(sidePanel);
+		gl_sidePanel.setHorizontalGroup(
+			gl_sidePanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(logoutButton, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+				.addComponent(userLabel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
 		);
-		gl_SidePanel.setVerticalGroup(
-			gl_SidePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_SidePanel.createSequentialGroup()
-					.addComponent(UserLabel)
+		gl_sidePanel.setVerticalGroup(
+			gl_sidePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_sidePanel.createSequentialGroup()
+					.addComponent(userLabel)
 					.addPreferredGap(ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
-					.addComponent(LogoutButton))
+					.addComponent(logoutButton))
 		);
-		SidePanel.setLayout(gl_SidePanel);
+		sidePanel.setLayout(gl_sidePanel);
 		
-		JPanel WelcomePanel = new JPanel();
-		WelcomePanel.setBackground(SystemColor.window);
-		MainPane.add(WelcomePanel, BorderLayout.CENTER);
+		JPanel welcomePanel = new JPanel();
+		welcomePanel.setBackground(SystemColor.window);
+		mainPane.add(welcomePanel, BorderLayout.CENTER);
 		
 		JLabel WelcomeLabel = new JLabel("Benvenuto, [Cognome,Nome]");
 		WelcomeLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 30));
 		WelcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setColumns(10);
+		searchField = new JTextField();
+		searchField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 30));
+		searchField.setHorizontalAlignment(SwingConstants.CENTER);
+		searchField.setColumns(10);
 		
 		JButton searchButton = new JButton("");
 		StretchIcon a = new StretchIcon(getClass().getClassLoader().getResource("search_icon.png"));
@@ -103,32 +104,47 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		GroupLayout gl_WelcomePanel = new GroupLayout(WelcomePanel);
-		gl_WelcomePanel.setHorizontalGroup(
-			gl_WelcomePanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_WelcomePanel.createSequentialGroup()
-					.addGap(358)
-					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-					.addGap(313))
-				.addGroup(gl_WelcomePanel.createSequentialGroup()
+		
+		JComboBox categoriaComboBox = new JComboBox();
+		
+		JComboBox tipoComboBox = new JComboBox();
+		GroupLayout gl_welcomePanel = new GroupLayout(welcomePanel);
+		gl_welcomePanel.setHorizontalGroup(
+			gl_welcomePanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_welcomePanel.createSequentialGroup()
 					.addGap(3)
-					.addComponent(WelcomeLabel, GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+					.addComponent(WelcomeLabel, GroupLayout.DEFAULT_SIZE, 1099, Short.MAX_VALUE)
 					.addGap(3))
+				.addGroup(Alignment.LEADING, gl_welcomePanel.createSequentialGroup()
+					.addGap(363)
+					.addGroup(gl_welcomePanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_welcomePanel.createSequentialGroup()
+							.addComponent(categoriaComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tipoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(676))
+						.addGroup(gl_welcomePanel.createSequentialGroup()
+							.addComponent(searchField, GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+							.addGap(2)
+							.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+							.addGap(313))))
 		);
-		gl_WelcomePanel.setVerticalGroup(
-			gl_WelcomePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_WelcomePanel.createSequentialGroup()
+		gl_welcomePanel.setVerticalGroup(
+			gl_welcomePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_welcomePanel.createSequentialGroup()
 					.addGap(5)
 					.addComponent(WelcomeLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_WelcomePanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(searchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
-					.addContainerGap(592, Short.MAX_VALUE))
+					.addGroup(gl_welcomePanel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(searchButton, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(searchField, GroupLayout.PREFERRED_SIZE, 46, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_welcomePanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(categoriaComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(tipoComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(560, Short.MAX_VALUE))
 		);
-		WelcomePanel.setLayout(gl_WelcomePanel);
+		welcomePanel.setLayout(gl_welcomePanel);
 		
 	}
 }

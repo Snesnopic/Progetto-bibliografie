@@ -17,22 +17,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class LoginFrame extends JFrame {
-	private JPanel LoginWindow;
+	private JPanel loginWindow;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JLabel PasswordLabel;
+	private JLabel passwordLabel;
 	
 	private Controller c;
 	
 	public LoginFrame(Controller c){
+		setResizable(false);
 		this.c=c;
 		setBackground(Color.WHITE);
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 768, 350);
+		setBounds(100, 100, 640, 480);
 				
-		LoginWindow = new JPanel();
-		setContentPane(LoginWindow);	
+		loginWindow = new JPanel();
+		setContentPane(loginWindow);	
 		
 		usernameField = new JTextField();
 		usernameField.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
@@ -43,19 +44,19 @@ public class LoginFrame extends JFrame {
 		
 		
 		
-		JLabel LoginLabel = new JLabel("Effettua l'accesso");
-		LoginLabel.setVerticalAlignment(SwingConstants.TOP);
-		LoginLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LoginLabel.setFont(new Font("Yu Gothic Light", LoginLabel.getFont().getStyle(), LoginLabel.getFont().getSize() + 30));
+		JLabel loginLabel = new JLabel("Effettua l'accesso");
+		loginLabel.setVerticalAlignment(SwingConstants.TOP);
+		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loginLabel.setFont(new Font("Yu Gothic Light", Font.PLAIN, 41));
 		
-		JLabel UsernameLabel = new JLabel("Username");
-		UsernameLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		JLabel usernameLabel = new JLabel("Username");
+		usernameLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		
-		PasswordLabel = new JLabel("Password");
-		PasswordLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		passwordLabel = new JLabel("Password");
+		passwordLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		
-		JButton LoginButton = new JButton("OK");
-		LoginButton.addActionListener(new ActionListener() {
+		JButton loginButton = new JButton("OK");
+		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				boolean error = false;
@@ -81,65 +82,66 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-		LoginButton.setBackground(Color.WHITE);
+		loginButton.setBackground(Color.WHITE);
 		
-		JLabel PasswordForgotLabel = new JLabel("Hai scordato la password?");
-		PasswordForgotLabel.setForeground(Color.BLUE);
-		PasswordForgotLabel.addMouseListener(new MouseAdapter() {
+		JLabel ppasswordForgotLabel = new JLabel("Hai scordato la password?");
+		ppasswordForgotLabel.setForeground(Color.BLUE);
+		ppasswordForgotLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JOptionPane.showMessageDialog(null, "Mi dispiace");
 			}
 		});
-		PasswordForgotLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
-		PasswordForgotLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		GroupLayout gl_LoginWindow = new GroupLayout(LoginWindow);
-		gl_LoginWindow.setHorizontalGroup(
-			gl_LoginWindow.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_LoginWindow.createSequentialGroup()
+		ppasswordForgotLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		ppasswordForgotLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		GroupLayout gl_loginWindow = new GroupLayout(loginWindow);
+		gl_loginWindow.setHorizontalGroup(
+			gl_loginWindow.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_loginWindow.createSequentialGroup()
 					.addGap(0)
-					.addGroup(gl_LoginWindow.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_LoginWindow.createSequentialGroup()
-							.addGap(126)
-							.addComponent(LoginButton, GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
-						.addGroup(gl_LoginWindow.createSequentialGroup()
-							.addGap(124)
-							.addGroup(gl_LoginWindow.createParallelGroup(Alignment.LEADING)
-								.addComponent(usernameField, GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
-								.addGroup(gl_LoginWindow.createSequentialGroup()
-									.addComponent(UsernameLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, 439, Short.MAX_VALUE))
-								.addComponent(PasswordLabel)
-								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))))
-					.addGap(137))
-				.addGroup(Alignment.LEADING, gl_LoginWindow.createSequentialGroup()
-					.addGap(157)
-					.addComponent(LoginLabel, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE)
-					.addGap(156))
-				.addGroup(Alignment.LEADING, gl_LoginWindow.createSequentialGroup()
-					.addGap(279)
-					.addComponent(PasswordForgotLabel, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-					.addGap(280))
+					.addGroup(gl_loginWindow.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_loginWindow.createSequentialGroup()
+							.addGap(100)
+							.addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+						.addGroup(gl_loginWindow.createSequentialGroup()
+							.addGap(100)
+							.addGroup(gl_loginWindow.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_loginWindow.createSequentialGroup()
+									.addComponent(usernameLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 387, Short.MAX_VALUE))
+								.addComponent(passwordLabel)
+								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+								.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE))))
+					.addGap(100))
+				.addGroup(gl_loginWindow.createSequentialGroup()
+					.addGap(100)
+					.addComponent(ppasswordForgotLabel, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+					.addGap(100))
+				.addGroup(gl_loginWindow.createSequentialGroup()
+					.addGap(100)
+					.addComponent(usernameField, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+					.addGap(100))
 		);
-		gl_LoginWindow.setVerticalGroup(
-			gl_LoginWindow.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_LoginWindow.createSequentialGroup()
-					.addComponent(LoginLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(UsernameLabel)
+		gl_loginWindow.setVerticalGroup(
+			gl_loginWindow.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_loginWindow.createSequentialGroup()
+					.addGap(20)
+					.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 39, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(usernameLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(PasswordLabel)
+					.addComponent(passwordLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
-					.addComponent(PasswordForgotLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(LoginButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(174, Short.MAX_VALUE))
+					.addComponent(ppasswordForgotLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addGap(240))
 		);
-		LoginWindow.setLayout(gl_LoginWindow);
+		loginWindow.setLayout(gl_loginWindow);
 		
 	
 	}
