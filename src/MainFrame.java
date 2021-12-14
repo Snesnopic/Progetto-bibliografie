@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 		setResizable(false);
 		this.c = c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 768);
+		setBounds(100, 0, 1280, 720);
 		mainPane = new JPanel();
 		mainPane.setBackground(UIManager.getColor("Button.background"));
 		mainPane.setLayout(new BorderLayout(0, 0));
@@ -67,17 +67,27 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+		
+		JLabel propicLabel = new JLabel("");
+		StretchIcon propicIcon = new StretchIcon(getClass().getClassLoader().getResource("stock_propic.png"));
+		propicLabel.setIcon(propicIcon);
 		GroupLayout gl_sidePanel = new GroupLayout(sidePanel);
 		gl_sidePanel.setHorizontalGroup(
-			gl_sidePanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(logoutButton, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-				.addComponent(userLabel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+			gl_sidePanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_sidePanel.createSequentialGroup()
+					.addGroup(gl_sidePanel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(propicLabel, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(userLabel, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		gl_sidePanel.setVerticalGroup(
-			gl_sidePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_sidePanel.createSequentialGroup()
+			gl_sidePanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_sidePanel.createSequentialGroup()
+					.addComponent(propicLabel, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(userLabel)
-					.addPreferredGap(ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 534, Short.MAX_VALUE)
 					.addComponent(logoutButton))
 		);
 		sidePanel.setLayout(gl_sidePanel);
@@ -96,9 +106,10 @@ public class MainFrame extends JFrame {
 		searchField.setColumns(10);
 		
 		JButton searchButton = new JButton("");
-		StretchIcon a = new StretchIcon(getClass().getClassLoader().getResource("search_icon.png"));
+		StretchIcon searchIcon = new StretchIcon(getClass().getClassLoader().getResource("search_icon.png"));
 		
-		searchButton.setIcon(a);
+		
+		searchButton.setIcon(searchIcon);
 		searchButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

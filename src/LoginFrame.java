@@ -84,16 +84,16 @@ public class LoginFrame extends JFrame {
 		});
 		loginButton.setBackground(Color.WHITE);
 		
-		JLabel ppasswordForgotLabel = new JLabel("Hai scordato la password?");
-		ppasswordForgotLabel.setForeground(Color.BLUE);
-		ppasswordForgotLabel.addMouseListener(new MouseAdapter() {
+		JLabel passwordForgotLabel = new JLabel("Hai scordato la password?");
+		passwordForgotLabel.setForeground(Color.BLUE);
+		passwordForgotLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JOptionPane.showMessageDialog(null, "Mi dispiace");
 			}
 		});
-		ppasswordForgotLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
-		ppasswordForgotLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordForgotLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		passwordForgotLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GroupLayout gl_loginWindow = new GroupLayout(loginWindow);
 		gl_loginWindow.setHorizontalGroup(
 			gl_loginWindow.createParallelGroup(Alignment.LEADING)
@@ -115,7 +115,7 @@ public class LoginFrame extends JFrame {
 					.addGap(100))
 				.addGroup(gl_loginWindow.createSequentialGroup()
 					.addGap(100)
-					.addComponent(ppasswordForgotLabel, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+					.addComponent(passwordForgotLabel, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
 					.addGap(100))
 				.addGroup(gl_loginWindow.createSequentialGroup()
 					.addGap(100)
@@ -136,7 +136,7 @@ public class LoginFrame extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(ppasswordForgotLabel)
+					.addComponent(passwordForgotLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
 					.addGap(240))
