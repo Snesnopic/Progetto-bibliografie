@@ -1,17 +1,18 @@
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class Controller {
-	Connection db;
+	
+	DBConnection dbc;
 	LoginFrame lf;
 	MainFrame mf;
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args)
 	{
 		new Controller();
 	}
-	public Controller() throws IOException
+	public Controller()
 	{
 		lf = new LoginFrame(this);
 		mf = new MainFrame(this);
@@ -20,21 +21,26 @@ public class Controller {
 	public boolean login(String username,char[] password)
 	{
 		try {
-			db = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "admin");
+			dbc = DBConnection.getInstance();
+			dbc.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","admin"); 
 			lf.setVisible(false);
 			mf.setVisible(true);
 			return true;
 		} catch (SQLException e) {
 			// ERRORE DATABASE, NON LOGIN
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 		}
-		//vero login
 		
-		return true;
+		return false;
 	}
-	public void logout() throws SQLException
+	public void logout()
 	{
-		db.close();
+		try {
+			dbc.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+		}
 		mf.setVisible(false);
 		lf.setVisible(true);
 	}

@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
 	private JPanel mainPane;
 	private Controller c;
 	private JTextField searchField;
-	public MainFrame(Controller c) throws IOException 
+	public MainFrame(Controller c)
 	{
 		setResizable(false);
 		this.c = c;
@@ -59,12 +59,7 @@ public class MainFrame extends JFrame {
 		JButton logoutButton = new JButton("Logout");
 		logoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					c.logout();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				c.logout();
 			}
 		});
 		
