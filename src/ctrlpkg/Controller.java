@@ -1,7 +1,10 @@
-import java.io.IOException;
+package ctrlpkg;
 import java.sql.SQLException;
-
+import guipkg.*;
 import javax.swing.JOptionPane;
+
+import guipkg.LoginFrame;
+import guipkg.MainFrame;
 
 public class Controller {
 	
