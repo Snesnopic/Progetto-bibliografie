@@ -20,9 +20,7 @@ import java.awt.event.MouseEvent;
 
 public class LoginFrame extends JFrame {
 	private JPanel loginWindow;
-	private JTextField usernameField;
-	private JPasswordField passwordField;
-	private JLabel passwordLabel;
+	private JTextField CFField;
 	
 	private Controller c;
 	
@@ -37,12 +35,9 @@ public class LoginFrame extends JFrame {
 		loginWindow = new JPanel();
 		setContentPane(loginWindow);	
 		
-		usernameField = new JTextField();
-		usernameField.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
-		usernameField.setToolTipText("Username");
-		
-		passwordField = new JPasswordField();
-		passwordField.setToolTipText("Password");
+		CFField = new JTextField();
+		CFField.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
+		CFField.setToolTipText("Username");
 		
 		
 		
@@ -51,33 +46,18 @@ public class LoginFrame extends JFrame {
 		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginLabel.setFont(new Font("Yu Gothic Light", Font.PLAIN, 41));
 		
-		JLabel usernameLabel = new JLabel("Username");
-		usernameLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
-		
-		passwordLabel = new JLabel("Password");
-		passwordLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		JLabel CFLabel = new JLabel("Codice Fiscale");
+		CFLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		
 		JButton loginButton = new JButton("OK");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				boolean error = false;
-				String messaggio = "";
-				if(usernameField.getText().isEmpty())
-				{
-					messaggio = "\nCampo username vuoto!";
-					error = true;
-				}
-				if(passwordField.getPassword().length==0)
-				{
-					messaggio = messaggio +"\nCampo password vuoto!";
-					error = true;
-				}
-				if(error)
-					JOptionPane.showMessageDialog(null, "Errore di input"+messaggio);
+				if(CFField.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Errore di input");		
 				else
 				{
-					if(c.login(usernameField.getText(), passwordField.getPassword()))
+					if(c.login(CFField.getText()))
 						JOptionPane.showMessageDialog(null, "Login riuscito");
 					else
 						JOptionPane.showMessageDialog(null, "Login fallito");
@@ -85,43 +65,18 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		loginButton.setBackground(Color.WHITE);
-		
-		JLabel passwordForgotLabel = new JLabel("Hai scordato la password?");
-		passwordForgotLabel.setForeground(Color.BLUE);
-		passwordForgotLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Mi dispiace");
-			}
-		});
-		passwordForgotLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
-		passwordForgotLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GroupLayout gl_loginWindow = new GroupLayout(loginWindow);
 		gl_loginWindow.setHorizontalGroup(
-			gl_loginWindow.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addGap(0)
+			gl_loginWindow.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_loginWindow.createSequentialGroup()
+					.addGap(100)
 					.addGroup(gl_loginWindow.createParallelGroup(Alignment.LEADING)
+						.addComponent(loginButton, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
 						.addGroup(gl_loginWindow.createSequentialGroup()
-							.addGap(100)
-							.addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
-						.addGroup(gl_loginWindow.createSequentialGroup()
-							.addGap(100)
-							.addGroup(gl_loginWindow.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_loginWindow.createSequentialGroup()
-									.addComponent(usernameLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, 387, Short.MAX_VALUE))
-								.addComponent(passwordLabel)
-								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
-								.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE))))
-					.addGap(100))
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addGap(100)
-					.addComponent(passwordForgotLabel, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
-					.addGap(100))
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addGap(100)
-					.addComponent(usernameField, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+							.addComponent(CFLabel)
+							.addPreferredGap(ComponentPlacement.RELATED, 407, Short.MAX_VALUE))
+						.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE)
+						.addComponent(CFField, GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
 					.addGap(100))
 		);
 		gl_loginWindow.setVerticalGroup(
@@ -130,18 +85,12 @@ public class LoginFrame extends JFrame {
 					.addGap(20)
 					.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 39, Short.MAX_VALUE)
 					.addGap(10)
-					.addComponent(usernameLabel)
+					.addComponent(CFLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(passwordLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(passwordForgotLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(CFField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(240))
+					.addGap(286))
 		);
 		loginWindow.setLayout(gl_loginWindow);
 		
@@ -149,7 +98,6 @@ public class LoginFrame extends JFrame {
 	}
 	void emptyFields()
 	{
-		usernameField.setText("");
-		passwordField.setText("");
+		CFField.setText("");
 	}
 }
