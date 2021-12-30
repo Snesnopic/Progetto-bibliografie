@@ -1,0 +1,7 @@
+
+*.class
+*.class
+bin/ctrlpkg/Controller.class
+bin/guipkg/LoginFrame$1.class
+bin/guipkg/LoginFrame$2.class
+bin/guipkg/LoginFrame.class
