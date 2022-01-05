@@ -2,10 +2,10 @@ package ctrlpkg;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import guipkg.*;
+import datalpkg.Riferimento;
 import javax.swing.JOptionPane;
 
-import datalpkg.RiferimentoBibliografico;
+
 import guipkg.LoginFrame;
 import guipkg.MainFrame;
 
@@ -66,12 +66,12 @@ public class Controller {
 	{
 		
 	}
-	public ArrayList<RiferimentoBibliografico> retrieveRiferimenti(String user_id)
+	public ArrayList<Riferimento> retrieveRiferimenti(String user_id)
 	{
 		return null;
 		
 	}
-	public ArrayList<RiferimentoBibliografico> retrieveCitazioni(String user_id)
+	public ArrayList<Riferimento> retrieveCitazioni(String user_id)
 	{
 		return null;
 		
