@@ -17,7 +17,6 @@ public class DBConnection {
 			instance = new DBConnection();
 		return instance;
 	}
-	
 	public void getConnection(String url,String username,String password) throws SQLException
 	{
 		cn = DriverManager.getConnection(url, username, password);
@@ -25,5 +24,11 @@ public class DBConnection {
 	public void closeConnection() throws SQLException
 	{
 		cn.close();
+	}
+	public ResultSet executeQuery(String query) throws SQLException
+	{
+		st = cn.createStatement();
+		rs = st.executeQuery(query);
+		return rs;
 	}
 }
