@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class LoginFrame extends JFrame {
@@ -34,6 +36,25 @@ public class LoginFrame extends JFrame {
 		setContentPane(loginWindow);	
 		
 		CFField = new JTextField();
+		CFField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) 
+			{
+				switch(e.getKeyCode())
+				{
+					case '\n':
+						if(CFField.getText().isEmpty())
+							JOptionPane.showMessageDialog(null, "Errore di input");		
+						else
+						{
+							if(c.login(CFField.getText()))
+								JOptionPane.showMessageDialog(null, "Login riuscito");
+							else
+								JOptionPane.showMessageDialog(null, "Login fallito");
+						}
+				}
+			}
+		});
 		CFField.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 11));
 		CFField.setToolTipText("Username");
 		
