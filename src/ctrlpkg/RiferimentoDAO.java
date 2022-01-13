@@ -10,7 +10,8 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	private DBConnection dbc = DBConnection.getInstance();
 	
 	@Override
-	public List<Riferimento> getAll(String sql) throws SQLException {
+	public List<Riferimento> getAll(String sql) throws SQLException 
+	{
 		ResultSet rs = dbc.executeQuery(sql);
 		List<Riferimento> list = new ArrayList<Riferimento>();
 		while(rs.next())
@@ -21,7 +22,8 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	}
 
 	@Override
-	public Riferimento get(String sql) throws SQLException {
+	public Riferimento get(String sql) throws SQLException 
+	{
 		ResultSet rs = dbc.executeQuery(sql);
 		if(rs.next())
 			return extract(rs);
@@ -30,19 +32,22 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	}
 
 	@Override
-	public void update(Riferimento obj, String sql) {
+	public void update(Riferimento obj, String sql) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Riferimento obj, String sql) {
+	public void delete(Riferimento obj, String sql) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void insert(Riferimento obj, String sql) {
+	public void insert(Riferimento obj, String sql) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
