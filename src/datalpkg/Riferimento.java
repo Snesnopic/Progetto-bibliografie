@@ -12,7 +12,8 @@ public class Riferimento {
 	private Boolean digitale;
 	private List<Categoria> categorie;
 	private List<Utente> autori;
-	private List<Riferimento> citazioni;
+	private List<Riferimento> cited;
+	private List<Riferimento> citedIn;
 	
 	public String getTitolo() {
 		return titolo;
@@ -56,11 +57,46 @@ public class Riferimento {
 	public void setAutori(List<Utente> autori) {
 		this.autori = autori;
 	}
-	public List<Riferimento> getCitazioni() {
-		return citazioni;
+	public List<Riferimento> getCitazioni()
+	{
+		return cited;
+	}
+	
+	public String citazioniToString()
+	{
+		String a = "";
+		for(int i=0;i<cited.size();i++)
+		{
+			a = a.concat(cited.get(i).getTitolo());
+			if(i!=cited.size()-1)
+				a = a.concat(",");
+		}
+		return a;
+	}
+	public String citazioniToString(String CF)
+	{
+		String a = "";
+		for(int i=0;i<cited.size();i++)
+		{
+			List<Utente> tempList = cited.get(i).getAutori();
+			if(tempList != null)
+			{
+				for(int j=0;j<tempList.size();j++)
+				{
+					if(CF.equals(tempList.get(i).getCf()))
+					{
+						a = a.concat(cited.get(i).getTitolo());
+						if(i!=cited.size()-1)
+							a = a.concat(",");
+						j = tempList.size();
+					}
+				}
+			}
+		}
+		return a;
 	}
 	public void setCitazioni(List<Riferimento> citazioni) {
-		this.citazioni = citazioni;
+		this.cited = citazioni;
 	}
 	public Riferimento(String titolo, Date dataCreazione, String tipo, String dOI_URL, Boolean digitale,
 			List<Categoria> categorie, List<Utente> autori, List<Riferimento> citazioni) {
@@ -72,7 +108,7 @@ public class Riferimento {
 		this.digitale = digitale;
 		this.categorie = categorie;
 		this.autori = autori;
-		this.citazioni = citazioni;
+		this.cited = citazioni;
 	}
 	public Riferimento(String titolo, Date dataCreazione, String tipo, String dOI_URL, Boolean digitale) {
 		super();
@@ -104,5 +140,11 @@ public class Riferimento {
 				a = a.concat(",");
 		}
 		return a;
+	}
+	public List<Riferimento> getCitedIn() {
+		return citedIn;
+	}
+	public void setCitedIn(List<Riferimento> citedIn) {
+		this.citedIn = citedIn;
 	}
 }
