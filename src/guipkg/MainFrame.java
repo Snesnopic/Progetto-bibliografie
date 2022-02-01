@@ -22,8 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Enumeration;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.SystemColor;
@@ -169,15 +171,18 @@ public class MainFrame extends JFrame {
 		titoloRadioButton.setBackground(new Color(23, 33, 43));
 		titoloRadioButton.setSelected(true);
 		titoloRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		titoloRadioButton.setActionCommand(titoloRadioButton.getName());
 		JRadioButton autoreRadioButton = new JRadioButton("Autore");
 		autoreRadioButton.setForeground(Color.WHITE);
 		autoreRadioButton.setBackground(new Color(23, 33, 43));
+		autoreRadioButton.setActionCommand(autoreRadioButton.getName());
 		autoreRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		JScrollPane citazioniTablePanel = new JScrollPane();
 		JRadioButton DOIRadioButton = new JRadioButton("DOI");
 		DOIRadioButton.setForeground(Color.WHITE);
 		DOIRadioButton.setBackground(new Color(23, 33, 43));
 		DOIRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		DOIRadioButton.setActionCommand(DOIRadioButton.getName());
 		
 		JLabel cercaPerLabel = new JLabel("Cerca per...");
 		cercaPerLabel.setBackground(new Color(255, 255, 255));
@@ -220,8 +225,10 @@ public class MainFrame extends JFrame {
 									.addComponent(titoloRadioButton)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(autoreRadioButton)
-									.addGap(49)
-									.addComponent(DOIRadioButton))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									
+									.addComponent(DOIRadioButton)
+									.addGap(49))
 								.addComponent(riferimentiLabel, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
 								.addComponent(riferimentiTablePanel, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
 								.addComponent(citazioniLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
@@ -274,23 +281,14 @@ public class MainFrame extends JFrame {
 		
 		citazioniTable = new JTable();
 		Object[][] dataCit = c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
-		citazioniTable.setModel(new DefaultTableModel(
-			/*new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},*/
-				dataCit,
-			new String[] {
-				"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo","Riferimento citato"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
+		citazioniTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo","Riferimento citato"})
+		{
+			boolean[] columnEditables = new boolean[] 
+			{
 				false, false, false, false,false, false,false
 			};
-			public boolean isCellEditable(int row, int column) {
+			public boolean isCellEditable(int row, int column)
+			{
 				return columnEditables[column];
 			}
 		});
@@ -305,26 +303,17 @@ public class MainFrame extends JFrame {
 		Object[][] dataRif = c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
 		
 		riferimentiTable = new JTable();
-		riferimentiTable.setModel(new DefaultTableModel(
-				/*new Object[][] {
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-				},*/
-					dataRif,
-				new String[] {
-					"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"
-				}
-			) {
-				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false,false
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
+		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"})
+		{
+			boolean[] columnEditables = new boolean[]
+			{
+				false, false, false, false, false,false
+			};
+			public boolean isCellEditable(int row, int column)
+			{
+				return columnEditables[column];
+			}
+		});
 		riferimentiTable.setFillsViewportHeight(true);
 		riferimentiTable.setBackground(new Color(14, 22, 33));
 		riferimentiTable.setForeground(new Color(255, 255, 255));
@@ -339,9 +328,13 @@ public class MainFrame extends JFrame {
 		bottoniRadio.add(autoreRadioButton);
 		bottoniRadio.add(titoloRadioButton);
 		
+		
+		
+		
+		
 		JPanel searchResultPanel = new JPanel();
 		searchResultPanel.setBackground(new Color(23, 33, 43));
-		mainPanel.add(searchResultPanel, BorderLayout.CENTER);
+		
 		
 		JLabel searchResultLabel = new JLabel("Risultati ricerca");
 		searchResultLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -350,7 +343,6 @@ public class MainFrame extends JFrame {
 		
 		JLabel recapRicercaLabel = new JLabel("di <ricerca> per <tipo>");
 		recapRicercaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		recapRicercaLabel.setToolTipText("");
 		recapRicercaLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 26));
 		recapRicercaLabel.setForeground(new Color(255, 255, 255));
 		
@@ -391,35 +383,26 @@ public class MainFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//se non ha messo una stringa da cercare o non ha selezionato tipi, dai errore
 				if(searchField.getText().isEmpty()||(!isRisorsaCheckBox.isSelected()&& !isLibroCheckBox.isSelected()&&!isDataSetCheckBox.isSelected()&&!isRivistaCheckBox.isSelected()&&
 				!isConferenzaCheckBox.isSelected()&&!isArticoloCheckBox.isSelected()))
 					JOptionPane.showMessageDialog(null, "Errore di input");
 				else
 				{
+					recapRicercaLabel.setText("di "+searchField.getText()+" per "+getSelectedButton(bottoniRadio));
 					boolean[] selezioni = new boolean[] {isRisorsaCheckBox.isSelected(), isLibroCheckBox.isSelected(),isDataSetCheckBox.isSelected(),isRivistaCheckBox.isSelected(),
-							isConferenzaCheckBox.isSelected(),isArticoloCheckBox.isSelected()
-					};
-					Object[][] dataRicerca = c.RicercaToObjectMatrix(searchField.getText(),categoriaComboBox.getSelectedItem().toString(),selezioni,bottoniRadio.getSelection().toString());
-					ricercaTable.setModel(new DefaultTableModel(
-							/*new Object[][] {
-								{null, null, null, null, null},
-								{null, null, null, null, null},
-								{null, null, null, null, null},
-								{null, null, null, null, null},
-								{null, null, null, null, null},
-							},*/
-								dataRicerca,
-							new String[] {
-								"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"
-							}
-						) {
-							boolean[] columnEditables = new boolean[] {
-								false, false, false, false, false,false
-							};
-							public boolean isCellEditable(int row, int column) {
-								return columnEditables[column];
-							}
-						});
+							isConferenzaCheckBox.isSelected(),isArticoloCheckBox.isSelected()};
+					Object[][] dataRicerca = c.RicercaToObjectMatrix(searchField.getText(),categoriaComboBox.getSelectedItem().toString(),selezioni,getSelectedButton(bottoniRadio));
+					ricercaTable.setModel(new DefaultTableModel(dataRicerca,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"})
+					{
+						boolean[] columnEditables = new boolean[] {false, false, false, false, false,false};
+						public boolean isCellEditable(int row, int column)
+						{
+							return columnEditables[column];
+						}
+					});
+					mainPanel.add(searchResultPanel, BorderLayout.CENTER);
+					welcomePanel.setVisible(false);
 				}
 			}
 		});
@@ -432,5 +415,15 @@ public class MainFrame extends JFrame {
 
 	public void setC(Controller c) {
 		this.c = c;
+	}
+	public String getSelectedButton(ButtonGroup btgrp)
+	{  
+	    for (Enumeration<AbstractButton> buttons = btgrp.getElements(); buttons.hasMoreElements();) {
+	        AbstractButton button = buttons.nextElement();
+	        if (button.isSelected()) {
+	                return button.getText();
+	        }
+	    }
+	    return null;
 	}
 }
