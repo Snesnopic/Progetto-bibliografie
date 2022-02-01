@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 @SuppressWarnings("serial")
@@ -43,33 +41,7 @@ public class LoginFrame extends JFrame {
 		CFField.setForeground(new Color(255, 255, 255));
 		CFField.setHorizontalAlignment(SwingConstants.CENTER);
 		CFField.setBackground(new Color(14, 22, 33));
-		CFField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) 
-			{
-				switch(e.getKeyCode())
-				{
-					case '\n':
-						if(CFField.getText().isEmpty())
-							JOptionPane.showMessageDialog(null, "Errore di input");		
-						else
-						{
-							CFField.setText(CFField.getText().toUpperCase());
-							try
-							{
-								if(c.login(CFField.getText()))
-									JOptionPane.showMessageDialog(null, "Login riuscito");
-								else
-									JOptionPane.showMessageDialog(null, "Login fallito");
-							}
-							catch (HeadlessException | IOException e1)
-							{
-								JOptionPane.showMessageDialog(null,"Errore: "+e1.getMessage());
-							}
-						}
-				}
-			}
-		});
+		
 		CFField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		CFField.setToolTipText("Username");
 		
@@ -90,6 +62,7 @@ public class LoginFrame extends JFrame {
 		JButton loginButton = new JButton("OK");
 		loginButton.setForeground(new Color(255, 255, 255));
 		loginButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+		this.getRootPane().setDefaultButton(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -112,6 +85,7 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
+		
 		loginButton.setBackground(new Color(14, 22, 33));
 		
 		JLabel uninaLogoLabel = new JLabel("");
