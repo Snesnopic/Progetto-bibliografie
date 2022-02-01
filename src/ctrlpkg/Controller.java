@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-
 import javax.swing.JOptionPane;
-
 import datalpkg.Categoria;
 import datalpkg.Riferimento;
 import datalpkg.Utente;
@@ -41,7 +39,7 @@ public class Controller {
 		try 
 		{
 			dbc = DBConnection.getInstance();
-			dbc.getConnection("jdbc:postgresql://localhost:5432/bibliografie","postgres","admin"); 
+			dbc.getConnection("jdbc:postgresql://localhost/bibliografie","postgres","admin"); 
 			uDAO = new UtenteDAO();
 			loginUser = uDAO.get("SELECT * FROM utente WHERE cf ='"+CF+"'");
 			if(Objects.isNull(loginUser))
@@ -142,20 +140,7 @@ public class Controller {
 		}
 		return r;
 	}
-	public Riferimento fillCitatoIn(Riferimento r)
-	{
-		try
-		{
-			rDAO = new RiferimentoDAO();
-			r.setCitedIn(rDAO.getAll("SELECT riferimento.* FROM riferimento JOIN citazione ON titolo = titolo_citante WHERE titolo_citato = '"+r.getTitolo()+"'"));
-		}
-		catch (SQLException e)
-		{
-			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
-			return null;
-		}
-		return r;
-	}
+	
 	public List<Riferimento> retrieveCitazioni(String CF)
 	{
 		try 
@@ -206,13 +191,26 @@ public class Controller {
 		try 
 		{
 			rDAO = new RiferimentoDAO();
-			String query = "SELECT riferimento.* FROM riferimento JOIN";
-			if(filtro.equals("autore"))
-				query = query.concat("JOIN autore_riferimento WHERE cf='"+testo+"'");
-			else
-				query = query.concat("WHERE "+filtro+"='"+testo+"'");
-			query = query.concat("AND ");
-			//TODO: query dinamica per la riccercca
+			String query = "SELECT DISTINCT riferimento.* FROM riferimento, categoria_riferimento ";
+			switch(filtro)
+			{
+				case "Titolo":
+					query = query.concat("WHERE riferimento.titolo LIKE '%"+testo+"%' ");
+					break;
+				case "Autore":
+					query = query.concat(", autore_riferimento WHERE autore_riferimento.titolo = riferimento.titolo AND cf = '"+testo+"' ");
+					break;
+				case "DOI":
+					query = query.concat("WHERE digitale = false AND doi_url = '"+testo+"' ");
+					break;
+			}
+
+			if(categoria != "Qualsiasi")
+				query = query.concat("AND categoria_riferimento.titolo = riferimento.titolo AND categoria_riferimento.nome = '"+categoria+"'");
+			System.out.println(query);
+			
+			
+			//TODO: query dinamica per la ricerca delle categorie
 			List<Riferimento> risultati = rDAO.getAll(query);
 			return RiferimentiToObjectMatrix(risultati,risultati.size());
 		} 
@@ -264,7 +262,6 @@ public class Controller {
 				fillTemp = fillTemp + 1;
 			}
 		}
-		
 		return data;
 	}
 }
