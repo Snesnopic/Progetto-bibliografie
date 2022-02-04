@@ -12,7 +12,7 @@ public class CategoriaDAO implements DAO<Categoria> {
 	@Override
 	public List<Categoria> getAll(String sql) throws SQLException {
 		ResultSet rs = dbc.executeQuery(sql);
-		List<Categoria> list = new ArrayList<Categoria>();
+		List<Categoria> list = new ArrayList<>();
 		while(rs.next())
 		{
 			list.add(extract(rs));
