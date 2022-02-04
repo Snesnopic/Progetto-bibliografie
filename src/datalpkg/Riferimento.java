@@ -112,7 +112,7 @@ public class Riferimento {
 	}
 	public Riferimento(String titolo, Date dataCreazione, String tipo, String dOI_URL, Boolean digitale) {
 		super();
-		categorie = new ArrayList<Categoria>();
+		categorie = new ArrayList<>();
 		this.titolo = titolo;
 		this.dataCreazione = dataCreazione;
 		this.tipo = tipo;
