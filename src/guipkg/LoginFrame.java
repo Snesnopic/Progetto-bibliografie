@@ -18,7 +18,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.io.IOException;
 
-@SuppressWarnings("serial")
 public class LoginFrame extends JFrame {
 	private JPanel loginWindow;
 	private JTextField CFField;
