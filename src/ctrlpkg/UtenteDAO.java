@@ -12,7 +12,7 @@ public class UtenteDAO implements DAO<Utente> {
 	@Override
 	public List<Utente> getAll(String sql) throws SQLException {
 		ResultSet rs = dbc.executeQuery(sql);
-		List<Utente> list = new ArrayList<Utente>();
+		List<Utente> list = new ArrayList<>();
 		while(rs.next())
 		{
 			list.add(extract(rs));
@@ -48,8 +48,7 @@ public class UtenteDAO implements DAO<Utente> {
 	}
 
 	private Utente extract(ResultSet rs) throws SQLException {
-		
-		Utente u = new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("cf"));
-		return u;
+
+		return new Utente(rs.getString("nome"), rs.getString("cognome"), rs.getString("cf"));
 	}
 }
