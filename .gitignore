@@ -1,17 +1,9 @@
 
 *.class
-*.class
 bin/ctrlpkg/Controller.class
 bin/guipkg/LoginFrame$1.class
 bin/guipkg/LoginFrame$2.class
 bin/guipkg/LoginFrame.class
-bin/guipkg/LoginFrame$1.class
-*.class
-*.class
-bin/guipkg/LoginFrame$2.class
-bin/guipkg/LoginFrame.class
-bin/guipkg/LoginFrame$1.class
-bin/ctrlpkg/Controller.class
 bin/search_icon.png
 bin/stock_propic.png
 bin/unina_logo.png
