@@ -13,7 +13,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	public List<Riferimento> getAll(String sql) throws SQLException 
 	{
 		ResultSet rs = dbc.executeQuery(sql);
-		List<Riferimento> list = new ArrayList<Riferimento>();
+		List<Riferimento> list = new ArrayList<>();
 		while(rs.next())
 		{
 			list.add(extract(rs));
@@ -54,8 +54,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	
 
 	private Riferimento extract(ResultSet rs) throws SQLException {
-		Riferimento r = new Riferimento(rs.getString("titolo"), rs.getDate("data_creazione"), rs.getString("tipo"), rs.getString("doi_url"), rs.getBoolean("digitale"));
-		return r;
+		return new Riferimento(rs.getString("titolo"), rs.getDate("data_creazione"), rs.getString("tipo"), rs.getString("doi_url"), rs.getBoolean("digitale"));
 	}
 	
 
