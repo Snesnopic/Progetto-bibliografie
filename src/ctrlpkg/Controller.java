@@ -126,34 +126,7 @@ public class Controller {
 		}
 		return r;
 	}
-	public Riferimento fillCitazioni(Riferimento r)
-	{
-		try
-		{
-			rDAO = new RiferimentoDAO();
-			r.setCitazioni(rDAO.getAll("SELECT riferimento.* FROM riferimento JOIN citazione ON titolo = titolo_citato WHERE titolo_citante = '"+r.getTitolo()+"'"));
-		}
-		catch (SQLException e)
-		{
-			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
-			return null;
-		}
-		return r;
-	}
-	
-	public List<Riferimento> retrieveCitazioni(String CF)
-	{
-		try 
-		{
-			rDAO = new RiferimentoDAO();
-			return rDAO.getAll("SELECT riferimento.* FROM riferimento CROSS JOIN autore_riferimento CROSS JOIN citazione WHERE cf ='"+CF+"' AND titolo_citato = autore_riferimento.titolo AND riferimento.titolo = titolo_citante");
-		} 
-		catch (SQLException e) 
-		{
-			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
-			return null;
-		}
-	}
+
 	public List<Riferimento> retrieveCitazioni(Riferimento r)
 	{
 		try 
@@ -185,6 +158,7 @@ public class Controller {
 			return null;
 		}
 	}
+
 	public Object[][] RicercaToObjectMatrix(String testo, String categoria, boolean[] tipi,String filtro)
 	{
 		
@@ -192,6 +166,7 @@ public class Controller {
 		{
 			rDAO = new RiferimentoDAO();
 			String query = "SELECT DISTINCT riferimento.* FROM riferimento, categoria_riferimento ";
+
 			switch(filtro)
 			{
 				case "Titolo":
@@ -205,7 +180,7 @@ public class Controller {
 					break;
 			}
 
-			if(categoria != "Qualsiasi")
+			if(!Objects.equals(categoria, "Qualsiasi"))
 				query = query.concat("AND categoria_riferimento.titolo = riferimento.titolo AND categoria_riferimento.nome = '"+categoria+"'");
 			System.out.println(query);
 			
