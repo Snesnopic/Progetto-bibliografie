@@ -16,6 +16,7 @@ public class SidePanel extends JPanel
 	private JButton logoutButton;
 	private JButton creaRifButton;
 	private JButton creaCatButton;
+	private JButton viewRifButton;
 	public JButton getCreaRifButton() {
 		return creaRifButton;
 	}
@@ -25,7 +26,7 @@ public class SidePanel extends JPanel
 	public JButton getViewRifButton() {
 		return viewRifButton;
 	}
-	private JButton viewRifButton;
+	
 	public void setLogoutButton(JButton logoutButton) {
 		this.logoutButton = logoutButton;
 	}
@@ -34,6 +35,7 @@ public class SidePanel extends JPanel
 	}
 	public void setCreaCatButton(JButton creaCatButton) {
 		this.creaCatButton = creaCatButton;
+		creaCatButton.setContentAreaFilled(false);
 	}
 	public void setViewRifButton(JButton viewRifButton) {
 		this.viewRifButton = viewRifButton;
@@ -72,6 +74,7 @@ public class SidePanel extends JPanel
 		creaRifButton.setForeground(Color.WHITE);
 		creaRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_creaRifButton = new GridBagConstraints();
+		gbc_creaRifButton.fill = GridBagConstraints.BOTH;
 		gbc_creaRifButton.insets = new Insets(0, 0, 5, 0);
 		gbc_creaRifButton.gridx = 0;
 		gbc_creaRifButton.gridy = 2;
@@ -81,6 +84,7 @@ public class SidePanel extends JPanel
 		creaCatButton.setForeground(Color.WHITE);
 		creaCatButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_creaCatButton = new GridBagConstraints();
+		gbc_creaCatButton.fill = GridBagConstraints.BOTH;
 		gbc_creaCatButton.insets = new Insets(0, 0, 5, 0);
 		gbc_creaCatButton.gridx = 0;
 		gbc_creaCatButton.gridy = 3;
@@ -90,14 +94,14 @@ public class SidePanel extends JPanel
 		viewRifButton.setForeground(Color.WHITE);
 		viewRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_viewRifButton = new GridBagConstraints();
+		gbc_viewRifButton.fill = GridBagConstraints.BOTH;
 		gbc_viewRifButton.insets = new Insets(0, 0, 5, 0);
 		gbc_viewRifButton.gridx = 0;
 		gbc_viewRifButton.gridy = 4;
 		add(viewRifButton, gbc_viewRifButton);
-		logoutButton = new JButton("Logout");
+		setLogoutButton(new JButton("Logout"));
 		
 		creaRifButton.setContentAreaFilled(false);
-		creaCatButton.setContentAreaFilled(false);
 		viewRifButton.setContentAreaFilled(false);
 		
 		logoutButton.setForeground(Color.WHITE);
