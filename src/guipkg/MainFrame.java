@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
 
 	private JPanel mainPanel;
 	private Controller c;
-
+	private JPanel currentPanel;
 	public MainFrame(Controller c) throws IOException
 	{
 		setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
@@ -40,9 +40,11 @@ public class MainFrame extends JFrame {
 		Object[][] dataCit = c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
 		Object[][] dataRif = c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
 		WelcomePanel welcomePanel = new WelcomePanel(c.retrieveNome(),c.retrieveCognome(),dataCit,dataRif);
+		currentPanel = welcomePanel;
+		
 		getRootPane().setDefaultButton(welcomePanel.getSearchButton());
 
-		mainPanel.add(welcomePanel, BorderLayout.CENTER);
+		mainPanel.add(currentPanel, BorderLayout.CENTER);
 		welcomePanel.getSearchButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,15 +55,17 @@ public class MainFrame extends JFrame {
 					boolean[] selezioni = welcomePanel.getSelezioni();
 					Object[][] dataRicerca = c.RicercaToObjectMatrix(testo,welcomePanel.getCategoriaComboBox().getSelectedItem().toString(),selezioni,selectedButton);
 					SearchResultPanel searchResultPanel = new SearchResultPanel(testo,selectedButton,dataRicerca);
-					mainPanel.remove(welcomePanel);
-					mainPanel.add(searchResultPanel,BorderLayout.CENTER);
+					currentPanel.setVisible(false);
+					currentPanel = searchResultPanel;
+					mainPanel.add(currentPanel,BorderLayout.CENTER);
 					searchResultPanel.getBackButton().addActionListener(new ActionListener()
 					{
 						@Override
 						public void actionPerformed(ActionEvent e)
 						{
-							mainPanel.remove(searchResultPanel);
-							mainPanel.add(welcomePanel,BorderLayout.CENTER);
+							mainPanel.remove(currentPanel);
+							currentPanel = welcomePanel;
+							currentPanel.setVisible(true);
 						}
 					});
 				}
@@ -71,7 +75,68 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-
+		
+		sidePanel.getCreaCatButton().addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				CreaCatPanel creaCatPanel = new CreaCatPanel();
+				currentPanel.setVisible(false);
+				currentPanel = creaCatPanel;
+				mainPanel.add(currentPanel);
+				creaCatPanel.getBackButton().addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						mainPanel.remove(currentPanel);
+						currentPanel = welcomePanel;
+						currentPanel.setVisible(true);
+					}
+				});
+			}
+		});
+		sidePanel.getCreaRifButton().addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				CreaRifPanel creaRifPanel = new CreaRifPanel();
+				currentPanel.setVisible(false);
+				currentPanel = creaRifPanel;
+				mainPanel.add(currentPanel);
+				creaRifPanel.getBackButton().addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						mainPanel.remove(currentPanel);
+						currentPanel = welcomePanel;
+						currentPanel.setVisible(true);
+					}
+				});
+			}
+		});
+		sidePanel.getViewRifButton().addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				ViewRifPanel viewRifPanel = new ViewRifPanel();
+				currentPanel.setVisible(false);
+				currentPanel = viewRifPanel;
+				mainPanel.add(currentPanel);
+				viewRifPanel.getBackButton().addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						mainPanel.remove(currentPanel);
+						currentPanel = welcomePanel;
+						currentPanel.setVisible(true);
+					}
+				});
+			}
+		});
+		
 		/*
 		welcomePanel.searchButton.addActionListener(new ActionListener()
 		{
