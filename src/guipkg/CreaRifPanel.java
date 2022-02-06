@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
+import javax.swing.AbstractButton;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 
@@ -26,43 +27,50 @@ public class CreaRifPanel extends JPanel
 	private JTextField nameField;
 	private JTextField linkField;
 	private JTextField doiField;
-
+	private JButton backButton;
+	public JButton getBackButton() {
+		return backButton;
+	}
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+		backButton.setForeground(Color.WHITE);
+	}
 	public CreaRifPanel()
 	{
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JButton backButton = new JButton("Indietro");
+		setBackButton(new JButton("Indietro"));
 		backButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
 		GridBagConstraints gbc_backButton = new GridBagConstraints();
-		gbc_backButton.anchor = GridBagConstraints.NORTH;
+		gbc_backButton.anchor = GridBagConstraints.WEST;
 		gbc_backButton.insets = new Insets(0, 0, 5, 5);
-		gbc_backButton.gridx = 0;
+		gbc_backButton.gridx = 1;
 		gbc_backButton.gridy = 0;
 		add(backButton, gbc_backButton);
 		
 		JLabel newRifLabel = new JLabel("Nuovo riferimento");
-		newRifLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 30));
+		newRifLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 30));
 		newRifLabel.setForeground(Color.WHITE);
 		GridBagConstraints gbc_newRifLabel = new GridBagConstraints();
 		gbc_newRifLabel.gridwidth = 4;
 		gbc_newRifLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_newRifLabel.gridx = 2;
+		gbc_newRifLabel.gridx = 3;
 		gbc_newRifLabel.gridy = 0;
 		add(newRifLabel, gbc_newRifLabel);
-		
+		backButton.setBackground(new Color(14, 22, 23));
 		JLabel nameLabel = new JLabel("Nome riferimento");
 		nameLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		nameLabel.setForeground(Color.WHITE);
 		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
 		gbc_nameLabel.anchor = GridBagConstraints.EAST;
 		gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_nameLabel.gridx = 1;
+		gbc_nameLabel.gridx = 2;
 		gbc_nameLabel.gridy = 1;
 		add(nameLabel, gbc_nameLabel);
 		
@@ -72,7 +80,7 @@ public class CreaRifPanel extends JPanel
 		gbc_nameField.gridwidth = 4;
 		gbc_nameField.insets = new Insets(0, 0, 5, 5);
 		gbc_nameField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_nameField.gridx = 2;
+		gbc_nameField.gridx = 3;
 		gbc_nameField.gridy = 1;
 		add(nameField, gbc_nameField);
 		nameField.setColumns(10);
@@ -83,7 +91,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_descriptionLabel = new GridBagConstraints();
 		gbc_descriptionLabel.anchor = GridBagConstraints.EAST;
 		gbc_descriptionLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_descriptionLabel.gridx = 1;
+		gbc_descriptionLabel.gridx = 2;
 		gbc_descriptionLabel.gridy = 2;
 		add(descriptionLabel, gbc_descriptionLabel);
 		
@@ -93,7 +101,7 @@ public class CreaRifPanel extends JPanel
 		gbc_descriptionPane.gridwidth = 4;
 		gbc_descriptionPane.insets = new Insets(0, 0, 5, 5);
 		gbc_descriptionPane.fill = GridBagConstraints.BOTH;
-		gbc_descriptionPane.gridx = 2;
+		gbc_descriptionPane.gridx = 3;
 		gbc_descriptionPane.gridy = 2;
 		add(descriptionPane, gbc_descriptionPane);
 		
@@ -103,7 +111,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_dateLabel = new GridBagConstraints();
 		gbc_dateLabel.anchor = GridBagConstraints.EAST;
 		gbc_dateLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_dateLabel.gridx = 1;
+		gbc_dateLabel.gridx = 2;
 		gbc_dateLabel.gridy = 3;
 		add(dateLabel, gbc_dateLabel);
 		DatePicker datePicker = new DatePicker();
@@ -115,7 +123,7 @@ public class CreaRifPanel extends JPanel
 		gbc_datePicker.gridwidth = 4;
 		gbc_datePicker.fill = GridBagConstraints.HORIZONTAL;
 		gbc_datePicker.insets = new Insets(0,0,5,5);
-		gbc_datePicker.gridx = 2;
+		gbc_datePicker.gridx = 3;
 		gbc_datePicker.gridy = 3;
 		add(datePicker,gbc_datePicker);
 		
@@ -125,7 +133,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_linkLabel = new GridBagConstraints();
 		gbc_linkLabel.anchor = GridBagConstraints.EAST;
 		gbc_linkLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_linkLabel.gridx = 1;
+		gbc_linkLabel.gridx = 2;
 		gbc_linkLabel.gridy = 4;
 		add(linkLabel, gbc_linkLabel);
 		
@@ -135,7 +143,7 @@ public class CreaRifPanel extends JPanel
 		gbc_linkField.gridwidth = 4;
 		gbc_linkField.insets = new Insets(0, 0, 5, 5);
 		gbc_linkField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_linkField.gridx = 2;
+		gbc_linkField.gridx = 3;
 		gbc_linkField.gridy = 4;
 		add(linkField, gbc_linkField);
 		linkField.setColumns(10);
@@ -147,7 +155,7 @@ public class CreaRifPanel extends JPanel
 		isDigitalCheckBox.setSelected(true);
 		GridBagConstraints gbc_isDigitalCheckBox = new GridBagConstraints();
 		gbc_isDigitalCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_isDigitalCheckBox.gridx = 6;
+		gbc_isDigitalCheckBox.gridx = 7;
 		gbc_isDigitalCheckBox.gridy = 4;
 		add(isDigitalCheckBox, gbc_isDigitalCheckBox);
 		
@@ -158,7 +166,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_doiLabel = new GridBagConstraints();
 		gbc_doiLabel.anchor = GridBagConstraints.EAST;
 		gbc_doiLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_doiLabel.gridx = 1;
+		gbc_doiLabel.gridx = 2;
 		gbc_doiLabel.gridy = 5;
 		add(doiLabel, gbc_doiLabel);
 		
@@ -168,7 +176,7 @@ public class CreaRifPanel extends JPanel
 		gbc_doiField.gridwidth = 4;
 		gbc_doiField.insets = new Insets(0, 0, 5, 5);
 		gbc_doiField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_doiField.gridx = 2;
+		gbc_doiField.gridx = 3;
 		gbc_doiField.gridy = 5;
 		add(doiField, gbc_doiField);
 		doiField.setColumns(10);
@@ -179,7 +187,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_typeLabel = new GridBagConstraints();
 		gbc_typeLabel.anchor = GridBagConstraints.EAST;
 		gbc_typeLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_typeLabel.gridx = 1;
+		gbc_typeLabel.gridx = 2;
 		gbc_typeLabel.gridy = 6;
 		add(typeLabel, gbc_typeLabel);
 		
@@ -189,7 +197,7 @@ public class CreaRifPanel extends JPanel
 		isArticoloRadioButton.setBackground(new Color(23, 33, 43));
 		GridBagConstraints gbc_isArticoloRadioButton = new GridBagConstraints();
 		gbc_isArticoloRadioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_isArticoloRadioButton.gridx = 2;
+		gbc_isArticoloRadioButton.gridx = 3;
 		gbc_isArticoloRadioButton.gridy = 6;
 		add(isArticoloRadioButton, gbc_isArticoloRadioButton);
 		
@@ -199,7 +207,7 @@ public class CreaRifPanel extends JPanel
 		isLibroRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		GridBagConstraints gbc_isLibroRadioButton = new GridBagConstraints();
 		gbc_isLibroRadioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_isLibroRadioButton.gridx = 3;
+		gbc_isLibroRadioButton.gridx = 4;
 		gbc_isLibroRadioButton.gridy = 6;
 		add(isLibroRadioButton, gbc_isLibroRadioButton);
 		
@@ -209,7 +217,7 @@ public class CreaRifPanel extends JPanel
 		isRisorsaRadioButton.setBackground(new Color(23, 33, 43));
 		GridBagConstraints gbc_isRisorsaRadioButton = new GridBagConstraints();
 		gbc_isRisorsaRadioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_isRisorsaRadioButton.gridx = 4;
+		gbc_isRisorsaRadioButton.gridx = 5;
 		gbc_isRisorsaRadioButton.gridy = 6;
 		add(isRisorsaRadioButton, gbc_isRisorsaRadioButton);
 		
@@ -219,7 +227,7 @@ public class CreaRifPanel extends JPanel
 		isDataSetRadioButton.setBackground(new Color(23, 33, 43));
 		GridBagConstraints gbc_isDataSetRadioButton = new GridBagConstraints();
 		gbc_isDataSetRadioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_isDataSetRadioButton.gridx = 5;
+		gbc_isDataSetRadioButton.gridx = 6;
 		gbc_isDataSetRadioButton.gridy = 6;
 		add(isDataSetRadioButton, gbc_isDataSetRadioButton);
 		
@@ -229,7 +237,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_noteLabel = new GridBagConstraints();
 		gbc_noteLabel.anchor = GridBagConstraints.EAST;
 		gbc_noteLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_noteLabel.gridx = 1;
+		gbc_noteLabel.gridx = 2;
 		gbc_noteLabel.gridy = 7;
 		add(noteLabel, gbc_noteLabel);
 		
@@ -239,7 +247,7 @@ public class CreaRifPanel extends JPanel
 		gbc_notePane.gridwidth = 4;
 		gbc_notePane.insets = new Insets(0, 0, 5, 5);
 		gbc_notePane.fill = GridBagConstraints.BOTH;
-		gbc_notePane.gridx = 2;
+		gbc_notePane.gridx = 3;
 		gbc_notePane.gridy = 7;
 		add(notePane, gbc_notePane);
 		ButtonGroup bottoniRadio = new ButtonGroup();
@@ -255,7 +263,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_autoriLabel = new GridBagConstraints();
 		gbc_autoriLabel.anchor = GridBagConstraints.EAST;
 		gbc_autoriLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_autoriLabel.gridx = 1;
+		gbc_autoriLabel.gridx = 2;
 		gbc_autoriLabel.gridy = 8;
 		add(autoriLabel, gbc_autoriLabel);
 		
@@ -274,7 +282,7 @@ public class CreaRifPanel extends JPanel
 		gbc_autoriList.gridwidth = 4;
 		gbc_autoriList.insets = new Insets(0, 0, 5, 5);
 		gbc_autoriList.fill = GridBagConstraints.BOTH;
-		gbc_autoriList.gridx = 2;
+		gbc_autoriList.gridx = 3;
 		gbc_autoriList.gridy = 8;
 		add(autoriList, gbc_autoriList);
 		
@@ -284,7 +292,7 @@ public class CreaRifPanel extends JPanel
 		GridBagConstraints gbc_categorieLabel = new GridBagConstraints();
 		gbc_categorieLabel.anchor = GridBagConstraints.EAST;
 		gbc_categorieLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_categorieLabel.gridx = 1;
+		gbc_categorieLabel.gridx = 2;
 		gbc_categorieLabel.gridy = 9;
 		add(categorieLabel, gbc_categorieLabel);
 		
@@ -303,7 +311,7 @@ public class CreaRifPanel extends JPanel
 		gbc_categorieList.gridwidth = 4;
 		gbc_categorieList.insets = new Insets(0, 0, 5, 5);
 		gbc_categorieList.fill = GridBagConstraints.BOTH;
-		gbc_categorieList.gridx = 2;
+		gbc_categorieList.gridx = 3;
 		gbc_categorieList.gridy = 9;
 		add(categorieList, gbc_categorieList);
 		
@@ -311,11 +319,13 @@ public class CreaRifPanel extends JPanel
 		createButton.setBackground(new Color(35, 46, 60));
 		createButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 24));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
+		gbc_createButton.anchor = GridBagConstraints.NORTH;
 		gbc_createButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_createButton.gridwidth = 4;
 		gbc_createButton.insets = new Insets(0, 0, 5, 5);
-		gbc_createButton.gridx = 2;
+		gbc_createButton.gridx = 3;
 		gbc_createButton.gridy = 10;
 		add(createButton, gbc_createButton);
 	}
+
 }
