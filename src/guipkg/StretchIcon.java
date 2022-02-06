@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.ImageObserver;
 import java.net.URL;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -24,7 +25,7 @@ import javax.swing.ImageIcon;
  * it is displayed, <CODE>StretchIcon</CODE> must only be used in conjunction
  * with a component and layout that does not depend on the size of the
  * component's Icon.
- * 
+ *
  * @version 1.0 03/27/12
  * @author Darryl
  */
@@ -109,13 +110,13 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the image with the specified behavior.
-   * 
+   *
    * @param image the image
    * @param proportionate <code>true</code> to retain the image's aspect ratio,
    *        <code>false</code> to allow distortion of the image to fill the
    *        component.
-   * 
-   * @see ImageIcon#ImageIcon(java.awt.Image) 
+   *
+   * @see ImageIcon#ImageIcon(java.awt.Image)
    */
   public StretchIcon(Image image, boolean proportionate) {
     super(image);
@@ -124,11 +125,11 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the image.
-   * 
+   *
    * @param image the image
    * @param  description a brief textual description of the image
-   * 
-   * @see ImageIcon#ImageIcon(java.awt.Image, java.lang.String) 
+   *
+   * @see ImageIcon#ImageIcon(java.awt.Image, java.lang.String)
    */
   public StretchIcon(Image image, String description) {
     super(image, description);
@@ -163,7 +164,7 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the specified file with the specified behavior.
-   * 
+   *
    * @param filename a String specifying a filename or path
    * @param proportionate <code>true</code> to retain the image's aspect ratio,
    *        <code>false</code> to allow distortion of the image to fill the
@@ -190,7 +191,7 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the specified file with the specified behavior.
-   * 
+   *
    * @param filename a String specifying a filename or path
    * @param  description a brief textual description of the image
    * @param proportionate <code>true</code> to retain the image's aspect ratio,
@@ -217,7 +218,7 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the specified URL with the specified behavior.
-   * 
+   *
    * @param location the URL for the image
    * @param proportionate <code>true</code> to retain the image's aspect ratio,
    *        <code>false</code> to allow distortion of the image to fill the
@@ -244,7 +245,7 @@ public class StretchIcon extends ImageIcon {
 
   /**
    * Creates a <CODE>StretchIcon</CODE> from the specified URL with the specified behavior.
-   * 
+   *
    * @param location the URL for the image
    * @param  description a brief textual description of the image
    * @param proportionate <code>true</code> to retain the image's aspect ratio,
@@ -313,7 +314,7 @@ public class StretchIcon extends ImageIcon {
   /**
    * Overridden to return 0.  The size of this Icon is determined by
    * the size of the component.
-   * 
+   *
    * @return 0
    */
   @Override
