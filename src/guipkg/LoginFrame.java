@@ -1,69 +1,72 @@
 package guipkg;
-import ctrlpkg.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.io.IOException;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
+import ctrlpkg.Controller;
 
 public class LoginFrame extends JFrame {
 	private JPanel loginWindow;
 	private JTextField CFField;
 	private Controller c;
-	
+
 	public LoginFrame(Controller c) throws IOException
 	{
         setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
 		this.setC(c);
 		setBackground(Color.WHITE);
 		setTitle("Login");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
-				
+
 		loginWindow = new JPanel();
 		loginWindow.setBackground(new Color(23, 33, 43));
-		setContentPane(loginWindow);	
-		
+		setContentPane(loginWindow);
+
 		CFField = new JTextField();
 		CFField.setForeground(new Color(255, 255, 255));
 		CFField.setHorizontalAlignment(SwingConstants.CENTER);
 		CFField.setBackground(new Color(14, 22, 33));
-		
+
 		CFField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		CFField.setToolTipText("Username");
-		
-		
-		
+
+
+
 		JLabel loginLabel = new JLabel("Effettua l'accesso");
 		loginLabel.setBackground(new Color(255, 255, 255));
 		loginLabel.setForeground(new Color(255, 255, 255));
 		loginLabel.setVerticalAlignment(SwingConstants.TOP);
 		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 41));
-		
+
 		JLabel CFLabel = new JLabel("Codice Fiscale");
 		CFLabel.setBackground(new Color(255, 255, 255));
 		CFLabel.setForeground(new Color(255, 255, 255));
 		CFLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
-		
+
 		JButton loginButton = new JButton("OK");
 		loginButton.setForeground(new Color(255, 255, 255));
 		loginButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		this.getRootPane().setDefaultButton(loginButton);
 		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+			@Override
+			public void actionPerformed(ActionEvent e)
 			{
 				if(CFField.getText().isEmpty())
 					JOptionPane.showMessageDialog(null, "Errore di input");
@@ -84,9 +87,9 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		loginButton.setBackground(new Color(14, 22, 33));
-		
+
 		JLabel uninaLogoLabel = new JLabel("");
 		uninaLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GroupLayout gl_loginWindow = new GroupLayout(loginWindow);
