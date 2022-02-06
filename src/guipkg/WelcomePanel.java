@@ -94,8 +94,7 @@ public class WelcomePanel extends JPanel
 		add(searchField, gbc_searchField);
 		setSearchButton(new JButton(""));
 
-		searchButton.setBackground(SystemColor.window);
-		searchButton.setContentAreaFilled(false);
+		searchButton.setBackground(new Color(14, 22, 33));
 		searchButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		searchButton.setIcon(searchIcon);
 		GridBagConstraints gbc_searchButton_1 = new GridBagConstraints();
