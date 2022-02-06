@@ -2,17 +2,42 @@ package guipkg;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class SidePanel extends JPanel
 {
-	public JButton logoutButton;
+	private JButton logoutButton;
+	private JButton creaRifButton;
+	private JButton creaCatButton;
+	public JButton getCreaRifButton() {
+		return creaRifButton;
+	}
+	public JButton getCreaCatButton() {
+		return creaCatButton;
+	}
+	public JButton getViewRifButton() {
+		return viewRifButton;
+	}
+	private JButton viewRifButton;
+	public void setLogoutButton(JButton logoutButton) {
+		this.logoutButton = logoutButton;
+	}
+	public void setCreaRifButton(JButton creaRifButton) {
+		this.creaRifButton = creaRifButton;
+	}
+	public void setCreaCatButton(JButton creaCatButton) {
+		this.creaCatButton = creaCatButton;
+	}
+	public void setViewRifButton(JButton viewRifButton) {
+		this.viewRifButton = viewRifButton;
+	}
 	public SidePanel(String nome,String cognome)
 	{
 		setBackground(new Color(14, 22, 33));
@@ -34,7 +59,7 @@ public class SidePanel extends JPanel
 		JLabel userLabel = new JLabel(cognome+" "+nome);
 		userLabel.setBackground(Color.WHITE);
 		userLabel.setForeground(Color.WHITE);
-		userLabel.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
+		userLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
 		userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_userLabel = new GridBagConstraints();
 		gbc_userLabel.fill = GridBagConstraints.HORIZONTAL;
@@ -43,38 +68,39 @@ public class SidePanel extends JPanel
 		gbc_userLabel.gridy = 1;
 		add(userLabel, gbc_userLabel);
 		
-		JLabel lblNewLabel = new JLabel("Crea riferimento");
-		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 2;
-		add(lblNewLabel, gbc_lblNewLabel);
+		setCreaRifButton(new JButton("Crea riferimento"));
+		creaRifButton.setForeground(Color.WHITE);
+		creaRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
+		GridBagConstraints gbc_creaRifButton = new GridBagConstraints();
+		gbc_creaRifButton.insets = new Insets(0, 0, 5, 0);
+		gbc_creaRifButton.gridx = 0;
+		gbc_creaRifButton.gridy = 2;
+		add(creaRifButton, gbc_creaRifButton);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBackground(Color.WHITE);
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 3;
-		add(lblNewLabel_2, gbc_lblNewLabel_2);
+		setCreaCatButton(new JButton("Crea categoria"));
+		creaCatButton.setForeground(Color.WHITE);
+		creaCatButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
+		GridBagConstraints gbc_creaCatButton = new GridBagConstraints();
+		gbc_creaCatButton.insets = new Insets(0, 0, 5, 0);
+		gbc_creaCatButton.gridx = 0;
+		gbc_creaCatButton.gridy = 3;
+		add(creaCatButton, gbc_creaCatButton);
 		
-		JLabel lblNewLabel_1 = new JLabel("Visualizza riferimenti");
-		lblNewLabel_1.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
-		lblNewLabel_1.setBackground(Color.WHITE);
-		lblNewLabel_1.setForeground(Color.WHITE);
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 4;
-		add(lblNewLabel_1, gbc_lblNewLabel_1);
+		setViewRifButton(new JButton("Visualizza riferimenti"));
+		viewRifButton.setForeground(Color.WHITE);
+		viewRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
+		GridBagConstraints gbc_viewRifButton = new GridBagConstraints();
+		gbc_viewRifButton.insets = new Insets(0, 0, 5, 0);
+		gbc_viewRifButton.gridx = 0;
+		gbc_viewRifButton.gridy = 4;
+		add(viewRifButton, gbc_viewRifButton);
 		logoutButton = new JButton("Logout");
 		
-		logoutButton.setForeground(new Color(255, 255, 255));
+		creaRifButton.setContentAreaFilled(false);
+		creaCatButton.setContentAreaFilled(false);
+		viewRifButton.setContentAreaFilled(false);
+		
+		logoutButton.setForeground(Color.WHITE);
 		logoutButton.setBackground(new Color(14, 22, 33));
 		logoutButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
 		GridBagConstraints gbc_logoutButton = new GridBagConstraints();
@@ -83,6 +109,9 @@ public class SidePanel extends JPanel
 		gbc_logoutButton.gridx = 0;
 		gbc_logoutButton.gridy = 6;
 		add(logoutButton, gbc_logoutButton);
-		
+
+	}
+	public JButton getLogoutButton() {
+		return logoutButton;
 	}
 }
