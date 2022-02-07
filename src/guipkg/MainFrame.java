@@ -160,7 +160,7 @@ public class MainFrame extends JFrame {
 									creaRifPanel.getSelectedCategories(),
 									creaRifPanel.getSelectedCitazioni());
 							welcomePanel.refreshRifTable(c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
-
+							welcomePanel.refreshCitTable(c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
 						}
 						else
 							JOptionPane.showMessageDialog(null, "Errore di input");
