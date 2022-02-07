@@ -48,14 +48,14 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 			sql = sql.concat(""+obj.getDOI()+",");
 		sql = sql.concat("descr_riferimento = '"+obj.getDescrizione()+"',descr_autore = '"+obj.getDescr_autore()+"' ");
 		sql = sql.concat("WHERE id_riferimento = "+obj.getId_Rif());
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 
 	@Override
 	public void delete(Riferimento obj) throws SQLException
 	{
 		String sql = "DELETE FROM riferimenti_biblio WHERE id_riferimento = "+obj.getId_Rif();
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 		else
 			sql = sql.concat(""+obj.getDOI()+",");
 		sql = sql.concat("'"+obj.getDescrizione()+"','"+obj.getDescr_autore()+"')");
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 	
 

@@ -39,13 +39,13 @@ public class UtenteDAO implements DAO<Utente> {
 		else
 			sql = sql.concat("'"+obj.getFine().toString()+"' ");
 		sql.concat("WHERE id_utente = "+obj.getUser_ID());
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 
 	@Override
 	public void delete(Utente obj) throws SQLException {
 		String sql = "DELETE FROM utente WHERE id_utente = "+obj.getUser_ID();
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class UtenteDAO implements DAO<Utente> {
 			sql = sql.concat("NULL");
 		else
 			sql = sql.concat("'"+obj.getFine().toString()+"' ");
-		dbc.executeQuery(sql);
+		dbc.execute(sql);
 	}
 
 	private Utente extract(ResultSet rs) throws SQLException {
