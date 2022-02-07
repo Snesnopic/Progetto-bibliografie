@@ -31,4 +31,9 @@ public class DBConnection {
 		rs = st.executeQuery(query);
 		return rs;
 	}
+	public void execute(String query) throws SQLException
+	{
+		st = cn.createStatement();
+		st.execute(query);
+	}
 }
