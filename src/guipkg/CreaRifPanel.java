@@ -6,9 +6,17 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
 import java.awt.Font;
 import javax.swing.JTextField;
 import com.github.lgooddatepicker.components.DatePicker;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
@@ -18,16 +26,38 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.UIManager;
 
 public class CreaRifPanel extends JPanel
 {
+	private ButtonGroup bottoniRadio;
+	private JList<String> citazioniList;
+	public ButtonGroup getBottoniRadio() {
+		return bottoniRadio;
+	}
+	public void setBottoniRadio(ButtonGroup bottoniRadio) {
+		this.bottoniRadio = bottoniRadio;
+	}
 	private JTextField nameField;
 	private JTextField linkField;
 	private JTextField doiField;
 	private JButton backButton;
+	private JTextPane descriptionPane;
 	private JList<String> autoriList;
 	private JList<String> categorieList;
-
+	private DatePicker datePicker;
+	private JTextPane notePane;
+	private JCheckBox isDigitalCheckBox;
+	private JButton createButton;
+	public JCheckBox getIsDigitalCheckBox() {
+		return isDigitalCheckBox;
+	}
+	public void setIsDigitalCheckBox(JCheckBox isDigitalCheckBox) {
+		this.isDigitalCheckBox = isDigitalCheckBox;
+	}
+	public JTextPane getDescriptionPane() {
+		return descriptionPane;
+	}
 	public JList<String> getCategorieList() {
 		return categorieList;
 	}
@@ -57,6 +87,8 @@ public class CreaRifPanel extends JPanel
 	}
 	public void setAutoriList(JList<String> autoriList) {
 		this.autoriList = autoriList;
+		autoriList.setBorder(UIManager.getBorder("ComboBox.border"));
+		autoriList.setForeground(Color.WHITE);
 	}
 	public JButton getBackButton() {
 		return backButton;
@@ -65,14 +97,14 @@ public class CreaRifPanel extends JPanel
 		this.backButton = backButton;
 		backButton.setForeground(Color.WHITE);
 	}
-	public CreaRifPanel(String[] utenti,String[] categorie)
+	public CreaRifPanel(String[] utenti,String[] categorie,String[] citazioni)
 	{
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		setBackButton(new JButton("Indietro"));
@@ -104,8 +136,11 @@ public class CreaRifPanel extends JPanel
 		gbc_nameLabel.gridy = 1;
 		add(nameLabel, gbc_nameLabel);
 
-		nameField = new JTextField();
+		setNameField(new JTextField());
+		nameField.setCaretColor(Color.WHITE);
+		nameField.setForeground(Color.WHITE);
 		nameField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		nameField.setBackground(new Color(14, 22, 33));
 		GridBagConstraints gbc_nameField = new GridBagConstraints();
 		gbc_nameField.gridwidth = 4;
 		gbc_nameField.insets = new Insets(0, 0, 5, 5);
@@ -125,14 +160,18 @@ public class CreaRifPanel extends JPanel
 		gbc_descriptionLabel.gridy = 2;
 		add(descriptionLabel, gbc_descriptionLabel);
 
-		JTextPane descriptionPane = new JTextPane();
-		descriptionPane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
+		setDescriptionPane(new JTextPane());
+		descriptionPane.setCaretColor(Color.WHITE);
+		descriptionPane.setBorder(UIManager.getBorder("ComboBox.border"));
+		descriptionPane.setForeground(Color.WHITE);
+		descriptionPane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_descriptionPane = new GridBagConstraints();
 		gbc_descriptionPane.gridwidth = 4;
 		gbc_descriptionPane.insets = new Insets(0, 0, 5, 5);
 		gbc_descriptionPane.fill = GridBagConstraints.BOTH;
 		gbc_descriptionPane.gridx = 3;
 		gbc_descriptionPane.gridy = 2;
+		descriptionPane.setBackground(new Color(14, 22, 33));
 		add(descriptionPane, gbc_descriptionPane);
 
 		JLabel dateLabel = new JLabel("Data");
@@ -144,11 +183,21 @@ public class CreaRifPanel extends JPanel
 		gbc_dateLabel.gridx = 2;
 		gbc_dateLabel.gridy = 3;
 		add(dateLabel, gbc_dateLabel);
-		DatePicker datePicker = new DatePicker();
+		
+		setDatePicker(new DatePicker());
+		datePicker.getComponentDateTextField().setCaretColor(Color.WHITE);
+		datePicker.setBackground(new Color(14, 22, 33));
+		datePicker.setForeground(Color.WHITE);
+		datePicker.getComponentToggleCalendarButton().setForeground(Color.WHITE);
+		datePicker.getComponentDateTextField().setForeground(Color.WHITE);
 		datePicker.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		datePicker.getComponentDateTextField().setText("01/01/2022");
-		datePicker.getComponentDateTextField().setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
-		datePicker.getComponentToggleCalendarButton().setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
+		datePicker.getComponentDateTextField().setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		datePicker.getComponentDateTextField().setBackground(new Color(14, 22, 33));
+		datePicker.getComponentDateTextField().setForeground(Color.WHITE);
+		datePicker.getComponentToggleCalendarButton().setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		datePicker.getComponentToggleCalendarButton().setBackground(new Color(14, 22, 33));
+		datePicker.getComponentToggleCalendarButton().setForeground(Color.WHITE);
 		GridBagConstraints gbc_datePicker = new GridBagConstraints();
 		gbc_datePicker.gridwidth = 4;
 		gbc_datePicker.fill = GridBagConstraints.HORIZONTAL;
@@ -167,8 +216,11 @@ public class CreaRifPanel extends JPanel
 		gbc_linkLabel.gridy = 4;
 		add(linkLabel, gbc_linkLabel);
 
-		linkField = new JTextField();
-		linkField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
+		setLinkField(new JTextField());
+		linkField.setCaretColor(Color.WHITE);
+		linkField.setForeground(Color.WHITE);
+		linkField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		linkField.setBackground(new Color(14, 22, 33));
 		GridBagConstraints gbc_linkField = new GridBagConstraints();
 		gbc_linkField.gridwidth = 4;
 		gbc_linkField.insets = new Insets(0, 0, 5, 5);
@@ -178,7 +230,7 @@ public class CreaRifPanel extends JPanel
 		add(linkField, gbc_linkField);
 		linkField.setColumns(10);
 
-		JCheckBox isDigitalCheckBox = new JCheckBox("Digitale");
+		setIsDigitalCheckBox(new JCheckBox("Digitale"));
 		isDigitalCheckBox.addChangeListener(new ChangeListener()
 		{
 			public void stateChanged(ChangeEvent e)
@@ -191,9 +243,10 @@ public class CreaRifPanel extends JPanel
 		});
 		isDigitalCheckBox.setForeground(Color.WHITE);
 		isDigitalCheckBox.setBackground(new Color(23,33, 43));
-		isDigitalCheckBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+		isDigitalCheckBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		isDigitalCheckBox.setSelected(true);
 		GridBagConstraints gbc_isDigitalCheckBox = new GridBagConstraints();
+		gbc_isDigitalCheckBox.anchor = GridBagConstraints.WEST;
 		gbc_isDigitalCheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_isDigitalCheckBox.gridx = 7;
 		gbc_isDigitalCheckBox.gridy = 4;
@@ -210,8 +263,11 @@ public class CreaRifPanel extends JPanel
 		gbc_doiLabel.gridy = 5;
 		add(doiLabel, gbc_doiLabel);
 
-		doiField = new JTextField();
-		doiField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
+		setDoiField(new JTextField());
+		doiField.setCaretColor(Color.WHITE);
+		doiField.setForeground(Color.WHITE);
+		doiField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		doiField.setBackground(new Color(14, 22, 33));
 		GridBagConstraints gbc_doiField = new GridBagConstraints();
 		gbc_doiField.gridwidth = 4;
 		gbc_doiField.insets = new Insets(0, 0, 5, 5);
@@ -236,6 +292,7 @@ public class CreaRifPanel extends JPanel
 		isArticoloRadioButton.setForeground(Color.WHITE);
 		isArticoloRadioButton.setBackground(new Color(23, 33, 43));
 		GridBagConstraints gbc_isArticoloRadioButton = new GridBagConstraints();
+		gbc_isArticoloRadioButton.anchor = GridBagConstraints.WEST;
 		gbc_isArticoloRadioButton.insets = new Insets(0, 0, 5, 5);
 		gbc_isArticoloRadioButton.gridx = 3;
 		gbc_isArticoloRadioButton.gridy = 6;
@@ -246,6 +303,7 @@ public class CreaRifPanel extends JPanel
 		isLibroRadioButton.setForeground(Color.WHITE);
 		isLibroRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		GridBagConstraints gbc_isLibroRadioButton = new GridBagConstraints();
+		gbc_isLibroRadioButton.anchor = GridBagConstraints.WEST;
 		gbc_isLibroRadioButton.insets = new Insets(0, 0, 5, 5);
 		gbc_isLibroRadioButton.gridx = 4;
 		gbc_isLibroRadioButton.gridy = 6;
@@ -256,6 +314,7 @@ public class CreaRifPanel extends JPanel
 		isRisorsaRadioButton.setForeground(Color.WHITE);
 		isRisorsaRadioButton.setBackground(new Color(23, 33, 43));
 		GridBagConstraints gbc_isRisorsaRadioButton = new GridBagConstraints();
+		gbc_isRisorsaRadioButton.anchor = GridBagConstraints.WEST;
 		gbc_isRisorsaRadioButton.insets = new Insets(0, 0, 5, 5);
 		gbc_isRisorsaRadioButton.gridx = 5;
 		gbc_isRisorsaRadioButton.gridy = 6;
@@ -281,8 +340,11 @@ public class CreaRifPanel extends JPanel
 		gbc_noteLabel.gridy = 7;
 		add(noteLabel, gbc_noteLabel);
 
-		JTextPane notePane = new JTextPane();
-		notePane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
+		setNotePane(new JTextPane());
+		notePane.setBorder(UIManager.getBorder("ComboBox.border"));
+		notePane.setCaretColor(Color.WHITE);
+		notePane.setBackground(new Color(14, 22, 33));
+		notePane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_notePane = new GridBagConstraints();
 		gbc_notePane.gridwidth = 4;
 		gbc_notePane.insets = new Insets(0, 0, 5, 5);
@@ -290,12 +352,7 @@ public class CreaRifPanel extends JPanel
 		gbc_notePane.gridx = 3;
 		gbc_notePane.gridy = 7;
 		add(notePane, gbc_notePane);
-		ButtonGroup bottoniRadio = new ButtonGroup();
-		isArticoloRadioButton.setSelected(true);
-		bottoniRadio.add(isDataSetRadioButton);
-		bottoniRadio.add(isRisorsaRadioButton);
-		bottoniRadio.add(isLibroRadioButton);
-		bottoniRadio.add(isArticoloRadioButton);
+		
 
 		JLabel autoriLabel = new JLabel("Autori");
 		autoriLabel.setForeground(Color.WHITE);
@@ -307,7 +364,8 @@ public class CreaRifPanel extends JPanel
 		gbc_autoriLabel.gridy = 8;
 		add(autoriLabel, gbc_autoriLabel);
 
-		setAutoriList (new JList<String>());
+		setAutoriList(new JList<String>());
+		autoriList.setBackground(new Color(14, 22, 33));
 		autoriList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		autoriList.setListData(utenti);
 		GridBagConstraints gbc_autoriList = new GridBagConstraints();
@@ -329,6 +387,7 @@ public class CreaRifPanel extends JPanel
 		add(categorieLabel, gbc_categorieLabel);
 
 		setCategorieList(new JList<String>());
+		categorieList.setBackground(new Color(14, 22, 33));
 		categorieList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		categorieList.setListData(categorie);
 		GridBagConstraints gbc_categorieList = new GridBagConstraints();
@@ -337,9 +396,35 @@ public class CreaRifPanel extends JPanel
 		gbc_categorieList.fill = GridBagConstraints.BOTH;
 		gbc_categorieList.gridx = 3;
 		gbc_categorieList.gridy = 9;
+		categorieList.setBorder(UIManager.getBorder("ComboBox.border"));
+		categorieList.setForeground(Color.WHITE);
 		add(categorieList, gbc_categorieList);
+		
+		JLabel citazioniLabel = new JLabel("Citazioni");
+		citazioniLabel.setForeground(Color.WHITE);
+		citazioniLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+		GridBagConstraints gbc_citazioniLabel = new GridBagConstraints();
+		gbc_citazioniLabel.anchor = GridBagConstraints.EAST;
+		gbc_citazioniLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_citazioniLabel.gridx = 2;
+		gbc_citazioniLabel.gridy = 10;
+		add(citazioniLabel, gbc_citazioniLabel);
+		
+		setCitazioniList(new JList<String>());
+		citazioniList.setForeground(Color.WHITE);
+		citazioniList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		citazioniList.setBorder(UIManager.getBorder("ComboBox.border"));
+		citazioniList.setBackground(new Color(14, 22, 33));
+		citazioniList.setListData(citazioni);
+		GridBagConstraints gbc_citazioniList = new GridBagConstraints();
+		gbc_citazioniList.gridwidth = 4;
+		gbc_citazioniList.insets = new Insets(0, 0, 5, 5);
+		gbc_citazioniList.fill = GridBagConstraints.BOTH;
+		gbc_citazioniList.gridx = 3;
+		gbc_citazioniList.gridy = 10;
+		add(citazioniList, gbc_citazioniList);
 
-		JButton createButton = new JButton("Crea");
+		setCreateButton(new JButton("Crea"));
 		createButton.setForeground(Color.WHITE);
 		createButton.setBackground(new Color(14, 22, 23));
 		createButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 24));
@@ -349,8 +434,99 @@ public class CreaRifPanel extends JPanel
 		gbc_createButton.gridwidth = 4;
 		gbc_createButton.insets = new Insets(0, 0, 5, 5);
 		gbc_createButton.gridx = 3;
-		gbc_createButton.gridy = 10;
+		gbc_createButton.gridy = 11;
 		add(createButton, gbc_createButton);
+		notePane.setForeground(Color.WHITE);
+		setBottoniRadio(new ButtonGroup());
+		isArticoloRadioButton.setSelected(true);
+		bottoniRadio.add(isDataSetRadioButton);
+		bottoniRadio.add(isRisorsaRadioButton);
+		bottoniRadio.add(isLibroRadioButton);
+		bottoniRadio.add(isArticoloRadioButton);
+		doiField.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+		            e.consume();  // if it's not a number, ignore the event
+		        }
+		     }});
 	}
-
+	private void setDescriptionPane(JTextPane jTextPane) {
+		this.descriptionPane = jTextPane;
+	}
+	public DatePicker getDatePicker() {
+		return datePicker;
+	}
+	public void setDatePicker(DatePicker datePicker) {
+		this.datePicker = datePicker;
+	}
+	public JTextPane getNotePane() {
+		return notePane;
+	}
+	public void setNotePane(JTextPane notePane) {
+		this.notePane = notePane;
+	}
+	public JButton getCreateButton() {
+		return createButton;
+	}
+	public void setCreateButton(JButton createButton) {
+		this.createButton = createButton;
+	}
+	public boolean isInputValid()
+	{
+		if(datePicker.getDate().isAfter(LocalDate.now())||nameField.getText().isBlank()||(isDigitalCheckBox.isSelected()&&linkField.getText().isBlank())||categorieList.isSelectionEmpty())
+			return false;
+		return true;
+	}
+	public String getSelectedButton()
+	{
+		for (Enumeration<AbstractButton> buttons = bottoniRadio.getElements(); buttons.hasMoreElements();)
+		{
+			AbstractButton button = buttons.nextElement();
+			if (button.isSelected())
+			{
+				return button.getText();
+			}
+		}
+		return null;
+	}
+	public ArrayList<Integer> getSelectedUsers()
+	{
+		int[] selectedIx = autoriList.getSelectedIndices();
+		for(int i=0;i<selectedIx.length;i++)
+		{
+			selectedIx[i]++;
+		}
+		List<Integer> tempList = Arrays.stream(selectedIx).boxed().toList();
+		ArrayList<Integer> userList = new ArrayList<Integer>(tempList);
+		return userList;
+	}
+	public ArrayList<Integer> getSelectedCategories()
+	{
+		int[] selectedIx = categorieList.getSelectedIndices();
+		for(int i=0;i<selectedIx.length;i++)
+		{
+			selectedIx[i]++;
+		}
+	    List<Integer> tempList = Arrays.stream(selectedIx).boxed().toList();
+	    ArrayList<Integer> catList = new ArrayList<Integer>(tempList);
+	    return catList;
+	}
+	public ArrayList<Integer> getSelectedCitazioni()
+	{
+		int[] selectedIx = citazioniList.getSelectedIndices();
+		for(int i=0;i<selectedIx.length;i++)
+		{
+			selectedIx[i]++;
+		}
+	    List<Integer> tempList = Arrays.stream(selectedIx).boxed().toList();
+	    ArrayList<Integer> citList = new ArrayList<Integer>(tempList);
+	    return citList;
+	}
+	public JList<String> getCitazioniList() {
+		return citazioniList;
+	}
+	public void setCitazioniList(JList<String> citazioniList) {
+		this.citazioniList = citazioniList;
+	}
 }
