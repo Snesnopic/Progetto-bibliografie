@@ -61,7 +61,7 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "Error: "+e.getMessage());
 		}
 	}
-	public void createUser(int user_ID, String nome, String cognome)
+	public void creaUtente(int user_ID, String nome, String cognome)
 	{
 		try
 		{
@@ -72,6 +72,66 @@ public class Controller {
 			backToLogin();
 		}
 		catch(SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+		}
+	}
+	public String RetrieveCodiciSottocategorie(String nomeCat)
+	{	
+		ResultSet rs;
+		try
+		{
+			rs = dbc.executeQuery("SELECT sub_cat("+RetrieveCodiceCategoria(nomeCat)+")");
+			rs.next();
+			return rs.getString(1);
+		} 
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+			return null;
+		}
+	}
+	public int RetrieveCodiceCategoria(String nomeCat) throws SQLException
+	{	
+		ResultSet rs;
+		rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '"+nomeCat+"'");
+		rs.next();
+		return rs.getInt(1);
+	}
+	public int retrieveCodiceUtente(String nome,String cognome) throws SQLException
+	{
+		ResultSet rs;
+		rs = dbc.executeQuery("SELECT id_utente FROM utente WHERE nome_utente = '"+nome+"' AND cognome_utente = '"+cognome+"'");
+		rs.next();
+		return rs.getInt(1);
+	}
+	public void creaRiferimento(String nomeRif,Date data,String tipo,String URL,Integer DOI,boolean dig,String descr_rif,String descr_aut,ArrayList<Integer> autori,ArrayList<Integer> categorie,ArrayList<Integer> citazioni)
+	{
+		try
+		{
+			ResultSet rs = dbc.executeQuery("SELECT MAX(Id_riferimento) FROM riferimenti_biblio");
+			rs.next();
+			int id_Rif = rs.getInt(1)+1;
+			if(!autori.contains(retrieveID()))
+				autori.add(0, retrieveID());
+			Riferimento r = new Riferimento(id_Rif,nomeRif,data, tipo, URL,DOI, (Boolean)dig,descr_rif, descr_aut);
+			RiferimentoDAO rDAO = new RiferimentoDAO();
+			rDAO.insert(r);
+			for(int i=0;i<autori.size();i++)
+			{
+				dbc.execute("INSERT INTO autore_riferimento VALUES ("+autori.get(i)+",null,"+id_Rif+")");
+			}
+			for(int i=0;i<categorie.size();i++)
+			{
+				dbc.execute("INSERT INTO associativa_riferimenti_categoria VALUES ("+id_Rif+","+categorie.get(i)+")");
+			}
+			for(int i=0;i<citazioni.size();i++)
+			{
+				dbc.execute("INSERT INTO associazione_riferimenti VALUES("+id_Rif+","+citazioni.get(i)+")");
+			}
+			JOptionPane.showMessageDialog(null, "Riferimento creato!");
+		}
+		catch (SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 		}
@@ -126,7 +186,6 @@ public class Controller {
 	{
 		return loginUser.getUser_ID();
 	}
-
 	public List<Riferimento> retrieveRiferimenti(int ID)
 	{
 		try 
@@ -168,7 +227,6 @@ public class Controller {
 		}
 		return r;
 	}
-
 	public List<Riferimento> retrieveCitazioni(Riferimento r)
 	{
 		try 
@@ -182,30 +240,6 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 			return null;
 		}
-	}
-	public String RetrieveCodiciSottocategorie(String nomeCat)
-	{	
-		ResultSet rs;
-		try
-		{
-			rs = dbc.executeQuery("SELECT sub_cat("+RetrieveCodiceCategoria(nomeCat)+")");
-			rs.next();
-			return rs.getString(1);
-		} 
-		catch (SQLException e)
-		{
-			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
-			return null;
-		}
-	}
-	public int RetrieveCodiceCategoria(String nomeCat) throws SQLException
-	{	
-		ResultSet rs;
-		rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '"+nomeCat+"'");
-		rs.next();
-		return rs.getInt(1);
-
-
 	}
 	public Object[][] RicercaToObjectMatrix(String testo, String categoria, boolean[] tipi,String filtro)
 	{
@@ -299,6 +333,25 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 		}
 	}
+	public String[] getCitazioni()
+	{
+		try
+		{
+			ArrayList<String> arrCitazioni = new ArrayList<>();
+			ResultSet rs = dbc.executeQuery("SELECT * FROM riferimenti_biblio ORDER BY id_riferimento ASC");
+			while(rs.next())
+			{
+				arrCitazioni.add(rs.getString("titolo_riferimento"));
+			}
+			String[] array = arrCitazioni.toArray(new String[arrCitazioni.size()]);
+			return array;
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+			return null;
+		}
+	}
 	public String[] getRiferimenti()
 	{
 		try
@@ -325,7 +378,7 @@ public class Controller {
 		{
 			ArrayList<String> arrUtenti = new ArrayList<>();
 
-			ResultSet rs = dbc.executeQuery("SELECT * FROM utente");
+			ResultSet rs = dbc.executeQuery("SELECT * FROM utente ORDER BY id_utente ASC");
 			while(rs.next())
 			{
 				arrUtenti.add(rs.getString("nome_utente")+" "+rs.getString("cognome_utente"));
@@ -346,7 +399,7 @@ public class Controller {
 			ArrayList<String> arrCategorie = new ArrayList<>();
 			if(b)
 				arrCategorie.add("Qualsiasi");
-			ResultSet rs = dbc.executeQuery("SELECT descr_categoria FROM categoria");
+			ResultSet rs = dbc.executeQuery("SELECT descr_categoria FROM categoria ORDER BY id_categoria ASC");
 			while(rs.next())
 			{
 				arrCategorie.add(rs.getString(1));
