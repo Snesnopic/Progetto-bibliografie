@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -93,7 +95,7 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-
+		
 		JLabel IDLabel = new JLabel("ID Utente");
 		IDLabel.setBackground(new Color(255, 255, 255));
 		IDLabel.setForeground(new Color(255, 255, 255));
@@ -136,6 +138,13 @@ public class LoginFrame extends JFrame {
 
 		IDField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		IDField.setToolTipText("Username");
+		IDField.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+		            e.consume();  // if it's not a number, ignore the event
+		        }
+		     }});
 		GridBagConstraints gbc_IDField = new GridBagConstraints();
 		gbc_IDField.gridwidth = 2;
 		gbc_IDField.fill = GridBagConstraints.BOTH;
