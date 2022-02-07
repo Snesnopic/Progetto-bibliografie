@@ -3,15 +3,16 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.JOptionPane;
-
 import datalpkg.Categoria;
 import datalpkg.Riferimento;
 import datalpkg.Utente;
 import guipkg.LoginFrame;
 import guipkg.MainFrame;
+import guipkg.RegisterFrame;
 
 public class Controller {
 	UtenteDAO uDAO;
@@ -21,6 +22,7 @@ public class Controller {
 	DBConnection dbc;
 	LoginFrame lf;
 	MainFrame mf;
+	RegisterFrame rf;
 	public static void main(String[] args)
 	{
 		try 
@@ -36,6 +38,43 @@ public class Controller {
 	{
 		lf = new LoginFrame(this);
 		lf.setVisible(true);
+	}
+	public void backToLogin()
+	{
+		rf.setVisible(false);
+		lf.setVisible(true);
+	}
+	public void register()
+	{
+		try
+		{
+			dbc = DBConnection.getInstance();
+			dbc.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici","postgres","admin");
+			ResultSet rs = dbc.executeQuery("SELECT MAX(id_utente) FROM utente");
+			rs.next();
+			rf = new RegisterFrame(this,rs.getInt(1)+1);
+			lf.setVisible(false);
+			rf.setVisible(true);
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error: "+e.getMessage());
+		}
+	}
+	public void createUser(int user_ID, String nome, String cognome)
+	{
+		try
+		{
+			Utente u = new Utente(nome,cognome,user_ID,new Date(),null);
+			UtenteDAO uDAO = new UtenteDAO();
+			uDAO.insert(u);
+			JOptionPane.showMessageDialog(null,"Utente creato!");
+			backToLogin();
+		}
+		catch(SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+		}
 	}
 	public boolean login(String user_ID) throws IOException
 	{

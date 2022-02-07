@@ -26,7 +26,7 @@ public class LoginFrame extends JFrame {
 
 	public LoginFrame(Controller c) throws IOException
 	{
-        setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
+		setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
 		this.setC(c);
 		setBackground(Color.WHITE);
 		setTitle("Login");
@@ -37,15 +37,16 @@ public class LoginFrame extends JFrame {
 		loginWindow.setBackground(new Color(23, 33, 43));
 		setContentPane(loginWindow);
 		GridBagLayout gbl_loginWindow = new GridBagLayout();
-		gbl_loginWindow.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_loginWindow.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gbl_loginWindow.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_loginWindow.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_loginWindow.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_loginWindow.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		loginWindow.setLayout(gbl_loginWindow);
 		JLabel uninaLogoLabel = new JLabel("");
 		uninaLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		uninaLogoLabel.setIcon(new StretchIcon(getClass().getClassLoader().getResource("unina_logo.png")));
 		GridBagConstraints gbc_uninaLogoLabel = new GridBagConstraints();
+		gbc_uninaLogoLabel.gridwidth = 2;
 		gbc_uninaLogoLabel.fill = GridBagConstraints.BOTH;
 		gbc_uninaLogoLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_uninaLogoLabel.gridx = 1;
@@ -58,13 +59,14 @@ public class LoginFrame extends JFrame {
 		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 41));
 		GridBagConstraints gbc_loginLabel = new GridBagConstraints();
+		gbc_loginLabel.gridwidth = 2;
 		gbc_loginLabel.anchor = GridBagConstraints.NORTH;
 		gbc_loginLabel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_loginLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_loginLabel.gridx = 1;
 		gbc_loginLabel.gridy = 1;
 		loginWindow.add(loginLabel, gbc_loginLabel);		
-		JButton loginButton = new JButton("OK");
+		JButton loginButton = new JButton("Effettua l'accesso");
 		loginButton.setForeground(new Color(255, 255, 255));
 		loginButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		this.getRootPane().setDefaultButton(loginButton);
@@ -97,14 +99,37 @@ public class LoginFrame extends JFrame {
 		IDLabel.setForeground(new Color(255, 255, 255));
 		IDLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
 		GridBagConstraints gbc_IDLabel = new GridBagConstraints();
-		gbc_IDLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_IDLabel.anchor = GridBagConstraints.NORTH;
+		gbc_IDLabel.fill = GridBagConstraints.BOTH;
 		gbc_IDLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_IDLabel.gridx = 1;
 		gbc_IDLabel.gridy = 2;
 		loginWindow.add(IDLabel, gbc_IDLabel);
 
+		JButton registerButton = new JButton("<HTML><U>Registrati</U></HTML>");
+		registerButton.setBorder(null);
+		registerButton.setMargin(new Insets(2, 14, 2, 0));
+		registerButton.setInheritsPopupMenu(true);
+		registerButton.setContentAreaFilled(false);
+		registerButton.setBorderPainted(false);
+		registerButton.setForeground(Color.WHITE);
+		registerButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
+		GridBagConstraints gbc_registerButton = new GridBagConstraints();
+		gbc_registerButton.fill = GridBagConstraints.VERTICAL;
+		gbc_registerButton.anchor = GridBagConstraints.EAST;
+		gbc_registerButton.insets = new Insets(0, 0, 5, 5);
+		gbc_registerButton.gridx = 2;
+		gbc_registerButton.gridy = 2;
+		loginWindow.add(registerButton, gbc_registerButton);
+		registerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				c.register();
+			}
+		});
+
 		IDField = new JTextField();
+		IDField.setCaretColor(Color.WHITE);
 		IDField.setForeground(new Color(255, 255, 255));
 		IDField.setHorizontalAlignment(SwingConstants.CENTER);
 		IDField.setBackground(new Color(14, 22, 33));
@@ -112,6 +137,7 @@ public class LoginFrame extends JFrame {
 		IDField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		IDField.setToolTipText("Username");
 		GridBagConstraints gbc_IDField = new GridBagConstraints();
+		gbc_IDField.gridwidth = 2;
 		gbc_IDField.fill = GridBagConstraints.BOTH;
 		gbc_IDField.insets = new Insets(0, 0, 5, 5);
 		gbc_IDField.gridx = 1;
@@ -120,6 +146,7 @@ public class LoginFrame extends JFrame {
 
 		loginButton.setBackground(new Color(14, 22, 33));
 		GridBagConstraints gbc_loginButton = new GridBagConstraints();
+		gbc_loginButton.gridwidth = 2;
 		gbc_loginButton.insets = new Insets(0, 0, 5, 5);
 		gbc_loginButton.fill = GridBagConstraints.BOTH;
 		gbc_loginButton.gridx = 1;
