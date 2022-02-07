@@ -1,7 +1,6 @@
 package guipkg;
 
 import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -9,18 +8,16 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
 import javax.swing.JTextField;
-
 import com.github.lgooddatepicker.components.DatePicker;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
-import javax.swing.AbstractButton;
-import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class CreaRifPanel extends JPanel
 {
@@ -28,6 +25,39 @@ public class CreaRifPanel extends JPanel
 	private JTextField linkField;
 	private JTextField doiField;
 	private JButton backButton;
+	private JList<String> autoriList;
+	private JList<String> categorieList;
+	
+	public JList<String> getCategorieList() {
+		return categorieList;
+	}
+	public void setCategorieList(JList<String> categorieList) {
+		this.categorieList = categorieList;
+	}
+	public JTextField getNameField() {
+		return nameField;
+	}
+	public void setNameField(JTextField nameField) {
+		this.nameField = nameField;
+	}
+	public JTextField getLinkField() {
+		return linkField;
+	}
+	public void setLinkField(JTextField linkField) {
+		this.linkField = linkField;
+	}
+	public JTextField getDoiField() {
+		return doiField;
+	}
+	public void setDoiField(JTextField doiField) {
+		this.doiField = doiField;
+	}
+	public JList<String> getAutoriList() {
+		return autoriList;
+	}
+	public void setAutoriList(JList<String> autoriList) {
+		this.autoriList = autoriList;
+	}
 	public JButton getBackButton() {
 		return backButton;
 	}
@@ -35,7 +65,7 @@ public class CreaRifPanel extends JPanel
 		this.backButton = backButton;
 		backButton.setForeground(Color.WHITE);
 	}
-	public CreaRifPanel()
+	public CreaRifPanel(String[] utenti,String[] categorie)
 	{
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -149,6 +179,16 @@ public class CreaRifPanel extends JPanel
 		linkField.setColumns(10);
 		
 		JCheckBox isDigitalCheckBox = new JCheckBox("Digitale");
+		isDigitalCheckBox.addChangeListener(new ChangeListener()
+		{
+			public void stateChanged(ChangeEvent e)
+			{
+				if(!isDigitalCheckBox.isSelected())
+					linkField.setEnabled(false);
+				else
+					linkField.setEnabled(true);
+			}
+		});
 		isDigitalCheckBox.setForeground(Color.WHITE);
 		isDigitalCheckBox.setBackground(new Color(23,33, 43));
 		isDigitalCheckBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -267,17 +307,9 @@ public class CreaRifPanel extends JPanel
 		gbc_autoriLabel.gridy = 8;
 		add(autoriLabel, gbc_autoriLabel);
 		
-		JList autoriList = new JList();
+		setAutoriList (new JList<String>());
 		autoriList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
-		autoriList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1", "2", "3", "4", "5"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		autoriList.setListData(utenti);
 		GridBagConstraints gbc_autoriList = new GridBagConstraints();
 		gbc_autoriList.gridwidth = 4;
 		gbc_autoriList.insets = new Insets(0, 0, 5, 5);
@@ -296,17 +328,9 @@ public class CreaRifPanel extends JPanel
 		gbc_categorieLabel.gridy = 9;
 		add(categorieLabel, gbc_categorieLabel);
 		
-		JList categorieList = new JList();
+		setCategorieList(new JList<String>());
 		categorieList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
-		categorieList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1", "2", "3", "4", "5", "6", "7"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		categorieList.setListData(categorie);
 		GridBagConstraints gbc_categorieList = new GridBagConstraints();
 		gbc_categorieList.gridwidth = 4;
 		gbc_categorieList.insets = new Insets(0, 0, 5, 5);
@@ -316,7 +340,8 @@ public class CreaRifPanel extends JPanel
 		add(categorieList, gbc_categorieList);
 		
 		JButton createButton = new JButton("Crea");
-		createButton.setBackground(new Color(35, 46, 60));
+		createButton.setForeground(Color.WHITE);
+		createButton.setBackground(new Color(14, 22, 23));
 		createButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 24));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
 		gbc_createButton.anchor = GridBagConstraints.NORTH;
