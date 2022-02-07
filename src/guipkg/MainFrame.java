@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
 		Object[][] dataRif = c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5);
 		WelcomePanel welcomePanel = new WelcomePanel(c.retrieveNome(),c.retrieveCognome(),dataCit,dataRif,c.getCategorie(true));
 		currentPanel = welcomePanel;
-		
+
 		getRootPane().setDefaultButton(welcomePanel.getSearchButton());
 
 		mainPanel.add(currentPanel, BorderLayout.CENTER);
@@ -75,7 +76,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		sidePanel.getCreaCatButton().addActionListener(new ActionListener()
 		{
 			@Override
@@ -107,6 +108,7 @@ public class MainFrame extends JFrame {
 							creaCatPanel.getSuperCatList().clearSelection();
 							JOptionPane.showMessageDialog(null, "Categoria creata!");
 							creaCatPanel.getSuperCatList().setListData(c.getCategorie(false));
+							welcomePanel.getCategoriaComboBox().setModel(new DefaultComboBoxModel<>(c.getCategorie(false)));
 						}
 					}
 				});
@@ -152,7 +154,7 @@ public class MainFrame extends JFrame {
 				});
 			}
 		});
-		
+
 		/*
 		welcomePanel.searchButton.addActionListener(new ActionListener()
 		{
@@ -179,7 +181,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		*/
+		 */
 
 	}
 
