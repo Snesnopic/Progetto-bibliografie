@@ -19,10 +19,13 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import ctrlpkg.Controller;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class LoginFrame extends JFrame {
 	private JPanel loginWindow;
-	private JTextField CFField;
+	private JTextField IDField;
 	private Controller c;
 
 	public LoginFrame(Controller c) throws IOException
@@ -37,101 +40,104 @@ public class LoginFrame extends JFrame {
 		loginWindow = new JPanel();
 		loginWindow.setBackground(new Color(23, 33, 43));
 		setContentPane(loginWindow);
-
-		CFField = new JTextField();
-		CFField.setForeground(new Color(255, 255, 255));
-		CFField.setHorizontalAlignment(SwingConstants.CENTER);
-		CFField.setBackground(new Color(14, 22, 33));
-
-		CFField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
-		CFField.setToolTipText("Username");
-
-
-
-		JLabel loginLabel = new JLabel("Effettua l'accesso");
-		loginLabel.setBackground(new Color(255, 255, 255));
-		loginLabel.setForeground(new Color(255, 255, 255));
-		loginLabel.setVerticalAlignment(SwingConstants.TOP);
-		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		loginLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 41));
-
-		JLabel CFLabel = new JLabel("Codice Fiscale");
-		CFLabel.setBackground(new Color(255, 255, 255));
-		CFLabel.setForeground(new Color(255, 255, 255));
-		CFLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
-
-		JButton loginButton = new JButton("OK");
-		loginButton.setForeground(new Color(255, 255, 255));
-		loginButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
-		this.getRootPane().setDefaultButton(loginButton);
-		loginButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(CFField.getText().isEmpty())
-					JOptionPane.showMessageDialog(null, "Errore di input");
-				else
-				{
-					CFField.setText(CFField.getText().toUpperCase());
-					try
+		GridBagLayout gbl_loginWindow = new GridBagLayout();
+		gbl_loginWindow.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_loginWindow.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_loginWindow.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_loginWindow.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		loginWindow.setLayout(gbl_loginWindow);
+				
+						JLabel uninaLogoLabel = new JLabel("");
+						uninaLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						uninaLogoLabel.setIcon(new StretchIcon(getClass().getClassLoader().getResource("unina_logo.png")));
+						GridBagConstraints gbc_uninaLogoLabel = new GridBagConstraints();
+						gbc_uninaLogoLabel.fill = GridBagConstraints.BOTH;
+						gbc_uninaLogoLabel.insets = new Insets(0, 0, 5, 5);
+						gbc_uninaLogoLabel.gridx = 1;
+						gbc_uninaLogoLabel.gridy = 0;
+						loginWindow.add(uninaLogoLabel, gbc_uninaLogoLabel);
+		
+		
+		
+				JLabel loginLabel = new JLabel("Effettua l'accesso");
+				loginLabel.setBackground(new Color(255, 255, 255));
+				loginLabel.setForeground(new Color(255, 255, 255));
+				loginLabel.setVerticalAlignment(SwingConstants.TOP);
+				loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				loginLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 41));
+				GridBagConstraints gbc_loginLabel = new GridBagConstraints();
+				gbc_loginLabel.anchor = GridBagConstraints.NORTH;
+				gbc_loginLabel.fill = GridBagConstraints.HORIZONTAL;
+				gbc_loginLabel.insets = new Insets(0, 0, 5, 5);
+				gbc_loginLabel.gridx = 1;
+				gbc_loginLabel.gridy = 1;
+				loginWindow.add(loginLabel, gbc_loginLabel);
+		
+				JButton loginButton = new JButton("OK");
+				loginButton.setForeground(new Color(255, 255, 255));
+				loginButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+				this.getRootPane().setDefaultButton(loginButton);
+				loginButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e)
 					{
-						if(c.login(CFField.getText()))
-							JOptionPane.showMessageDialog(null, "Login riuscito");
+						if(IDField.getText().isEmpty())
+							JOptionPane.showMessageDialog(null, "Errore di input");
 						else
-							JOptionPane.showMessageDialog(null, "Login fallito");
+						{
+							IDField.setText(IDField.getText().toUpperCase());
+							try
+							{
+								if(c.login(IDField.getText()))
+									JOptionPane.showMessageDialog(null, "Login riuscito");
+								else
+									JOptionPane.showMessageDialog(null, "Login fallito");
+							}
+							catch (HeadlessException | IOException e1)
+							{
+								JOptionPane.showMessageDialog(null,"Errore: "+e1.getMessage());
+							}
+						}
 					}
-					catch (HeadlessException | IOException e1)
-					{
-						JOptionPane.showMessageDialog(null,"Errore: "+e1.getMessage());
-					}
-				}
-			}
-		});
-
-		loginButton.setBackground(new Color(14, 22, 33));
-
-		JLabel uninaLogoLabel = new JLabel("");
-		uninaLogoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		GroupLayout gl_loginWindow = new GroupLayout(loginWindow);
-		gl_loginWindow.setHorizontalGroup(
-			gl_loginWindow.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addGap(100)
-					.addGroup(gl_loginWindow.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_loginWindow.createSequentialGroup()
-							.addComponent(CFLabel, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-							.addGap(414))
-						.addGroup(gl_loginWindow.createSequentialGroup()
-							.addGroup(gl_loginWindow.createParallelGroup(Alignment.TRAILING)
-								.addComponent(loginButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-								.addComponent(CFField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
-							.addGap(124))))
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addGroup(gl_loginWindow.createParallelGroup(Alignment.TRAILING)
-						.addComponent(uninaLogoLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
-						.addComponent(loginLabel, GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE))
-					.addGap(0))
-		);
-		gl_loginWindow.setVerticalGroup(
-			gl_loginWindow.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_loginWindow.createSequentialGroup()
-					.addComponent(uninaLogoLabel, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(CFLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(CFField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(123, Short.MAX_VALUE))
-		);
-		loginWindow.setLayout(gl_loginWindow);
-		uninaLogoLabel.setIcon(new StretchIcon(getClass().getClassLoader().getResource("unina_logo.png")));
+				});
+						
+								JLabel IDLabel = new JLabel("ID Utente");
+								IDLabel.setBackground(new Color(255, 255, 255));
+								IDLabel.setForeground(new Color(255, 255, 255));
+								IDLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
+								GridBagConstraints gbc_IDLabel = new GridBagConstraints();
+								gbc_IDLabel.fill = GridBagConstraints.HORIZONTAL;
+								gbc_IDLabel.anchor = GridBagConstraints.NORTH;
+								gbc_IDLabel.insets = new Insets(0, 0, 5, 5);
+								gbc_IDLabel.gridx = 1;
+								gbc_IDLabel.gridy = 2;
+								loginWindow.add(IDLabel, gbc_IDLabel);
+						
+								IDField = new JTextField();
+								IDField.setForeground(new Color(255, 255, 255));
+								IDField.setHorizontalAlignment(SwingConstants.CENTER);
+								IDField.setBackground(new Color(14, 22, 33));
+								
+										IDField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+										IDField.setToolTipText("Username");
+										GridBagConstraints gbc_IDField = new GridBagConstraints();
+										gbc_IDField.fill = GridBagConstraints.BOTH;
+										gbc_IDField.insets = new Insets(0, 0, 5, 5);
+										gbc_IDField.gridx = 1;
+										gbc_IDField.gridy = 3;
+										loginWindow.add(IDField, gbc_IDField);
+				
+						loginButton.setBackground(new Color(14, 22, 33));
+						GridBagConstraints gbc_loginButton = new GridBagConstraints();
+						gbc_loginButton.insets = new Insets(0, 0, 5, 5);
+						gbc_loginButton.fill = GridBagConstraints.BOTH;
+						gbc_loginButton.gridx = 1;
+						gbc_loginButton.gridy = 4;
+						loginWindow.add(loginButton, gbc_loginButton);
 	}
 	public void emptyFields()
 	{
-		CFField.setText("");
+		IDField.setText("");
 	}
 	public Controller getC() {
 		return c;
