@@ -157,7 +157,7 @@ public class RegisterFrame extends JFrame {
 				if(nameTextField.getText().isBlank() || cognomeTextField.getText().isBlank())
 					JOptionPane.showMessageDialog(null, "Errore di input");
 				else
-					c.createUser(ID, nameTextField.getText(), cognomeTextField.getText());
+					c.creaUtente(ID, nameTextField.getText(), cognomeTextField.getText());
 			}
 		});
 		okButton.setBackground(new Color(14, 22, 33));
