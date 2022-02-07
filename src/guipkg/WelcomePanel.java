@@ -4,9 +4,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.util.Enumeration;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -53,7 +51,7 @@ public class WelcomePanel extends JPanel
 		this.searchButton = searchButton;
 	}
 	JComboBox<String> categoriaComboBox;
-	public WelcomePanel(String nome,String cognome,Object[][] dataCit,Object[][] dataRif)
+	public WelcomePanel(String nome,String cognome,Object[][] dataCit,Object[][] dataRif,String[] categorie)
 	{
 		setBackground(new Color(23, 33, 43));
 		StretchIcon searchIcon = new StretchIcon(getClass().getClassLoader().getResource("search_icon.png"));
@@ -159,7 +157,7 @@ public class WelcomePanel extends JPanel
 
 		categoriaComboBox.setForeground(Color.WHITE);
 		categoriaComboBox.setBackground(new Color(14, 22, 33));
-		categoriaComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Qualsiasi"}));
+		categoriaComboBox.setModel(new DefaultComboBoxModel<>(categorie));
 		categoriaComboBox.setMaximumRowCount(100);
 		categoriaComboBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		categoriaComboBox.setToolTipText("Scegli categoria");
@@ -238,11 +236,11 @@ public class WelcomePanel extends JPanel
 		add(riferimentiLabel, gbc_riferimentiLabel);
 		JScrollPane riferimentiTablePanel = new JScrollPane();
 		JTable riferimentiTable = new JTable();
-		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"})
+		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
 		{
 			boolean[] columnEditables = new boolean[]
 			{
-				false, false, false, false, false,false
+				false, false, false, false, false,false,false
 			};
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -277,11 +275,11 @@ public class WelcomePanel extends JPanel
 		add(citazioniLabel, gbc_citazioniLabel);
 		JScrollPane citazioniTablePanel = new JScrollPane();
 		JTable citazioniTable = new JTable();
-		citazioniTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo","Riferimento citato"})
+		citazioniTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo","Riferimento citato"})
 		{
 			boolean[] columnEditables = new boolean[]
 			{
-				false, false, false, false,false, false,false
+				false, false, false, false,false,false, false,false
 			};
 			@Override
 			public boolean isCellEditable(int row, int column)
