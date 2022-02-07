@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import datalpkg.Riferimento;
 
 public class RiferimentoDAO implements DAO<Riferimento> {
@@ -32,29 +34,52 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	}
 
 	@Override
-	public void update(Riferimento obj, String sql) 
+	public void update(Riferimento obj) throws SQLException 
 	{
-		// TODO Auto-generated method stub
-		
+		String sql = "UPDATE riferimenti_biblio SET titolo_riferimento = '"+obj.getTitolo()+"', data_riferimento = '"+obj.getDataCreazione().toString()+"',on_line = '"+obj.getDigitale().toString()+"',tipo = '"+obj.getTipo()
+		+"',url = ";
+		if(Objects.isNull(obj.getURL()))
+			sql = sql.concat("NULL, doi = ");
+		else
+			sql = sql.concat("'"+obj.getURL()+"', doi = ");
+		if(Objects.isNull(obj.getDOI()))
+			sql = sql.concat("NULL,");
+		else
+			sql = sql.concat(""+obj.getDOI()+",");
+		sql = sql.concat("descr_riferimento = '"+obj.getDescrizione()+"',descr_autore = '"+obj.getDescr_autore()+"' ");
+		sql = sql.concat("WHERE id_riferimento = "+obj.getId_Rif());
+		dbc.executeQuery(sql);
 	}
 
 	@Override
-	public void delete(Riferimento obj, String sql) 
+	public void delete(Riferimento obj) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM riferimenti_biblio WHERE id_riferimento = "+obj.getId_Rif();
+		dbc.executeQuery(sql);
 	}
 
 	@Override
-	public void insert(Riferimento obj, String sql) 
+	public void insert(Riferimento obj) throws SQLException 
 	{
-		// TODO Auto-generated method stub
-		
+		String sql = "INSERT INTO riferimenti_biblio VALUES("+obj.getId_Rif()+",'"
+		+obj.getTitolo()+"'','"+obj.getDataCreazione().toString()+"','"+obj.getDigitale().toString()+"','"+obj.getTipo()
+			+"',";
+		if(Objects.isNull(obj.getURL()))
+			sql = sql.concat("NULL,");
+		else
+			sql = sql.concat("'"+obj.getURL()+"',");
+		if(Objects.isNull(obj.getDOI()))
+			sql = sql.concat("NULL,");
+		else
+			sql = sql.concat(""+obj.getDOI()+",");
+		sql = sql.concat("'"+obj.getDescrizione()+"','"+obj.getDescr_autore()+"')");
+		dbc.executeQuery(sql);
 	}
 	
 
 	private Riferimento extract(ResultSet rs) throws SQLException {
-		return new Riferimento(rs.getString("titolo"), rs.getDate("data_creazione"), rs.getString("tipo"), rs.getString("doi_url"), rs.getBoolean("digitale"));
+		return new Riferimento(rs.getString("id_riferimento"),rs.getString("titolo_riferimento"), rs.getDate("data_riferimento"), rs.getString("tipo"), rs.getString("url"),rs.getInt("doi"), rs.getBoolean("on_line"),
+				rs.getString("descr_riferimento"),rs.getString("descr_autore"));
 	}
 	
 
