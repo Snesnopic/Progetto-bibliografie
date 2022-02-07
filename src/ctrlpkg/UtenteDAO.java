@@ -2,6 +2,7 @@ package ctrlpkg;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,11 +52,13 @@ public class UtenteDAO implements DAO<Utente> {
 	@Override
 	public void insert(Utente obj) throws SQLException {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO utente VALUES("+obj.getUser_ID()+",'"+obj.getNome()+"','"+obj.getCognome()+"','"+obj.getInizio().toString()+"',";
+		String sql = "INSERT INTO utente VALUES("+obj.getUser_ID()+",'"+obj.getNome()+"','"+obj.getCognome()+"','"+new SimpleDateFormat("dd/MM/yyyy").format(obj.getInizio())+"',";
 		if(Objects.isNull(obj.getFine()))
 			sql = sql.concat("NULL");
 		else
-			sql = sql.concat("'"+obj.getFine().toString()+"' ");
+			sql = sql.concat("'"+new SimpleDateFormat("dd/MM/yyyy").format(obj.getFine())+"' ");
+		sql = sql.concat(")");
+		System.out.println(sql);
 		dbc.execute(sql);
 	}
 
