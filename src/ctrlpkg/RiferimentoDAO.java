@@ -62,7 +62,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	public void insert(Riferimento obj) throws SQLException 
 	{
 		String sql = "INSERT INTO riferimenti_biblio VALUES("+obj.getId_Rif()+",'"
-				+obj.getTitolo()+"'','"+obj.getDataCreazione().toString()+"','"+obj.getDigitale().toString()+"','"+obj.getTipo()
+				+obj.getTitolo()+"','"+obj.getDataCreazione().toString()+"','"+obj.getDigitale().toString()+"','"+obj.getTipo()
 				+"',";
 		if(Objects.isNull(obj.getURL()))
 			sql = sql.concat("NULL,");
@@ -78,7 +78,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 
 
 	private Riferimento extract(ResultSet rs) throws SQLException {
-		return new Riferimento(rs.getString("id_riferimento"),rs.getString("titolo_riferimento"), rs.getDate("data_riferimento"), rs.getString("tipo"), rs.getString("url"),rs.getInt("doi"), rs.getBoolean("on_line"),
+		return new Riferimento(rs.getInt("id_riferimento"),rs.getString("titolo_riferimento"), rs.getDate("data_riferimento"), rs.getString("tipo"), rs.getString("url"),rs.getInt("doi"), rs.getBoolean("on_line"),
 				rs.getString("descr_riferimento"),rs.getString("descr_autore"));
 	}
 
