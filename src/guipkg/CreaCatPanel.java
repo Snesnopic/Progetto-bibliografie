@@ -9,7 +9,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -17,12 +16,15 @@ public class CreaCatPanel extends JPanel
 {
 	private JTextField textField;
 	private JButton backButton;
-	public CreaCatPanel() {
+	private JButton createButton;
+	private JList<String> superCatList;
+	
+	public CreaCatPanel(String[] categorie) {
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{100, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -74,17 +76,9 @@ public class CreaCatPanel extends JPanel
 		gbc_superCatLabel.gridy = 2;
 		add(superCatLabel, gbc_superCatLabel);
 		
-		JList superCatList = new JList();
+		setSuperCatList(new JList<String>());
 		superCatList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		superCatList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1", "2", "3", "4", "5"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		superCatList.setListData(categorie);
 		superCatList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_superCatList = new GridBagConstraints();
 		gbc_superCatList.insets = new Insets(0, 0, 5, 5);
@@ -93,8 +87,10 @@ public class CreaCatPanel extends JPanel
 		gbc_superCatList.gridy = 2;
 		add(superCatList, gbc_superCatList);
 		
-		JButton createButton = new JButton("Crea");
+		setCreateButton(new JButton("Crea"));
 		createButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
+		createButton.setForeground(new Color(255, 255, 255));
+		createButton.setBackground(new Color(14,22,23));
 		GridBagConstraints gbc_createButton = new GridBagConstraints();
 		gbc_createButton.anchor = GridBagConstraints.NORTH;
 		gbc_createButton.fill = GridBagConstraints.HORIZONTAL;
@@ -104,12 +100,31 @@ public class CreaCatPanel extends JPanel
 		add(createButton, gbc_createButton);
 
 	}
+	public JTextField getTextField() {
+		return textField;
+	}
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+	public JList<String> getSuperCatList() {
+		return superCatList;
+	}
+	private void setSuperCatList(JList<String> jList) {
+		this.superCatList = jList;
+		
+	}
 	public JButton getBackButton() {
 		return backButton;
 	}
 	public void setBackButton(JButton backButton) {
 		this.backButton = backButton;
 		backButton.setForeground(Color.WHITE);
+	}
+	public JButton getCreateButton() {
+		return createButton;
+	}
+	public void setCreateButton(JButton createButton) {
+		this.createButton = createButton;
 	}
 
 }
