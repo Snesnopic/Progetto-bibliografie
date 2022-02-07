@@ -37,9 +37,9 @@ public class MainFrame extends JFrame {
 				c.logout();
 			}
 		});
-		Object[][] dataCit = c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
-		Object[][] dataRif = c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveCF()), 5);
-		WelcomePanel welcomePanel = new WelcomePanel(c.retrieveNome(),c.retrieveCognome(),dataCit,dataRif);
+		Object[][] dataCit = c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5);
+		Object[][] dataRif = c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5);
+		WelcomePanel welcomePanel = new WelcomePanel(c.retrieveNome(),c.retrieveCognome(),dataCit,dataRif,c.getCategorie(true));
 		currentPanel = welcomePanel;
 		
 		getRootPane().setDefaultButton(welcomePanel.getSearchButton());
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				CreaCatPanel creaCatPanel = new CreaCatPanel();
+				CreaCatPanel creaCatPanel = new CreaCatPanel(c.getCategorie(false));
 				currentPanel.setVisible(false);
 				currentPanel = creaCatPanel;
 				mainPanel.add(currentPanel);
@@ -94,6 +94,22 @@ public class MainFrame extends JFrame {
 						currentPanel.setVisible(true);
 					}
 				});
+				creaCatPanel.getCreateButton().addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if(creaCatPanel.getTextField().getText().isBlank())
+							JOptionPane.showMessageDialog(null, "Errore di input");
+						else
+						{
+							c.creaCategoria(creaCatPanel.getTextField().getText(), creaCatPanel.getSuperCatList().getSelectedValue(), c.retrieveID());
+							creaCatPanel.getTextField().setText("");
+							creaCatPanel.getSuperCatList().clearSelection();
+							JOptionPane.showMessageDialog(null, "Categoria creata!");
+							creaCatPanel.getSuperCatList().setListData(c.getCategorie(false));
+						}
+					}
+				});
 			}
 		});
 		sidePanel.getCreaRifButton().addActionListener(new ActionListener()
@@ -101,7 +117,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				CreaRifPanel creaRifPanel = new CreaRifPanel();
+				CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false));
 				currentPanel.setVisible(false);
 				currentPanel = creaRifPanel;
 				mainPanel.add(currentPanel);
@@ -121,7 +137,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				ViewRifPanel viewRifPanel = new ViewRifPanel();
+				ViewRifPanel viewRifPanel = new ViewRifPanel(c.getRiferimenti());
 				currentPanel.setVisible(false);
 				currentPanel = viewRifPanel;
 				mainPanel.add(currentPanel);
