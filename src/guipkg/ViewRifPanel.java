@@ -83,13 +83,6 @@ public class ViewRifPanel extends JPanel
 		gbc_editButton.gridx = 4;
 		gbc_editButton.gridy = 2;
 		add(editButton, gbc_editButton);
-
-		JLabel lblNewLabel = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 3;
-		gbc_lblNewLabel.gridy = 3;
-		add(lblNewLabel, gbc_lblNewLabel);
 	}
 	public JButton getBackButton() {
 		return backButton;
