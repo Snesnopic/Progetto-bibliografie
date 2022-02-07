@@ -23,6 +23,13 @@ import javax.swing.table.DefaultTableModel;
 public class WelcomePanel extends JPanel
 {
 	private JTextField searchField;
+	private JTable riferimentiTable;
+	public JTable getRiferimentiTable() {
+		return riferimentiTable;
+	}
+	public void setRiferimentiTable(JTable riferimentiTable) {
+		this.riferimentiTable = riferimentiTable;
+	}
 	private JCheckBox isRisorsaCheckBox;
 	public void setIsRisorsaCheckBox(JCheckBox isRisorsaCheckBox) {
 		this.isRisorsaCheckBox = isRisorsaCheckBox;
@@ -235,7 +242,8 @@ public class WelcomePanel extends JPanel
 		gbc_riferimentiLabel.gridy = 6;
 		add(riferimentiLabel, gbc_riferimentiLabel);
 		JScrollPane riferimentiTablePanel = new JScrollPane();
-		JTable riferimentiTable = new JTable();
+		riferimentiTablePanel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
+		setRiferimentiTable(new JTable());
 		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
 		{
 			boolean[] columnEditables = new boolean[]
@@ -252,7 +260,7 @@ public class WelcomePanel extends JPanel
 		riferimentiTable.setFillsViewportHeight(true);
 		riferimentiTable.setBackground(new Color(14, 22, 33));
 		riferimentiTable.setForeground(new Color(255, 255, 255));
-		riferimentiTable.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		riferimentiTable.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		riferimentiTablePanel.setViewportView(riferimentiTable);
 		GridBagConstraints gbc_riferimentiTablePanel = new GridBagConstraints();
 		gbc_riferimentiTablePanel.gridwidth = 7;
@@ -274,6 +282,7 @@ public class WelcomePanel extends JPanel
 		gbc_citazioniLabel.gridy = 8;
 		add(citazioniLabel, gbc_citazioniLabel);
 		JScrollPane citazioniTablePanel = new JScrollPane();
+		citazioniTablePanel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		JTable citazioniTable = new JTable();
 		citazioniTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo","Riferimento citato"})
 		{
@@ -292,7 +301,7 @@ public class WelcomePanel extends JPanel
 		citazioniTable.setBackground(new Color(14, 22, 33));
 		citazioniTable.setForeground(Color.WHITE);
 		citazioniTablePanel.setViewportView(citazioniTable);
-		citazioniTable.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		citazioniTable.setFont(new Font("Yu Gothic UI", Font.PLAIN, 12));
 		GridBagConstraints gbc_citazioniTablePanel = new GridBagConstraints();
 		gbc_citazioniTablePanel.gridwidth = 7;
 		gbc_citazioniTablePanel.fill = GridBagConstraints.BOTH;
@@ -306,6 +315,7 @@ public class WelcomePanel extends JPanel
 	}
 	public void setSearchField(JTextField searchField) {
 		this.searchField = searchField;
+		searchField.setCaretColor(Color.WHITE);
 	}
 	public JButton getSearchButton() {
 		return searchButton;
@@ -337,5 +347,35 @@ public class WelcomePanel extends JPanel
 	public JComboBox<String> getCategoriaComboBox()
 	{
 		return categoriaComboBox;
+	}
+	public void refreshRifTable(Object[][] dataRif)
+	{
+		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
+		{
+			boolean[] columnEditables = new boolean[]
+					{
+							false, false, false, false, false,false,false
+					};
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return columnEditables[column];
+			}
+		});
+	}
+	public void refreshCitTable(Object[][] dataCit)
+	{
+		riferimentiTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
+		{
+			boolean[] columnEditables = new boolean[]
+					{
+							false, false, false, false, false,false,false
+					};
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return columnEditables[column];
+			}
+		});
 	}
 }
