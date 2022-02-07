@@ -5,15 +5,20 @@ import java.util.Date;
 import java.util.List;
 
 public class Riferimento {
+	private String id_Rif;
 	private String titolo;
 	private Date dataCreazione;
 	private String tipo;
-	private String DOI_URL;
+	private String URL;
+	private int DOI;
 	private Boolean digitale;
+	private String descrizione;
+	private String descr_autore;
 	private List<Categoria> categorie;
 	private List<Utente> autori;
 	private List<Riferimento> cited;
 	private List<Riferimento> citedIn;
+	
 	
 	public String getTitolo() {
 		return titolo;
@@ -33,11 +38,11 @@ public class Riferimento {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getDOI_URL() {
-		return DOI_URL;
+	public String getURL() {
+		return URL;
 	}
-	public void setDOI_URL(String dOI_URL) {
-		DOI_URL = dOI_URL;
+	public void setURL(String URL) {
+		this.URL = URL;
 	}
 	public Boolean getDigitale() {
 		return digitale;
@@ -73,7 +78,7 @@ public class Riferimento {
 		}
 		return a;
 	}
-	public String citazioniToString(String CF)
+	public String citazioniToString(int ID)
 	{
 		String a = "";
 		for(int i=0;i<cited.size();i++)
@@ -83,7 +88,7 @@ public class Riferimento {
 			{
 				for(int j=0;j<tempList.size();j++)
 				{
-					if(CF.equals(tempList.get(i).getCf()))
+					if(ID == tempList.get(i).getUser_ID())
 					{
 						a = a.concat(cited.get(i).getTitolo());
 						if(i!=cited.size()-1)
@@ -98,26 +103,32 @@ public class Riferimento {
 	public void setCitazioni(List<Riferimento> citazioni) {
 		this.cited = citazioni;
 	}
-	public Riferimento(String titolo, Date dataCreazione, String tipo, String dOI_URL, Boolean digitale,
+	public Riferimento(String id_Rif,String titolo, Date dataCreazione, String tipo, String URL,int DOI, Boolean digitale,
 			List<Categoria> categorie, List<Utente> autori, List<Riferimento> citazioni) {
 		super();
+		this.id_Rif = id_Rif;
 		this.titolo = titolo;
 		this.dataCreazione = dataCreazione;
 		this.tipo = tipo;
-		DOI_URL = dOI_URL;
+		this.URL = URL;
+		this.DOI = DOI;
 		this.digitale = digitale;
 		this.categorie = categorie;
 		this.autori = autori;
 		this.cited = citazioni;
 	}
-	public Riferimento(String titolo, Date dataCreazione, String tipo, String dOI_URL, Boolean digitale) {
+	public Riferimento(String id_Rif,String titolo, Date dataCreazione, String tipo, String URL,int DOI, Boolean digitale,String descrizione, String descr_autore) {
 		super();
+		this.id_Rif = id_Rif;
 		categorie = new ArrayList<>();
 		this.titolo = titolo;
 		this.dataCreazione = dataCreazione;
+		this.DOI = DOI;
 		this.tipo = tipo;
-		DOI_URL = dOI_URL;
+		this.URL = URL;
 		this.digitale = digitale;
+		this.descrizione = descrizione;
+		this.descr_autore = descr_autore;
 	}
 	public String autoriToString()
 	{
@@ -146,5 +157,29 @@ public class Riferimento {
 	}
 	public void setCitedIn(List<Riferimento> citedIn) {
 		this.citedIn = citedIn;
+	}
+	public String getId_Rif() {
+		return id_Rif;
+	}
+	public void setId_Rif(String id_Rif) {
+		this.id_Rif = id_Rif;
+	}
+	public int getDOI() {
+		return DOI;
+	}
+	public void setDOI(int dOI) {
+		DOI = dOI;
+	}
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	public String getDescr_autore() {
+		return descr_autore;
+	}
+	public void setDescr_autore(String descr_autore) {
+		this.descr_autore = descr_autore;
 	}
 }
