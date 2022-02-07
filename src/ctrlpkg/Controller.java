@@ -253,6 +253,7 @@ public class Controller {
 
 			CategoriaDAO cDAO = new CategoriaDAO();
 			cDAO.insert(c);
+			JOptionPane.showMessageDialog(null, "Categoria creata!");
 		}
 		catch (SQLException e)
 		{

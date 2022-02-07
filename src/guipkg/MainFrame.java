@@ -106,7 +106,6 @@ public class MainFrame extends JFrame {
 							c.creaCategoria(creaCatPanel.getTextField().getText(), creaCatPanel.getSuperCatList().getSelectedValue(), c.retrieveID());
 							creaCatPanel.getTextField().setText("");
 							creaCatPanel.getSuperCatList().clearSelection();
-							JOptionPane.showMessageDialog(null, "Categoria creata!");
 							creaCatPanel.getSuperCatList().setListData(c.getCategorie(false));
 							welcomePanel.getCategoriaComboBox().setModel(new DefaultComboBoxModel<>(c.getCategorie(false)));
 						}
