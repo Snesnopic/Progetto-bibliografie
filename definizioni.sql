@@ -28,6 +28,7 @@ CREATE TABLE Riferimenti_Biblio (
     Titolo_Riferimento character varying(200) NOT NULL,
     Data_Riferimento date,
     On_line boolean NOT NULL,
+	Tipo tipo_enum NOT NULL,
     URL character varying(500) UNIQUE,
     DOI integer UNIQUE,
     Descr_Riferimento character varying(1000),
@@ -74,11 +75,11 @@ INSERT INTO Utente VALUES (4, 'Sara','Benerecetti', '2022-01-26', NULL);
 INSERT INTO Utente VALUES (5, 'Manuel','Bavaro', '2022-02-23',NULL);
 
 --INSERT riferiti ai riferimenti biblio
-INSERT INTO Riferimenti_Biblio VALUES (1,'Test 01', CURRENT_DATE ,'true','www.google.com',1234,'Testi 01', 'Autore 01');
-INSERT INTO Riferimenti_Biblio VALUES (2,'Test 02', CURRENT_DATE ,'false',NULL,7894,'Testi 02', 'Autore 02');
-INSERT INTO Riferimenti_Biblio VALUES (3,'Test 03', CURRENT_DATE ,'true','www.google03.com',9632,'Testi 03', 'Autore 03');
-INSERT INTO Riferimenti_Biblio VALUES (4,'Test 04', CURRENT_DATE ,'false',NULL,4561,'Testi 04', 'Autore 04');
-INSERT INTO Riferimenti_Biblio VALUES (5,'Test 05', CURRENT_DATE ,'true','www.google05.com',5289,'Testi 05', 'Autore 05');
+INSERT INTO Riferimenti_Biblio VALUES (1,'Test 01', CURRENT_DATE ,'true','Articolo','www.google.com',1234,'Testi 01', 'Autore 01');
+INSERT INTO Riferimenti_Biblio VALUES (2,'Test 02', CURRENT_DATE ,'false','Risorsa on-line',NULL,7894,'Testi 02', 'Autore 02');
+INSERT INTO Riferimenti_Biblio VALUES (3,'Test 03', CURRENT_DATE ,'true','Libro','www.google03.com',9632,'Testi 03', 'Autore 03');
+INSERT INTO Riferimenti_Biblio VALUES (4,'Test 04', CURRENT_DATE ,'false','Articolo',NULL,4561,'Testi 04', 'Autore 04');
+INSERT INTO Riferimenti_Biblio VALUES (5,'Test 05', CURRENT_DATE ,'true','Dataset','www.google05.com',5289,'Testi 05', 'Autore 05');
 
 --INSERT riferiti agli autori riferimento
 INSERT INTO Autore_Riferimento VALUES (1,'Descr Utente1',3);
@@ -102,7 +103,9 @@ INSERT INTO Associazione_Riferimenti VALUES (3,5);
 
 --INSERT riferiti alle associativa_riferimenti_categoria
 INSERT INTO Associativa_Riferimenti_Categoria VALUES (1,1);
-INSERT INTO Associativa_Riferimenti_Categoria VALUES (1,1);
+INSERT INTO Associativa_Riferimenti_Categoria VALUES (2,3);
+INSERT INTO Associativa_Riferimenti_Categoria VALUES (3,4);
+INSERT INTO Associativa_Riferimenti_Categoria VALUES (5,5);
 INSERT INTO Associativa_Riferimenti_Categoria VALUES (4,2);
 
 --vincoli 
