@@ -69,9 +69,9 @@ public class SearchResultPanel extends JPanel
 		ricercaTable.setBackground(new Color(14, 22, 23));
 		ricercaTable.setFillsViewportHeight(true);
 		ricercaTablePanel.setViewportView(ricercaTable);
-		ricercaTable.setModel(new DefaultTableModel(dataRicerca,new String[] {"Titolo", "Autori", "Data", "DOI/URL", "Categorie","Tipo"})
+		ricercaTable.setModel(new DefaultTableModel(dataRicerca,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
 		{
-			boolean[] columnEditables = new boolean[] {false, false, false, false, false,false};
+			boolean[] columnEditables = new boolean[] {false, false, false, false,false, false,false};
 				@Override
 			public boolean isCellEditable(int row, int column)
 			{
