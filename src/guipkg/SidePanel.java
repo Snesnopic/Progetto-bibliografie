@@ -32,13 +32,15 @@ public class SidePanel extends JPanel
 	}
 	public void setCreaRifButton(JButton creaRifButton) {
 		this.creaRifButton = creaRifButton;
+		
 	}
 	public void setCreaCatButton(JButton creaCatButton) {
 		this.creaCatButton = creaCatButton;
-		creaCatButton.setContentAreaFilled(false);
+		
 	}
 	public void setViewRifButton(JButton viewRifButton) {
 		this.viewRifButton = viewRifButton;
+		
 	}
 	public SidePanel(String nome,String cognome)
 	{
@@ -70,7 +72,7 @@ public class SidePanel extends JPanel
 		gbc_userLabel.gridy = 1;
 		add(userLabel, gbc_userLabel);
 
-		setCreaRifButton(new JButton("Crea riferimento"));
+		setCreaRifButton(new JButton("<HTML><U>Crea riferimento</U></HTML>"));
 		creaRifButton.setForeground(Color.WHITE);
 		creaRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_creaRifButton = new GridBagConstraints();
@@ -80,7 +82,7 @@ public class SidePanel extends JPanel
 		gbc_creaRifButton.gridy = 2;
 		add(creaRifButton, gbc_creaRifButton);
 
-		setCreaCatButton(new JButton("Crea categoria"));
+		setCreaCatButton(new JButton("<HTML><U>Crea categoria</U></HTML>"));
 		creaCatButton.setForeground(Color.WHITE);
 		creaCatButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_creaCatButton = new GridBagConstraints();
@@ -89,8 +91,9 @@ public class SidePanel extends JPanel
 		gbc_creaCatButton.gridx = 0;
 		gbc_creaCatButton.gridy = 3;
 		add(creaCatButton, gbc_creaCatButton);
-
-		setViewRifButton(new JButton("Visualizza riferimenti"));
+		creaCatButton.setBorderPainted(false);
+		creaCatButton.setContentAreaFilled(false);
+		setViewRifButton(new JButton("<HTML><U>Visualizza riferimenti</U></HTML>"));
 		viewRifButton.setForeground(Color.WHITE);
 		viewRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
 		GridBagConstraints gbc_viewRifButton = new GridBagConstraints();
@@ -100,10 +103,10 @@ public class SidePanel extends JPanel
 		gbc_viewRifButton.gridy = 4;
 		add(viewRifButton, gbc_viewRifButton);
 		setLogoutButton(new JButton("Logout"));
-
+		viewRifButton.setBorderPainted(false);
 		creaRifButton.setContentAreaFilled(false);
 		viewRifButton.setContentAreaFilled(false);
-
+		creaRifButton.setBorderPainted(false);
 		logoutButton.setForeground(Color.WHITE);
 		logoutButton.setBackground(new Color(14, 22, 33));
 		logoutButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));
