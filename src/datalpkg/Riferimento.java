@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Riferimento {
-	private String id_Rif;
+	private int id_Rif;
 	private String titolo;
 	private Date dataCreazione;
 	private String tipo;
 	private String URL;
-	private int DOI;
+	private Integer DOI;
 	private Boolean digitale;
 	private String descrizione;
 	private String descr_autore;
@@ -103,7 +103,7 @@ public class Riferimento {
 	public void setCitazioni(List<Riferimento> citazioni) {
 		this.cited = citazioni;
 	}
-	public Riferimento(String id_Rif,String titolo, Date dataCreazione, String tipo, String URL,int DOI, Boolean digitale,
+	public Riferimento(int id_Rif,String titolo, Date dataCreazione, String tipo, String URL,int DOI, Boolean digitale,
 			List<Categoria> categorie, List<Utente> autori, List<Riferimento> citazioni) {
 		super();
 		this.id_Rif = id_Rif;
@@ -117,7 +117,7 @@ public class Riferimento {
 		this.autori = autori;
 		this.cited = citazioni;
 	}
-	public Riferimento(String id_Rif,String titolo, Date dataCreazione, String tipo, String URL,int DOI, Boolean digitale,String descrizione, String descr_autore) {
+	public Riferimento(int id_Rif,String titolo, Date dataCreazione, String tipo, String URL,Integer DOI, Boolean digitale,String descrizione, String descr_autore) {
 		super();
 		this.id_Rif = id_Rif;
 		categorie = new ArrayList<>();
@@ -158,13 +158,13 @@ public class Riferimento {
 	public void setCitedIn(List<Riferimento> citedIn) {
 		this.citedIn = citedIn;
 	}
-	public String getId_Rif() {
+	public int getId_Rif() {
 		return id_Rif;
 	}
-	public void setId_Rif(String id_Rif) {
+	public void setId_Rif(int id_Rif) {
 		this.id_Rif = id_Rif;
 	}
-	public int getDOI() {
+	public Integer getDOI() {
 		return DOI;
 	}
 	public void setDOI(int dOI) {
