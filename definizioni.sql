@@ -11,7 +11,7 @@ CREATE TABLE Associazione_Riferimenti(
 );
 
 CREATE TABLE Autore_Riferimento(
-    ID_Utente integer PRIMARY KEY,
+    ID_Utente integer NOT NULL,
     Descr_Utente character varying(500),
     ID_Riferimento integer NOT NULL
 );
