@@ -3,7 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+import java.util.Date;
+import java.time.ZoneId;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -118,7 +119,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false));
+				CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false), c.getCitazioni());
 				currentPanel.setVisible(false);
 				currentPanel = creaRifPanel;
 				mainPanel.add(currentPanel);
@@ -129,6 +130,40 @@ public class MainFrame extends JFrame {
 						mainPanel.remove(currentPanel);
 						currentPanel = welcomePanel;
 						currentPanel.setVisible(true);
+					}
+				});
+				creaRifPanel.getCreateButton().addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if(creaRifPanel.isInputValid())
+						{
+							String url = null;
+							Integer doi;
+							if(creaRifPanel.getDoiField().getText().isBlank())
+								doi = null;
+							else
+								doi = Integer.parseInt(creaRifPanel.getDoiField().getText());
+							if(creaRifPanel.getIsDigitalCheckBox().isSelected())
+								url = creaRifPanel.getLinkField().getText();
+							
+							c.creaRiferimento(
+									creaRifPanel.getNameField().getText(),
+									Date.from(creaRifPanel.getDatePicker().getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()), 
+									creaRifPanel.getSelectedButton(), 
+									url,
+									doi,
+									creaRifPanel.getIsDigitalCheckBox().isSelected(),
+									creaRifPanel.getDescriptionPane().getText(), 
+									creaRifPanel.getNotePane().getText(),
+									creaRifPanel.getSelectedUsers(), 
+									creaRifPanel.getSelectedCategories(),
+									creaRifPanel.getSelectedCitazioni());
+							welcomePanel.refreshRifTable(c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
+
+						}
+						else
+							JOptionPane.showMessageDialog(null, "Errore di input");
 					}
 				});
 			}
