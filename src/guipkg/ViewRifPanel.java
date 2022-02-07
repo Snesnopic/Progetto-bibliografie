@@ -24,7 +24,7 @@ public class ViewRifPanel extends JPanel
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		setBackButton(new JButton("Indietro"));
 		backButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
 		GridBagConstraints gbc_backButton = new GridBagConstraints();
@@ -33,7 +33,7 @@ public class ViewRifPanel extends JPanel
 		gbc_backButton.gridx = 1;
 		gbc_backButton.gridy = 0;
 		add(backButton, gbc_backButton);
-		
+
 		JLabel viewRifLabel = new JLabel("Visualizza riferimenti");
 		viewRifLabel.setForeground(Color.WHITE);
 		viewRifLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 30));
@@ -52,7 +52,7 @@ public class ViewRifPanel extends JPanel
 		gbc_selectRifLabel.gridx = 2;
 		gbc_selectRifLabel.gridy = 1;
 		add(selectRifLabel, gbc_selectRifLabel);
-		
+
 		setMyRifList(new JList<String>());
 		myRifList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		myRifList.setListData(riferimenti);
@@ -64,7 +64,7 @@ public class ViewRifPanel extends JPanel
 		gbc_myRifList.gridx = 3;
 		gbc_myRifList.gridy = 1;
 		add(myRifList, gbc_myRifList);
-		
+
 		JButton deleteButton = new JButton("Cancella");
 		deleteButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
@@ -73,7 +73,7 @@ public class ViewRifPanel extends JPanel
 		gbc_deleteButton.gridx = 4;
 		gbc_deleteButton.gridy = 1;
 		add(deleteButton, gbc_deleteButton);
-		
+
 		JButton editButton = new JButton("Modifica");
 		editButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
@@ -83,7 +83,7 @@ public class ViewRifPanel extends JPanel
 		gbc_editButton.gridx = 4;
 		gbc_editButton.gridy = 2;
 		add(editButton, gbc_editButton);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);

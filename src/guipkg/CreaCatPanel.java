@@ -18,7 +18,7 @@ public class CreaCatPanel extends JPanel
 	private JButton backButton;
 	private JButton createButton;
 	private JList<String> superCatList;
-	
+
 	public CreaCatPanel(String[] categorie) {
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -27,7 +27,7 @@ public class CreaCatPanel extends JPanel
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		setBackButton(new JButton("Indietro"));
 		backButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
 		GridBagConstraints gbc_backButton = new GridBagConstraints();
@@ -36,7 +36,7 @@ public class CreaCatPanel extends JPanel
 		gbc_backButton.gridx = 1;
 		gbc_backButton.gridy = 0;
 		add(backButton, gbc_backButton);
-		
+
 		JLabel newCatLabel = new JLabel("Nuova categoria");
 		newCatLabel.setForeground(Color.WHITE);
 		newCatLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 30));
@@ -45,7 +45,7 @@ public class CreaCatPanel extends JPanel
 		gbc_newCatLabel.gridx = 3;
 		gbc_newCatLabel.gridy = 0;
 		add(newCatLabel, gbc_newCatLabel);
-		
+
 		JLabel nameLabel = new JLabel("Nome");
 		nameLabel.setForeground(Color.WHITE);
 		nameLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -55,7 +55,7 @@ public class CreaCatPanel extends JPanel
 		gbc_nameLabel.gridx = 2;
 		gbc_nameLabel.gridy = 1;
 		add(nameLabel, gbc_nameLabel);
-		
+
 		textField = new JTextField();
 		textField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
@@ -75,7 +75,7 @@ public class CreaCatPanel extends JPanel
 		gbc_superCatLabel.gridx = 2;
 		gbc_superCatLabel.gridy = 2;
 		add(superCatLabel, gbc_superCatLabel);
-		
+
 		setSuperCatList(new JList<String>());
 		superCatList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		superCatList.setListData(categorie);
@@ -86,7 +86,7 @@ public class CreaCatPanel extends JPanel
 		gbc_superCatList.gridx = 3;
 		gbc_superCatList.gridy = 2;
 		add(superCatList, gbc_superCatList);
-		
+
 		setCreateButton(new JButton("Crea"));
 		createButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
 		createButton.setForeground(new Color(255, 255, 255));
@@ -111,7 +111,7 @@ public class CreaCatPanel extends JPanel
 	}
 	private void setSuperCatList(JList<String> jList) {
 		this.superCatList = jList;
-		
+
 	}
 	public JButton getBackButton() {
 		return backButton;

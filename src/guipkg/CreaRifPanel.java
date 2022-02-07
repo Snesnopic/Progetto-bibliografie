@@ -27,7 +27,7 @@ public class CreaRifPanel extends JPanel
 	private JButton backButton;
 	private JList<String> autoriList;
 	private JList<String> categorieList;
-	
+
 	public JList<String> getCategorieList() {
 		return categorieList;
 	}
@@ -74,7 +74,7 @@ public class CreaRifPanel extends JPanel
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		setBackButton(new JButton("Indietro"));
 		backButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
 		GridBagConstraints gbc_backButton = new GridBagConstraints();
@@ -83,7 +83,7 @@ public class CreaRifPanel extends JPanel
 		gbc_backButton.gridx = 1;
 		gbc_backButton.gridy = 0;
 		add(backButton, gbc_backButton);
-		
+
 		JLabel newRifLabel = new JLabel("Nuovo riferimento");
 		newRifLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 30));
 		newRifLabel.setForeground(Color.WHITE);
@@ -103,7 +103,7 @@ public class CreaRifPanel extends JPanel
 		gbc_nameLabel.gridx = 2;
 		gbc_nameLabel.gridy = 1;
 		add(nameLabel, gbc_nameLabel);
-		
+
 		nameField = new JTextField();
 		nameField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_nameField = new GridBagConstraints();
@@ -114,7 +114,7 @@ public class CreaRifPanel extends JPanel
 		gbc_nameField.gridy = 1;
 		add(nameField, gbc_nameField);
 		nameField.setColumns(10);
-		
+
 		JLabel descriptionLabel = new JLabel("Descrizione");
 		descriptionLabel.setForeground(Color.WHITE);
 		descriptionLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -124,7 +124,7 @@ public class CreaRifPanel extends JPanel
 		gbc_descriptionLabel.gridx = 2;
 		gbc_descriptionLabel.gridy = 2;
 		add(descriptionLabel, gbc_descriptionLabel);
-		
+
 		JTextPane descriptionPane = new JTextPane();
 		descriptionPane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
 		GridBagConstraints gbc_descriptionPane = new GridBagConstraints();
@@ -134,7 +134,7 @@ public class CreaRifPanel extends JPanel
 		gbc_descriptionPane.gridx = 3;
 		gbc_descriptionPane.gridy = 2;
 		add(descriptionPane, gbc_descriptionPane);
-		
+
 		JLabel dateLabel = new JLabel("Data");
 		dateLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		dateLabel.setForeground(Color.WHITE);
@@ -156,7 +156,7 @@ public class CreaRifPanel extends JPanel
 		gbc_datePicker.gridx = 3;
 		gbc_datePicker.gridy = 3;
 		add(datePicker,gbc_datePicker);
-		
+
 		JLabel linkLabel = new JLabel("URL");
 		linkLabel.setForeground(Color.WHITE);
 		linkLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -166,7 +166,7 @@ public class CreaRifPanel extends JPanel
 		gbc_linkLabel.gridx = 2;
 		gbc_linkLabel.gridy = 4;
 		add(linkLabel, gbc_linkLabel);
-		
+
 		linkField = new JTextField();
 		linkField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
 		GridBagConstraints gbc_linkField = new GridBagConstraints();
@@ -177,7 +177,7 @@ public class CreaRifPanel extends JPanel
 		gbc_linkField.gridy = 4;
 		add(linkField, gbc_linkField);
 		linkField.setColumns(10);
-		
+
 		JCheckBox isDigitalCheckBox = new JCheckBox("Digitale");
 		isDigitalCheckBox.addChangeListener(new ChangeListener()
 		{
@@ -198,7 +198,7 @@ public class CreaRifPanel extends JPanel
 		gbc_isDigitalCheckBox.gridx = 7;
 		gbc_isDigitalCheckBox.gridy = 4;
 		add(isDigitalCheckBox, gbc_isDigitalCheckBox);
-		
+
 		JLabel doiLabel = new JLabel("DOI");
 		doiLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		doiLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -209,7 +209,7 @@ public class CreaRifPanel extends JPanel
 		gbc_doiLabel.gridx = 2;
 		gbc_doiLabel.gridy = 5;
 		add(doiLabel, gbc_doiLabel);
-		
+
 		doiField = new JTextField();
 		doiField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
 		GridBagConstraints gbc_doiField = new GridBagConstraints();
@@ -220,7 +220,7 @@ public class CreaRifPanel extends JPanel
 		gbc_doiField.gridy = 5;
 		add(doiField, gbc_doiField);
 		doiField.setColumns(10);
-		
+
 		JLabel typeLabel = new JLabel("Tipo");
 		typeLabel.setForeground(Color.WHITE);
 		typeLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -230,7 +230,7 @@ public class CreaRifPanel extends JPanel
 		gbc_typeLabel.gridx = 2;
 		gbc_typeLabel.gridy = 6;
 		add(typeLabel, gbc_typeLabel);
-		
+
 		JRadioButton isArticoloRadioButton = new JRadioButton("Articolo");
 		isArticoloRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		isArticoloRadioButton.setForeground(Color.WHITE);
@@ -240,7 +240,7 @@ public class CreaRifPanel extends JPanel
 		gbc_isArticoloRadioButton.gridx = 3;
 		gbc_isArticoloRadioButton.gridy = 6;
 		add(isArticoloRadioButton, gbc_isArticoloRadioButton);
-		
+
 		JRadioButton isLibroRadioButton = new JRadioButton("Libro");
 		isLibroRadioButton.setBackground(new Color(23, 33, 43));
 		isLibroRadioButton.setForeground(Color.WHITE);
@@ -250,7 +250,7 @@ public class CreaRifPanel extends JPanel
 		gbc_isLibroRadioButton.gridx = 4;
 		gbc_isLibroRadioButton.gridy = 6;
 		add(isLibroRadioButton, gbc_isLibroRadioButton);
-		
+
 		JRadioButton isRisorsaRadioButton = new JRadioButton("Risorsa on-line");
 		isRisorsaRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		isRisorsaRadioButton.setForeground(Color.WHITE);
@@ -260,7 +260,7 @@ public class CreaRifPanel extends JPanel
 		gbc_isRisorsaRadioButton.gridx = 5;
 		gbc_isRisorsaRadioButton.gridy = 6;
 		add(isRisorsaRadioButton, gbc_isRisorsaRadioButton);
-		
+
 		JRadioButton isDataSetRadioButton = new JRadioButton("Dataset");
 		isDataSetRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		isDataSetRadioButton.setForeground(Color.WHITE);
@@ -270,7 +270,7 @@ public class CreaRifPanel extends JPanel
 		gbc_isDataSetRadioButton.gridx = 6;
 		gbc_isDataSetRadioButton.gridy = 6;
 		add(isDataSetRadioButton, gbc_isDataSetRadioButton);
-		
+
 		JLabel noteLabel = new JLabel("Note autore");
 		noteLabel.setForeground(Color.WHITE);
 		noteLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -280,7 +280,7 @@ public class CreaRifPanel extends JPanel
 		gbc_noteLabel.gridx = 2;
 		gbc_noteLabel.gridy = 7;
 		add(noteLabel, gbc_noteLabel);
-		
+
 		JTextPane notePane = new JTextPane();
 		notePane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 10));
 		GridBagConstraints gbc_notePane = new GridBagConstraints();
@@ -296,7 +296,7 @@ public class CreaRifPanel extends JPanel
 		bottoniRadio.add(isRisorsaRadioButton);
 		bottoniRadio.add(isLibroRadioButton);
 		bottoniRadio.add(isArticoloRadioButton);
-		
+
 		JLabel autoriLabel = new JLabel("Autori");
 		autoriLabel.setForeground(Color.WHITE);
 		autoriLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -306,7 +306,7 @@ public class CreaRifPanel extends JPanel
 		gbc_autoriLabel.gridx = 2;
 		gbc_autoriLabel.gridy = 8;
 		add(autoriLabel, gbc_autoriLabel);
-		
+
 		setAutoriList (new JList<String>());
 		autoriList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		autoriList.setListData(utenti);
@@ -317,7 +317,7 @@ public class CreaRifPanel extends JPanel
 		gbc_autoriList.gridx = 3;
 		gbc_autoriList.gridy = 8;
 		add(autoriList, gbc_autoriList);
-		
+
 		JLabel categorieLabel = new JLabel("Categorie");
 		categorieLabel.setForeground(Color.WHITE);
 		categorieLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -327,7 +327,7 @@ public class CreaRifPanel extends JPanel
 		gbc_categorieLabel.gridx = 2;
 		gbc_categorieLabel.gridy = 9;
 		add(categorieLabel, gbc_categorieLabel);
-		
+
 		setCategorieList(new JList<String>());
 		categorieList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		categorieList.setListData(categorie);
@@ -338,7 +338,7 @@ public class CreaRifPanel extends JPanel
 		gbc_categorieList.gridx = 3;
 		gbc_categorieList.gridy = 9;
 		add(categorieList, gbc_categorieList);
-		
+
 		JButton createButton = new JButton("Crea");
 		createButton.setForeground(Color.WHITE);
 		createButton.setBackground(new Color(14, 22, 23));

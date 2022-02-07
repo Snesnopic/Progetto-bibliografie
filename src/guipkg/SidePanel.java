@@ -26,7 +26,7 @@ public class SidePanel extends JPanel
 	public JButton getViewRifButton() {
 		return viewRifButton;
 	}
-	
+
 	public void setLogoutButton(JButton logoutButton) {
 		this.logoutButton = logoutButton;
 	}
@@ -69,7 +69,7 @@ public class SidePanel extends JPanel
 		gbc_userLabel.gridx = 0;
 		gbc_userLabel.gridy = 1;
 		add(userLabel, gbc_userLabel);
-		
+
 		setCreaRifButton(new JButton("Crea riferimento"));
 		creaRifButton.setForeground(Color.WHITE);
 		creaRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
@@ -79,7 +79,7 @@ public class SidePanel extends JPanel
 		gbc_creaRifButton.gridx = 0;
 		gbc_creaRifButton.gridy = 2;
 		add(creaRifButton, gbc_creaRifButton);
-		
+
 		setCreaCatButton(new JButton("Crea categoria"));
 		creaCatButton.setForeground(Color.WHITE);
 		creaCatButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
@@ -89,7 +89,7 @@ public class SidePanel extends JPanel
 		gbc_creaCatButton.gridx = 0;
 		gbc_creaCatButton.gridy = 3;
 		add(creaCatButton, gbc_creaCatButton);
-		
+
 		setViewRifButton(new JButton("Visualizza riferimenti"));
 		viewRifButton.setForeground(Color.WHITE);
 		viewRifButton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 12));
@@ -100,10 +100,10 @@ public class SidePanel extends JPanel
 		gbc_viewRifButton.gridy = 4;
 		add(viewRifButton, gbc_viewRifButton);
 		setLogoutButton(new JButton("Logout"));
-		
+
 		creaRifButton.setContentAreaFilled(false);
 		viewRifButton.setContentAreaFilled(false);
-		
+
 		logoutButton.setForeground(Color.WHITE);
 		logoutButton.setBackground(new Color(14, 22, 33));
 		logoutButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 18));

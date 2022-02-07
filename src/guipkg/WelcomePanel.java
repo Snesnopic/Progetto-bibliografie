@@ -239,9 +239,9 @@ public class WelcomePanel extends JPanel
 		riferimentiTable.setModel(new DefaultTableModel(dataRif,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
 		{
 			boolean[] columnEditables = new boolean[]
-			{
-				false, false, false, false, false,false,false
-			};
+					{
+							false, false, false, false, false,false,false
+					};
 			@Override
 			public boolean isCellEditable(int row, int column)
 			{
@@ -278,9 +278,9 @@ public class WelcomePanel extends JPanel
 		citazioniTable.setModel(new DefaultTableModel(dataCit,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo","Riferimento citato"})
 		{
 			boolean[] columnEditables = new boolean[]
-			{
-				false, false, false, false,false,false, false,false
-			};
+					{
+							false, false, false, false,false,false, false,false
+					};
 			@Override
 			public boolean isCellEditable(int row, int column)
 			{
@@ -312,15 +312,15 @@ public class WelcomePanel extends JPanel
 	}
 	public String getSelectedButton()
 	{
-	    for (Enumeration<AbstractButton> buttons = bottoniRadio.getElements(); buttons.hasMoreElements();)
-	    {
-	        AbstractButton button = buttons.nextElement();
-	        if (button.isSelected())
-	        {
-	        	return button.getText();
-	        }
-	    }
-	    return null;
+		for (Enumeration<AbstractButton> buttons = bottoniRadio.getElements(); buttons.hasMoreElements();)
+		{
+			AbstractButton button = buttons.nextElement();
+			if (button.isSelected())
+			{
+				return button.getText();
+			}
+		}
+		return null;
 	}
 	public boolean isSearchValid()
 	{

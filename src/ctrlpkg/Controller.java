@@ -87,7 +87,7 @@ public class Controller {
 	{
 		return loginUser.getUser_ID();
 	}
-	
+
 	public List<Riferimento> retrieveRiferimenti(int ID)
 	{
 		try 
@@ -165,12 +165,12 @@ public class Controller {
 		rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '"+nomeCat+"'");
 		rs.next();
 		return rs.getInt(1);
-		
-		
+
+
 	}
 	public Object[][] RicercaToObjectMatrix(String testo, String categoria, boolean[] tipi,String filtro)
 	{
-		
+
 		try 
 		{
 			rDAO = new RiferimentoDAO();
@@ -178,15 +178,15 @@ public class Controller {
 			//condizioni per filtro
 			switch(filtro)
 			{
-				case "Titolo":
-					query = query.concat("WHERE titolo_riferimento LIKE '%"+testo+"%' ");
-					break;
-				case "Autore":
-					query = query.concat(", autore_riferimento,utente WHERE autore_riferimento.id_riferimento = riferimenti_biblio.id_riferimento AND autore_riferimento.id_utente = utente.id_utente AND (nome_utente LIKE '%"+testo+"%' OR cognome_utente LIKE '%"+testo+"%') ");
-					break;
-				case "DOI":
-					query = query.concat("WHERE doi = '"+testo+"' ");
-					break;
+			case "Titolo":
+				query = query.concat("WHERE titolo_riferimento LIKE '%"+testo+"%' ");
+				break;
+			case "Autore":
+				query = query.concat(", autore_riferimento,utente WHERE autore_riferimento.id_riferimento = riferimenti_biblio.id_riferimento AND autore_riferimento.id_utente = utente.id_utente AND (nome_utente LIKE '%"+testo+"%' OR cognome_utente LIKE '%"+testo+"%') ");
+				break;
+			case "DOI":
+				query = query.concat("WHERE doi = '"+testo+"' ");
+				break;
 			}
 			//condizioni per categorie
 			if(!Objects.equals(categoria, "Qualsiasi"))
@@ -226,7 +226,7 @@ public class Controller {
 				query = query.concat("Articolo'");
 			}
 			query = query.concat(")");
-			
+
 			List<Riferimento> risultati = rDAO.getAll(query);
 			return RiferimentiToObjectMatrix(risultati,risultati.size());
 		} 
@@ -235,7 +235,7 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 			return null;
 		}
-		
+
 	}
 	public void creaCategoria(String nomeCat,String nomeSuperCat,int user_ID)
 	{
@@ -250,7 +250,7 @@ public class Controller {
 			{
 				c = new Categoria(rs.getInt(1)+1,nomeCat,user_ID,RetrieveCodiceCategoria(nomeSuperCat));
 			}
-				
+
 			CategoriaDAO cDAO = new CategoriaDAO();
 			cDAO.insert(c);
 		}
@@ -264,7 +264,7 @@ public class Controller {
 		try
 		{
 			ArrayList<String> arrRiferimenti = new ArrayList<>();
-			
+
 			ResultSet rs = dbc.executeQuery("SELECT * FROM riferimenti_biblio JOIN autore_riferimento ON autore_riferimento.id_riferimento = riferimenti_biblio.id_riferimento WHERE id_utente = "+this.retrieveID());
 			while(rs.next())
 			{
@@ -284,7 +284,7 @@ public class Controller {
 		try
 		{
 			ArrayList<String> arrUtenti = new ArrayList<>();
-			
+
 			ResultSet rs = dbc.executeQuery("SELECT * FROM utente");
 			while(rs.next())
 			{
