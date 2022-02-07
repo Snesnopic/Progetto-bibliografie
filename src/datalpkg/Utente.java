@@ -1,11 +1,14 @@
 package datalpkg;
 
+import java.util.Date;
 import java.util.List;
 
 public class Utente {
 	private String nome;
 	private String cognome;
-	private String cf;
+	private int user_ID;
+	private Date inizio;
+	private Date fine;
 	private List<Categoria> categorieCreate;
 	private List<Riferimento> riferimentiCreati;
 	
@@ -21,11 +24,11 @@ public class Utente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public String getCf() {
-		return cf;
+	public int getUser_ID() {
+		return user_ID;
 	}
-	public void setCf(String cf) {
-		this.cf = cf;
+	public void setUser_ID(int ID) {
+		this.user_ID = ID;
 	}
 	public List<Categoria> getCategorieCreate() {
 		return categorieCreate;
@@ -39,20 +42,22 @@ public class Utente {
 	public void setRiferimentiCreati(List<Riferimento> riferimentiCreati) {
 		this.riferimentiCreati = riferimentiCreati;
 	}
-	public Utente(String nome, String cognome, String cf, List<Categoria> categorieCreate,
+	public Utente(String nome, String cognome, int ID, List<Categoria> categorieCreate,
 			List<Riferimento> riferimentiCreati) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
-		this.cf = cf;
+		this.user_ID = ID;
 		this.categorieCreate = categorieCreate;
 		this.riferimentiCreati = riferimentiCreati;
 	}
-	public Utente(String nome, String cognome, String cf) {
+	public Utente(String nome, String cognome, int ID,Date inizio,Date fine) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
-		this.cf = cf;
+		this.user_ID = ID;
+		this.inizio = inizio;
+		this.fine = fine;
 	}
 	public Utente() {
 		// TODO Auto-generated constructor stub
@@ -60,5 +65,17 @@ public class Utente {
 	public String nominativoCompletoToString()
 	{
 		return this.getNome()+" "+this.getCognome();
+	}
+	public Date getInizio() {
+		return inizio;
+	}
+	public void setInizio(Date inizio) {
+		this.inizio = inizio;
+	}
+	public Date getFine() {
+		return fine;
+	}
+	public void setFine(Date fine) {
+		this.fine = fine;
 	}
 }
