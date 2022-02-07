@@ -1,9 +1,12 @@
 package ctrlpkg;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.JOptionPane;
+
 import datalpkg.Categoria;
 import datalpkg.Riferimento;
 import datalpkg.Utente;
@@ -34,14 +37,14 @@ public class Controller {
 		lf = new LoginFrame(this);
 		lf.setVisible(true);
 	}
-	public boolean login(String CF) throws IOException
+	public boolean login(String user_ID) throws IOException
 	{
 		try 
 		{
 			dbc = DBConnection.getInstance();
-			dbc.getConnection("jdbc:postgresql://localhost/bibliografie","postgres","admin"); 
+			dbc.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici","postgres","admin"); 
 			uDAO = new UtenteDAO();
-			loginUser = uDAO.get("SELECT * FROM utente WHERE cf ='"+CF+"'");
+			loginUser = uDAO.get("SELECT * FROM utente WHERE id_utente ='"+user_ID+"'");
 			if(Objects.isNull(loginUser))
 				return false;
 			else
@@ -80,17 +83,17 @@ public class Controller {
 	{
 		return loginUser.getCognome();
 	}
-	public String retrieveCF()
+	public int retrieveID()
 	{
-		return loginUser.getCf();
+		return loginUser.getUser_ID();
 	}
 	
-	public List<Riferimento> retrieveRiferimenti(String CF)
+	public List<Riferimento> retrieveRiferimenti(int ID)
 	{
 		try 
 		{
 			rDAO = new RiferimentoDAO();
-			return rDAO.getAll("SELECT riferimento.* FROM riferimento NATURAL JOIN autore_riferimento WHERE cf ='"+CF+"'");
+			return rDAO.getAll("SELECT riferimenti_biblio.* FROM riferimenti_biblio NATURAL JOIN autore_riferimento WHERE id_utente ='"+ID+"'");
 		} 
 		catch (SQLException e) 
 		{
@@ -103,7 +106,7 @@ public class Controller {
 		try
 		{
 			cDAO = new CategoriaDAO();
-			r.setCategorie(cDAO.getAll("SELECT categoria.* FROM categoria NATURAL JOIN categoria_riferimento WHERE titolo='"+r.getTitolo()+"'"));
+			r.setCategorie(cDAO.getAll("SELECT categoria.* FROM categoria NATURAL JOIN associativa_riferimenti_categoria WHERE id_riferimento='"+r.getId_Rif()+"'"));
 		}
 		catch (SQLException e)
 		{
@@ -117,7 +120,7 @@ public class Controller {
 		try 
 		{
 			uDAO = new UtenteDAO();
-			r.setAutori(uDAO.getAll("SELECT utente.* FROM utente NATURAL JOIN autore_riferimento WHERE titolo = '"+r.getTitolo()+"'"));
+			r.setAutori(uDAO.getAll("SELECT utente.* FROM utente NATURAL JOIN autore_riferimento WHERE id_riferimento = '"+r.getId_Rif()+"'"));
 		}
 		catch (SQLException e)
 		{
@@ -132,7 +135,8 @@ public class Controller {
 		try 
 		{
 			rDAO = new RiferimentoDAO();
-			return rDAO.getAll("SELECT riferimento.* FROM riferimento JOIN citazione ON titolo = titolo_citante AND titolo_citato = '"+r.getTitolo()+"'");
+			return rDAO.getAll("SELECT riferimenti_biblio.* FROM riferimenti_biblio JOIN associazione_riferimenti ON riferimenti_biblio.id_riferimento = associazione"
+					+ "_riferimenti.id_riferimento AND id_riferimento_associato = '"+r.getId_Rif()+"'");
 		} 
 		catch (SQLException e) 
 		{
@@ -140,52 +144,89 @@ public class Controller {
 			return null;
 		}
 	}
-	public List<Categoria> findSottocategorie(String nomeCategoria)
-	{
-		
+	public String RetrieveCodiciSottocategorie(String nomeCat)
+	{	
+		ResultSet rs;
 		try
 		{
-			cDAO = new CategoriaDAO();
-			List<Categoria> listaTemp = cDAO.getAll("SELECT ");
-			//TODO: query (o funzione) per avere tutte le sottocategorie di una data categoria
-			
-			
-			return listaTemp;
-		}
-		catch(SQLException e)
+			rs = dbc.executeQuery("SELECT sub_cat("+RetrieveCodiceCategoria(nomeCat)+")");
+			rs.next();
+			return rs.getString(1);
+		} 
+		catch (SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
 			return null;
 		}
 	}
-
+	public int RetrieveCodiceCategoria(String nomeCat) throws SQLException
+	{	
+		ResultSet rs;
+		rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '"+nomeCat+"'");
+		rs.next();
+		return rs.getInt(1);
+		
+		
+	}
 	public Object[][] RicercaToObjectMatrix(String testo, String categoria, boolean[] tipi,String filtro)
 	{
 		
 		try 
 		{
 			rDAO = new RiferimentoDAO();
-			String query = "SELECT DISTINCT riferimento.* FROM riferimento, categoria_riferimento ";
-
+			String query = "SELECT DISTINCT riferimenti_biblio.* FROM riferimenti_biblio, associativa_riferimenti_categoria ";
+			//condizioni per filtro
 			switch(filtro)
 			{
 				case "Titolo":
-					query = query.concat("WHERE riferimento.titolo LIKE '%"+testo+"%' ");
+					query = query.concat("WHERE titolo_riferimento LIKE '%"+testo+"%' ");
 					break;
 				case "Autore":
-					query = query.concat(", autore_riferimento WHERE autore_riferimento.titolo = riferimento.titolo AND cf = '"+testo+"' ");
+					query = query.concat(", autore_riferimento,utente WHERE autore_riferimento.id_riferimento = riferimenti_biblio.id_riferimento AND autore_riferimento.id_utente = utente.id_utente AND (nome_utente LIKE '%"+testo+"%' OR cognome_utente LIKE '%"+testo+"%') ");
 					break;
 				case "DOI":
-					query = query.concat("WHERE digitale = false AND doi_url = '"+testo+"' ");
+					query = query.concat("WHERE doi = '"+testo+"' ");
 					break;
 			}
-
+			//condizioni per categorie
 			if(!Objects.equals(categoria, "Qualsiasi"))
-				query = query.concat("AND categoria_riferimento.titolo = riferimento.titolo AND categoria_riferimento.nome = '"+categoria+"'");
-			System.out.println(query);
+			{
+				query = query.concat("AND associativa_riferimenti_categoria.id_riferimento = riferimenti_biblio.id_riferimento AND associativa_riferimenti_categoria.id_categoria IN ("+RetrieveCodiceCategoria(categoria));
+				String sottoCat = RetrieveCodiciSottocategorie(categoria);
+				if(!sottoCat.isEmpty())
+					query = query.concat(","+sottoCat);
+				query = query.concat(") ");
+			}
+			//condizioni per tipi
+			query = query.concat("AND tipo IN ('");
+			boolean multipleTypes = false;
+			if(tipi[0])
+			{
+				query = query.concat("Risorsa on-line'");
+				multipleTypes = true;
+			}
+			if(tipi[1])
+			{
+				if(multipleTypes)
+					query = query.concat(",'");
+				query = query.concat("Libro'");
+				multipleTypes = true;
+			}
+			if(tipi[2])
+			{
+				if(multipleTypes)
+					query = query.concat(",'");
+				query = query.concat("Dataset'");
+				multipleTypes = true;
+			}
+			if(tipi[3])
+			{
+				if(multipleTypes)
+					query = query.concat(",'");
+				query = query.concat("Articolo'");
+			}
+			query = query.concat(")");
 			
-			
-			//TODO: query dinamica per la ricerca delle categorie
 			List<Riferimento> risultati = rDAO.getAll(query);
 			return RiferimentiToObjectMatrix(risultati,risultati.size());
 		} 
@@ -196,9 +237,92 @@ public class Controller {
 		}
 		
 	}
+	public void creaCategoria(String nomeCat,String nomeSuperCat,int user_ID)
+	{
+		try
+		{
+			ResultSet rs = dbc.executeQuery("SELECT MAX(id_categoria) FROM categoria");
+			rs.next();
+			Categoria c;
+			if(Objects.isNull(nomeSuperCat))
+				c = new Categoria(rs.getInt(1)+1,nomeCat,user_ID);
+			else
+			{
+				c = new Categoria(rs.getInt(1)+1,nomeCat,user_ID,RetrieveCodiceCategoria(nomeSuperCat));
+			}
+				
+			CategoriaDAO cDAO = new CategoriaDAO();
+			cDAO.insert(c);
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+		}
+	}
+	public String[] getRiferimenti()
+	{
+		try
+		{
+			ArrayList<String> arrRiferimenti = new ArrayList<>();
+			
+			ResultSet rs = dbc.executeQuery("SELECT * FROM riferimenti_biblio JOIN autore_riferimento ON autore_riferimento.id_riferimento = riferimenti_biblio.id_riferimento WHERE id_utente = "+this.retrieveID());
+			while(rs.next())
+			{
+				arrRiferimenti.add(rs.getString("titolo_riferimento"));
+			}
+			String[] array = arrRiferimenti.toArray(new String[arrRiferimenti.size()]);
+			return array;
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+			return null;
+		}
+	}
+	public String[] getUtenti()
+	{
+		try
+		{
+			ArrayList<String> arrUtenti = new ArrayList<>();
+			
+			ResultSet rs = dbc.executeQuery("SELECT * FROM utente");
+			while(rs.next())
+			{
+				arrUtenti.add(rs.getString("nome_utente")+" "+rs.getString("cognome_utente"));
+			}
+			String[] array = arrUtenti.toArray(new String[arrUtenti.size()]);
+			return array;
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+			return null;
+		}
+	}
+	public String[] getCategorie(boolean b)
+	{
+		try
+		{
+			ArrayList<String> arrCategorie = new ArrayList<>();
+			if(b)
+				arrCategorie.add("Qualsiasi");
+			ResultSet rs = dbc.executeQuery("SELECT descr_categoria FROM categoria");
+			while(rs.next())
+			{
+				arrCategorie.add(rs.getString(1));
+			}
+			String[] array = arrCategorie.toArray(new String[arrCategorie.size()]);
+			return array;
+		}
+		catch (SQLException e)
+		{
+			JOptionPane.showMessageDialog(null, "DB Error:\n"+e.getMessage()+"\nCodice errore: "+e.getErrorCode());
+			return null;
+		}
+	}
 	public Object[][] RiferimentiToObjectMatrix(List<Riferimento> listaRiferimenti, int righe)
 	{
-		Object[][] data = new Object[righe][6];
+		Object[][] data = new Object[righe][7];
 		for(int i=0;i<listaRiferimenti.size()&&i<righe;i++)
 		{
 			listaRiferimenti.set(i, this.fillAutori(listaRiferimenti.get(i)));
@@ -209,15 +333,16 @@ public class Controller {
 			data[i][0] = listaRiferimenti.get(i).getTitolo();
 			data[i][1] = listaRiferimenti.get(i).autoriToString();
 			data[i][2] = listaRiferimenti.get(i).getDataCreazione();
-			data[i][3] = listaRiferimenti.get(i).getDOI_URL();
-			data[i][4] = listaRiferimenti.get(i).categorieToString();
-			data[i][5] = listaRiferimenti.get(i).getTipo();
+			data[i][3] = listaRiferimenti.get(i).getURL();
+			data[i][4] = listaRiferimenti.get(i).getDOI();
+			data[i][5] = listaRiferimenti.get(i).categorieToString();
+			data[i][6] = listaRiferimenti.get(i).getTipo();
 		}
 		return data;
 	}
 	public Object[][] CitazioniToObjectMatrix(List<Riferimento> listaRiferimenti, int righe)
 	{
-		Object[][] data = new Object[righe][7];
+		Object[][] data = new Object[righe][8];
 		int fillTemp = 0;
 		rDAO = new RiferimentoDAO();
 		for(int i=0;i<listaRiferimenti.size()&&fillTemp<righe;i++)
@@ -230,10 +355,11 @@ public class Controller {
 				data[fillTemp][0] = citTemp.get(j).getTitolo();
 				data[fillTemp][1] = citTemp.get(j).autoriToString();
 				data[fillTemp][2] = citTemp.get(j).getDataCreazione();
-				data[fillTemp][3] = citTemp.get(j).getDOI_URL();
-				data[fillTemp][4] = citTemp.get(j).categorieToString();
-				data[fillTemp][5] = citTemp.get(j).getTipo();
-				data[fillTemp][6] = listaRiferimenti.get(i).getTitolo();
+				data[fillTemp][3] = citTemp.get(j).getURL();
+				data[fillTemp][4] = citTemp.get(j).getDOI();
+				data[fillTemp][5] = citTemp.get(j).categorieToString();
+				data[fillTemp][6] = citTemp.get(j).getTipo();
+				data[fillTemp][7] = listaRiferimenti.get(i).getTitolo();
 				fillTemp = fillTemp + 1;
 			}
 		}
