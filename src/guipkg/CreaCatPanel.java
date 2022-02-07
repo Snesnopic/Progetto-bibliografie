@@ -57,6 +57,9 @@ public class CreaCatPanel extends JPanel
 		add(nameLabel, gbc_nameLabel);
 
 		textField = new JTextField();
+		textField.setCaretColor(Color.WHITE);
+		textField.setForeground(Color.WHITE);
+		textField.setBackground(new Color(14, 22, 23));
 		textField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -79,6 +82,7 @@ public class CreaCatPanel extends JPanel
 		setSuperCatList(new JList<String>());
 		superCatList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		superCatList.setListData(categorie);
+		superCatList.setBackground(new Color(14, 22, 23));
 		superCatList.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		GridBagConstraints gbc_superCatList = new GridBagConstraints();
 		gbc_superCatList.insets = new Insets(0, 0, 5, 5);
@@ -98,7 +102,8 @@ public class CreaCatPanel extends JPanel
 		gbc_createButton.gridx = 3;
 		gbc_createButton.gridy = 3;
 		add(createButton, gbc_createButton);
-
+		superCatList.setForeground(Color.WHITE);
+		backButton.setForeground(Color.WHITE);
 	}
 	public JTextField getTextField() {
 		return textField;
@@ -111,14 +116,12 @@ public class CreaCatPanel extends JPanel
 	}
 	private void setSuperCatList(JList<String> jList) {
 		this.superCatList = jList;
-
 	}
 	public JButton getBackButton() {
 		return backButton;
 	}
 	public void setBackButton(JButton backButton) {
 		this.backButton = backButton;
-		backButton.setForeground(Color.WHITE);
 	}
 	public JButton getCreateButton() {
 		return createButton;
