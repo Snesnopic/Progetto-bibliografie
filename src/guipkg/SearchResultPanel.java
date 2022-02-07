@@ -72,10 +72,10 @@ public class SearchResultPanel extends JPanel
 		ricercaTable.setModel(new DefaultTableModel(dataRicerca,new String[] {"Titolo", "Autori", "Data", "URL","DOI", "Categorie","Tipo"})
 		{
 			boolean[] columnEditables = new boolean[] {false, false, false, false,false, false,false};
-				@Override
+			@Override
 			public boolean isCellEditable(int row, int column)
 			{
-					return columnEditables[column];
+				return columnEditables[column];
 			}
 		});
 	}

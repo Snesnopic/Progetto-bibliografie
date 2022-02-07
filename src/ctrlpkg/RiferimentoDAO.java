@@ -10,7 +10,7 @@ import datalpkg.Riferimento;
 
 public class RiferimentoDAO implements DAO<Riferimento> {
 	private DBConnection dbc = DBConnection.getInstance();
-	
+
 	@Override
 	public List<Riferimento> getAll(String sql) throws SQLException 
 	{
@@ -62,8 +62,8 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	public void insert(Riferimento obj) throws SQLException 
 	{
 		String sql = "INSERT INTO riferimenti_biblio VALUES("+obj.getId_Rif()+",'"
-		+obj.getTitolo()+"'','"+obj.getDataCreazione().toString()+"','"+obj.getDigitale().toString()+"','"+obj.getTipo()
-			+"',";
+				+obj.getTitolo()+"'','"+obj.getDataCreazione().toString()+"','"+obj.getDigitale().toString()+"','"+obj.getTipo()
+				+"',";
 		if(Objects.isNull(obj.getURL()))
 			sql = sql.concat("NULL,");
 		else
@@ -75,14 +75,14 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 		sql = sql.concat("'"+obj.getDescrizione()+"','"+obj.getDescr_autore()+"')");
 		dbc.execute(sql);
 	}
-	
+
 
 	private Riferimento extract(ResultSet rs) throws SQLException {
 		return new Riferimento(rs.getString("id_riferimento"),rs.getString("titolo_riferimento"), rs.getDate("data_riferimento"), rs.getString("tipo"), rs.getString("url"),rs.getInt("doi"), rs.getBoolean("on_line"),
 				rs.getString("descr_riferimento"),rs.getString("descr_autore"));
 	}
-	
 
-	
+
+
 
 }

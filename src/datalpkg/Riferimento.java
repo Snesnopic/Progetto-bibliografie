@@ -18,8 +18,8 @@ public class Riferimento {
 	private List<Utente> autori;
 	private List<Riferimento> cited;
 	private List<Riferimento> citedIn;
-	
-	
+
+
 	public String getTitolo() {
 		return titolo;
 	}
@@ -66,7 +66,7 @@ public class Riferimento {
 	{
 		return cited;
 	}
-	
+
 	public String citazioniToString()
 	{
 		String a = "";

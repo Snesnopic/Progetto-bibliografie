@@ -10,7 +10,7 @@ import datalpkg.Utente;
 
 public class UtenteDAO implements DAO<Utente> {
 	private DBConnection dbc = DBConnection.getInstance();
-	
+
 	@Override
 	public List<Utente> getAll(String sql) throws SQLException {
 		ResultSet rs = dbc.executeQuery(sql);

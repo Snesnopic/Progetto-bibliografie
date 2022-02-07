@@ -5,7 +5,7 @@ public class Categoria {
 	private String nome;
 	private int autore;
 	private int id_Generaliz;
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -26,7 +26,7 @@ public class Categoria {
 	public void setGeneraliz(int generaliz) {
 		this.id_Generaliz = generaliz;
 	}
-	
+
 	public Categoria(int id_Cat,String nome, int autore, int generaliz) {
 		super();
 		this.id_Cat = id_Cat;

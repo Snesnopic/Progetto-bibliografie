@@ -40,7 +40,7 @@ public class CategoriaDAO implements DAO<Categoria> {
 	@Override
 	public void delete(Categoria obj) throws SQLException {
 		String sql = "DELETE FROM categoria WHERE id_categoria = "+obj.getId_Cat();
-		
+
 		dbc.execute(sql);
 	}
 
@@ -54,7 +54,7 @@ public class CategoriaDAO implements DAO<Categoria> {
 		{
 			sql = sql.concat(","+obj.getGeneraliz());
 		}
-		
+
 		sql = sql.concat(","+obj.getAutore()+")");
 		dbc.execute(sql);
 	}
@@ -68,7 +68,7 @@ public class CategoriaDAO implements DAO<Categoria> {
 		return c;
 	}
 
-	
-	
+
+
 
 }
