@@ -82,9 +82,10 @@ public class MainFrame extends JFrame {
 		});
 		sidePanel.getCreaRifButton().addActionListener(e -> {
 			CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false), c.getCitazioni());
+			JScrollPane scrollable = new JScrollPane(creaRifPanel);
 			currentPanel.setVisible(false);
 			currentPanel = creaRifPanel;
-			mainPanel.add(currentPanel);
+			mainPanel.add(scrollable);
 			creaRifPanel.getBackButton().addActionListener(e16 -> {
 				mainPanel.remove(currentPanel);
 				currentPanel = welcomePanel;
