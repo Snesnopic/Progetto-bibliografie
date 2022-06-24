@@ -13,14 +13,13 @@ public class Riferimento {
 	private Integer DOI;
 	private Boolean digitale;
 	private String descrizione;
-	private String descr_autore;
 	private List<Categoria> categorie;
 	private List<Utente> autori;
 	private List<Riferimento> cited;
 	private List<Riferimento> citedIn;
 
 	public Riferimento(int id_Rif, String titolo, Date dataCreazione, String tipo, String URL, Integer DOI,
-			Boolean digitale, String descrizione, String descr_autore) {
+			Boolean digitale, String descrizione) {
 		super();
 		this.id_Rif = id_Rif;
 		categorie = new ArrayList<>();
@@ -31,7 +30,6 @@ public class Riferimento {
 		this.URL = URL;
 		this.digitale = digitale;
 		this.descrizione = descrizione;
-		this.descr_autore = descr_autore;
 	}
 
 	public String getTitolo() {
@@ -178,11 +176,4 @@ public class Riferimento {
 		this.descrizione = descrizione;
 	}
 
-	public String getDescr_autore() {
-		return descr_autore;
-	}
-
-	public void setDescr_autore(String descr_autore) {
-		this.descr_autore = descr_autore;
-	}
 }
