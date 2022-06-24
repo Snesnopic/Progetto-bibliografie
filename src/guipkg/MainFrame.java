@@ -58,6 +58,14 @@ public class MainFrame extends JFrame {
 		});
 
 		sidePanel.getCreaCatButton().addActionListener(e -> {
+			if(!(currentPanel instanceof CreaCatPanel))
+			{
+				for (Component d : mainPanel.getComponents()) {
+				    if (d instanceof JScrollPane)
+				    {
+				        mainPanel.remove(d);
+				    }
+				}
 			CreaCatPanel creaCatPanel = new CreaCatPanel(c.getCategorie(false));
 			currentPanel.setVisible(false);
 			currentPanel = creaCatPanel;
@@ -79,8 +87,11 @@ public class MainFrame extends JFrame {
 					welcomePanel.getCategoriaComboBox().setModel(new DefaultComboBoxModel<>(c.getCategorie(false)));
 				}
 			});
+			}
 		});
 		sidePanel.getCreaRifButton().addActionListener(e -> {
+			if(!(currentPanel instanceof CreaRifPanel))
+			{
 			CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false), c.getCitazioni());
 			JScrollPane scrollable = new JScrollPane(creaRifPanel);
 			currentPanel.setVisible(false);
@@ -88,6 +99,7 @@ public class MainFrame extends JFrame {
 			mainPanel.add(scrollable);
 			creaRifPanel.getBackButton().addActionListener(e16 -> {
 				mainPanel.remove(currentPanel);
+				mainPanel.remove(scrollable);
 				currentPanel = welcomePanel;
 				currentPanel.setVisible(true);
 			});
@@ -105,7 +117,7 @@ public class MainFrame extends JFrame {
 					c.creaRiferimento(creaRifPanel.getNameField().getText(),
 							Date.valueOf(creaRifPanel.getDatePicker().getDate()), creaRifPanel.getSelectedButton(), url,
 							doi, creaRifPanel.getIsDigitalCheckBox().isSelected(),
-							creaRifPanel.getDescriptionPane().getText(), creaRifPanel.getNotePane().getText(),
+							creaRifPanel.getDescriptionPane().getText(),
 							creaRifPanel.getSelectedUsers(), creaRifPanel.getSelectedCategories(),
 							creaRifPanel.getSelectedCitazioni());
 					welcomePanel.refreshRifTable(c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
@@ -113,8 +125,17 @@ public class MainFrame extends JFrame {
 				} else
 					JOptionPane.showMessageDialog(null, "Errore di input");
 			});
+		}
 		});
 		sidePanel.getViewRifButton().addActionListener(e -> {
+			if(!(currentPanel instanceof ViewRifPanel))
+			{
+				for (Component d : mainPanel.getComponents()) {
+				    if (d instanceof JScrollPane)
+				    {
+				        mainPanel.remove(d);
+				    }
+				}
 			ViewRifPanel viewRifPanel = new ViewRifPanel(c.getRiferimenti());
 			currentPanel.setVisible(false);
 			currentPanel = viewRifPanel;
@@ -144,7 +165,6 @@ public class MainFrame extends JFrame {
 					viewRifPanel.getDescrPane().setText(c.getDescrizione(id_rif));
 					viewRifPanel.getLinkField().setText(c.getURL(id_rif));
 					viewRifPanel.getIsDigitalCheckBox().setSelected(c.getOnline(id_rif));
-					viewRifPanel.getNotePane().setText(c.getNote(id_rif));
 					viewRifPanel.getDoiField().setText(c.getDOI(id_rif).toString());
 					viewRifPanel.getDatePicker().setDate(c.getData(id_rif).toLocalDate());
 					viewRifPanel.getBottoniRadio().clearSelection();
@@ -155,11 +175,14 @@ public class MainFrame extends JFrame {
 					case "Libro":
 						viewRifPanel.getIsLibroRadioButton().setSelected(true);
 						break;
-					case "Risorsa on-line":
+					case "Rivista":
 						viewRifPanel.getIsRisorsaRadioButton().setSelected(true);
 						break;
-					case "Dataset":
+					case "Fascicolo":
 						viewRifPanel.getIsDataSetRadioButton().setSelected(true);
+						break;
+					case "Conferenza":
+						viewRifPanel.getIsConferenzaRadioButton().setSelected(true);
 						break;
 					}
 					viewRifPanel.setSelection(true);
@@ -170,9 +193,10 @@ public class MainFrame extends JFrame {
 					c.updateRiferimento(id_rif, viewRifPanel.getTitleField().getText(),
 							viewRifPanel.getDescrPane().getText(), viewRifPanel.getLinkField().getText(),
 							Integer.parseInt(viewRifPanel.getDoiField().getText()),
-							viewRifPanel.getIsDigitalCheckBox().isSelected(), viewRifPanel.getNotePane().getText(),
+							viewRifPanel.getIsDigitalCheckBox().isSelected(),
 							Date.valueOf(viewRifPanel.getDatePicker().getDate()), viewRifPanel.getSelectedButton());
 			});
+			}
 		});
 	}
 }
