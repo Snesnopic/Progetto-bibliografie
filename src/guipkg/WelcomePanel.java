@@ -13,6 +13,7 @@ public class WelcomePanel extends JPanel {
 	private JCheckBox isArticoloCheckBox;
 	private JCheckBox isDataSetCheckBox;
 	private JCheckBox isLibroCheckBox;
+	private JCheckBox isConferenzaCheckBox;
 	private ButtonGroup bottoniRadio;
 	private JButton searchButton;
 
@@ -66,12 +67,24 @@ public class WelcomePanel extends JPanel {
 		gbc_searchButton_1.gridy = 1;
 		add(searchButton, gbc_searchButton_1);
 		setIsArticoloCheckBox(new JCheckBox("Articoli"));
-
+		
 		isArticoloCheckBox.setForeground(Color.WHITE);
 		isArticoloCheckBox.setBackground(new Color(23, 33, 43));
 		isArticoloCheckBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
 		isArticoloCheckBox.setSelected(true);
-
+		
+		setIsConferenzaCheckBox(new JCheckBox("Conferenza"));
+		isConferenzaCheckBox.setForeground(Color.WHITE);
+		isConferenzaCheckBox.setBackground(new Color(23, 33, 43));
+		isConferenzaCheckBox.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+		isConferenzaCheckBox.setSelected(true);
+		GridBagConstraints gbc_isConferenzaCheckBox = new GridBagConstraints();
+		gbc_isConferenzaCheckBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_isConferenzaCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_isConferenzaCheckBox.gridx = 5;
+		gbc_isConferenzaCheckBox.gridy = 2;
+		add(isConferenzaCheckBox, gbc_isConferenzaCheckBox);
+		
 		GridBagConstraints gbc_isArticoloCheckBox = new GridBagConstraints();
 		gbc_isArticoloCheckBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_isArticoloCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -91,7 +104,7 @@ public class WelcomePanel extends JPanel {
 		gbc_isLibroCheckBox.gridx = 2;
 		gbc_isLibroCheckBox.gridy = 2;
 		add(isLibroCheckBox, gbc_isLibroCheckBox);
-		setIsRisorsaCheckBox(new JCheckBox("Risorse on-line"));
+		setIsRisorsaCheckBox(new JCheckBox("Fascicolo"));
 
 		isRisorsaCheckBox.setForeground(Color.WHITE);
 		isRisorsaCheckBox.setBackground(new Color(23, 33, 43));
@@ -103,7 +116,7 @@ public class WelcomePanel extends JPanel {
 		gbc_isRisorsaCheckBox.gridx = 3;
 		gbc_isRisorsaCheckBox.gridy = 2;
 		add(isRisorsaCheckBox, gbc_isRisorsaCheckBox);
-		setIsDataSetCheckBox(new JCheckBox("Dataset"));
+		setIsDataSetCheckBox(new JCheckBox("Rivista"));
 
 		isDataSetCheckBox.setForeground(Color.WHITE);
 		isDataSetCheckBox.setBackground(new Color(23, 33, 43));
@@ -126,7 +139,7 @@ public class WelcomePanel extends JPanel {
 		GridBagConstraints gbc_categoriaComboBox = new GridBagConstraints();
 		gbc_categoriaComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_categoriaComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_categoriaComboBox.gridx = 5;
+		gbc_categoriaComboBox.gridx = 6;
 		gbc_categoriaComboBox.gridy = 2;
 		add(categoriaComboBox, gbc_categoriaComboBox);
 		JLabel cercaPerLabel = new JLabel("Cerca per...");
@@ -157,7 +170,6 @@ public class WelcomePanel extends JPanel {
 		add(titoloRadioButton, gbc_titoloRadioButton);
 		JRadioButton autoreRadioButton = new JRadioButton("Autore");
 		bottoniRadio.add(autoreRadioButton);
-
 		autoreRadioButton.setForeground(Color.WHITE);
 		autoreRadioButton.setBackground(new Color(23, 33, 43));
 		autoreRadioButton.setActionCommand(autoreRadioButton.getName());
@@ -279,6 +291,10 @@ public class WelcomePanel extends JPanel {
 	public void setIsLibroCheckBox(JCheckBox isLibroCheckBox) {
 		this.isLibroCheckBox = isLibroCheckBox;
 	}
+	
+	public void setIsConferenzaCheckBox(JCheckBox isConferenzaCheckBox) {
+		this.isConferenzaCheckBox = isConferenzaCheckBox;
+	}
 
 	public void setBottoniRadio(ButtonGroup bottoniRadio) {
 		this.bottoniRadio = bottoniRadio;
@@ -309,7 +325,7 @@ public class WelcomePanel extends JPanel {
 
 	public boolean isSearchValid() {
 		return !(searchField.getText().isEmpty() || (!isRisorsaCheckBox.isSelected() && !isLibroCheckBox.isSelected()
-				&& !isDataSetCheckBox.isSelected() && !isArticoloCheckBox.isSelected()));
+				&& !isDataSetCheckBox.isSelected() && !isArticoloCheckBox.isSelected() && !isConferenzaCheckBox.isSelected()));
 	}
 
 	public String getSearchFieldText() {
@@ -318,7 +334,7 @@ public class WelcomePanel extends JPanel {
 
 	public boolean[] getSelezioni() {
 		return new boolean[] { isRisorsaCheckBox.isSelected(), isLibroCheckBox.isSelected(),
-				isDataSetCheckBox.isSelected(), isArticoloCheckBox.isSelected() };
+				isDataSetCheckBox.isSelected(), isArticoloCheckBox.isSelected(),isConferenzaCheckBox.isSelected() };
 	}
 
 	public JComboBox<String> getCategoriaComboBox() {

@@ -20,21 +20,35 @@ public class ViewRifPanel extends JPanel {
 	private DatePicker datePicker;
 	private final JRadioButton isLibroRadioButton;
 	private final JRadioButton isRisorsaRadioButton;
+	private JRadioButton isConferenzaRadioButton;
 	private final JButton confirmEditButton;
 	private final JButton editButton;
 	private final JTextField titleField;
 	private final JTextPane descrPane;
-	private final JTextPane notePane;
 	private final JTextField linkField;
 	private JTextField doiField;
+	private JLabel editoreLabel;
+	private JLabel isnnLabel;
+	private JLabel isbnLabel;
+	private JLabel pginiLabel;
+	private JLabel pgfinLabel;
+	private JLabel luogoLabel;
+	private JLabel edizioneLabel;
+	private JTextField editoreTextField;
+	private JTextField edizioneTextField;
+	private JTextField luogoTextField;
+	private JTextField isbnTextField;
+	private JTextField pginiTextField;
+	private JTextField pgfinTextField;
+	private JTextField isnnTextField;
 
 	public ViewRifPanel(String[] riferimenti) {
 		setBackground(new Color(23, 33, 43));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0,
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
@@ -300,7 +314,7 @@ public class ViewRifPanel extends JPanel {
 			add(isLibroRadioButton, gbc_isLibroRadioButton);
 		}
 		{
-			isRisorsaRadioButton = new JRadioButton("Risorsa on-line");
+			isRisorsaRadioButton = new JRadioButton("Rivista");
 			isRisorsaRadioButton.setEnabled(false);
 			bottoniRadio.add(isRisorsaRadioButton);
 			isRisorsaRadioButton.setForeground(Color.WHITE);
@@ -315,7 +329,8 @@ public class ViewRifPanel extends JPanel {
 			add(isRisorsaRadioButton, gbc_isRisorsaRadioButton);
 		}
 		{
-			setIsDataSetRadioButton(new JRadioButton("Dataset"));
+			setIsDataSetRadioButton(new JRadioButton("Fascicolo"));
+			isDataSetRadioButton.setEnabled(false);
 			bottoniRadio.add(isDataSetRadioButton);
 			isDataSetRadioButton.setForeground(Color.WHITE);
 			isDataSetRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -329,32 +344,201 @@ public class ViewRifPanel extends JPanel {
 			add(isDataSetRadioButton, gbc_isDataSetRadioButton);
 		}
 		{
-			JLabel noteLabel = new JLabel("Note autore");
-			noteLabel.setForeground(Color.WHITE);
-			noteLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
-			GridBagConstraints gbc_noteLabel = new GridBagConstraints();
-			gbc_noteLabel.fill = GridBagConstraints.VERTICAL;
-			gbc_noteLabel.anchor = GridBagConstraints.EAST;
-			gbc_noteLabel.insets = new Insets(0, 0, 5, 5);
-			gbc_noteLabel.gridx = 2;
-			gbc_noteLabel.gridy = 10;
-			add(noteLabel, gbc_noteLabel);
-			myRifList.setBackground(new Color(14, 22, 33));
+			setIsConferenzaRadioButton(new JRadioButton("Conferenza"));
+			isConferenzaRadioButton.setEnabled(false);
+			bottoniRadio.add(isConferenzaRadioButton);
+			isConferenzaRadioButton.setForeground(Color.WHITE);
+			isConferenzaRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			isConferenzaRadioButton.setBackground(new Color(23, 33, 43));
+			GridBagConstraints gbc_isConferenzaRadioButton = new GridBagConstraints();
+			gbc_isConferenzaRadioButton.fill = GridBagConstraints.VERTICAL;
+			gbc_isConferenzaRadioButton.anchor = GridBagConstraints.WEST;
+			gbc_isConferenzaRadioButton.insets = new Insets(0, 0, 5, 5);
+			gbc_isConferenzaRadioButton.gridx = 7;
+			gbc_isConferenzaRadioButton.gridy = 9;
+			add(isConferenzaRadioButton, gbc_isConferenzaRadioButton);
 		}
 		{
-			notePane = new JTextPane();
-			notePane.setEnabled(false);
-			notePane.setCaretColor(Color.WHITE);
-			notePane.setForeground(Color.WHITE);
-			notePane.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
-			notePane.setBackground(new Color(14, 22, 33));
-			GridBagConstraints gbc_notePane = new GridBagConstraints();
-			gbc_notePane.gridwidth = 4;
-			gbc_notePane.insets = new Insets(0, 0, 5, 5);
-			gbc_notePane.fill = GridBagConstraints.BOTH;
-			gbc_notePane.gridx = 3;
-			gbc_notePane.gridy = 10;
-			add(notePane, gbc_notePane);
+			editoreLabel = new JLabel("Editore");
+			editoreLabel.setForeground(Color.WHITE);
+			editoreLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_editoreLabel = new GridBagConstraints();
+			gbc_editoreLabel.anchor = GridBagConstraints.EAST;
+			gbc_editoreLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_editoreLabel.gridx = 2;
+			gbc_editoreLabel.gridy = 10;
+			add(editoreLabel, gbc_editoreLabel);
+		}
+		{
+			editoreTextField = new JTextField();
+			GridBagConstraints gbc_editoreTextField = new GridBagConstraints();
+			editoreTextField.setCaretColor(Color.WHITE);
+			editoreTextField.setForeground(Color.WHITE);
+			editoreTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			editoreTextField.setBackground(new Color(14, 22, 33));
+			gbc_editoreTextField.gridwidth = 4;
+			gbc_editoreTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_editoreTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_editoreTextField.gridx = 3;
+			gbc_editoreTextField.gridy = 10;
+			add(editoreTextField, gbc_editoreTextField);
+			editoreTextField.setColumns(10);
+		}
+		{
+			edizioneLabel = new JLabel("Edizione");
+			edizioneLabel.setForeground(Color.WHITE);
+			edizioneLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_edizioneLabel = new GridBagConstraints();
+			gbc_edizioneLabel.anchor = GridBagConstraints.EAST;
+			gbc_edizioneLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_edizioneLabel.gridx = 2;
+			gbc_edizioneLabel.gridy = 11;
+			add(edizioneLabel, gbc_edizioneLabel);
+		}
+		{
+			edizioneTextField = new JTextField();
+			GridBagConstraints gbc_edizioneTextField = new GridBagConstraints();
+			edizioneTextField.setCaretColor(Color.WHITE);
+			edizioneTextField.setForeground(Color.WHITE);
+			edizioneTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			edizioneTextField.setBackground(new Color(14, 22, 33));
+			gbc_edizioneTextField.gridwidth = 4;
+			gbc_edizioneTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_edizioneTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_edizioneTextField.gridx = 3;
+			gbc_edizioneTextField.gridy = 11;
+			add(edizioneTextField, gbc_edizioneTextField);
+			edizioneTextField.setColumns(10);
+		}
+		{
+			luogoLabel = new JLabel("Luogo");
+			luogoLabel.setForeground(Color.WHITE);
+			luogoLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_luogoLabel = new GridBagConstraints();
+			gbc_luogoLabel.anchor = GridBagConstraints.EAST;
+			gbc_luogoLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_luogoLabel.gridx = 2;
+			gbc_luogoLabel.gridy = 12;
+			add(luogoLabel, gbc_luogoLabel);
+		}
+		{
+			luogoTextField = new JTextField();
+			GridBagConstraints gbc_luogoTextField = new GridBagConstraints();
+			luogoTextField.setCaretColor(Color.WHITE);
+			luogoTextField.setForeground(Color.WHITE);
+			luogoTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			luogoTextField.setBackground(new Color(14, 22, 33));
+			gbc_luogoTextField.gridwidth = 4;
+			gbc_luogoTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_luogoTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_luogoTextField.gridx = 3;
+			gbc_luogoTextField.gridy = 12;
+			add(luogoTextField, gbc_luogoTextField);
+			luogoTextField.setColumns(10);
+		}
+		{
+			isbnLabel = new JLabel("ISBN");
+			isbnLabel.setForeground(Color.WHITE);
+			isbnLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_isbnLabel = new GridBagConstraints();
+			gbc_isbnLabel.anchor = GridBagConstraints.EAST;
+			gbc_isbnLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_isbnLabel.gridx = 2;
+			gbc_isbnLabel.gridy = 13;
+			add(isbnLabel, gbc_isbnLabel);
+		}
+		{
+			isbnTextField = new JTextField();
+			GridBagConstraints gbc_isbnTextField = new GridBagConstraints();
+			isbnTextField.setCaretColor(Color.WHITE);
+			isbnTextField.setForeground(Color.WHITE);
+			isbnTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			isbnTextField.setBackground(new Color(14, 22, 33));
+			gbc_isbnTextField.gridwidth = 4;
+			gbc_isbnTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_isbnTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_isbnTextField.gridx = 3;
+			gbc_isbnTextField.gridy = 13;
+			add(isbnTextField, gbc_isbnTextField);
+			isbnTextField.setColumns(10);
+		}
+		{
+			pginiLabel = new JLabel("Pag. Inizio");
+			pginiLabel.setForeground(Color.WHITE);
+			pginiLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_pginiLabel = new GridBagConstraints();
+			gbc_pginiLabel.anchor = GridBagConstraints.EAST;
+			gbc_pginiLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_pginiLabel.gridx = 2;
+			gbc_pginiLabel.gridy = 14;
+			add(pginiLabel, gbc_pginiLabel);
+		}
+		{
+			pginiTextField = new JTextField();
+			GridBagConstraints gbc_pginiTextField = new GridBagConstraints();
+			pginiTextField.setCaretColor(Color.WHITE);
+			pginiTextField.setForeground(Color.WHITE);
+			pginiTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			pginiTextField.setBackground(new Color(14, 22, 33));
+			gbc_pginiTextField.gridwidth = 4;
+			gbc_pginiTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_pginiTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_pginiTextField.gridx = 3;
+			gbc_pginiTextField.gridy = 14;
+			add(pginiTextField, gbc_pginiTextField);
+			pginiTextField.setColumns(10);
+		}
+		{
+			pgfinLabel = new JLabel("Pag. Fine");
+			pgfinLabel.setForeground(Color.WHITE);
+			pgfinLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_pgfinLabel = new GridBagConstraints();
+			gbc_pgfinLabel.anchor = GridBagConstraints.EAST;
+			gbc_pgfinLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_pgfinLabel.gridx = 2;
+			gbc_pgfinLabel.gridy = 15;
+			add(pgfinLabel, gbc_pgfinLabel);
+		}
+		{
+			pgfinTextField = new JTextField();
+			GridBagConstraints gbc_pgfinTextField = new GridBagConstraints();
+			pgfinTextField.setCaretColor(Color.WHITE);
+			pgfinTextField.setForeground(Color.WHITE);
+			pgfinTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			pgfinTextField.setBackground(new Color(14, 22, 33));
+			gbc_pgfinTextField.gridwidth = 4;
+			gbc_pgfinTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_pgfinTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_pgfinTextField.gridx = 3;
+			gbc_pgfinTextField.gridy = 15;
+			add(pgfinTextField, gbc_pgfinTextField);
+			pgfinTextField.setColumns(10);
+		}
+		{
+			isnnLabel = new JLabel("ISNN");
+			isnnLabel.setForeground(Color.WHITE);
+			isnnLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+			GridBagConstraints gbc_isnnLabel = new GridBagConstraints();
+			gbc_isnnLabel.anchor = GridBagConstraints.EAST;
+			gbc_isnnLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_isnnLabel.gridx = 2;
+			gbc_isnnLabel.gridy = 16;
+			add(isnnLabel, gbc_isnnLabel);
+		}
+		{
+			isnnTextField = new JTextField();
+			isnnTextField.setCaretColor(Color.WHITE);
+			isnnTextField.setForeground(Color.WHITE);
+			isnnTextField.setFont(new Font("Yu Gothic UI", Font.PLAIN, 11));
+			isnnTextField.setBackground(new Color(14, 22, 33));
+			GridBagConstraints gbc_isnnTextField = new GridBagConstraints();
+			gbc_isnnTextField.gridwidth = 4;
+			gbc_isnnTextField.insets = new Insets(0, 0, 5, 5);
+			gbc_isnnTextField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_isnnTextField.gridx = 3;
+			gbc_isnnTextField.gridy = 16;
+			add(isnnTextField, gbc_isnnTextField);
+			isnnTextField.setColumns(10);
 		}
 		{
 			confirmEditButton = new JButton("Conferma");
@@ -367,7 +551,7 @@ public class ViewRifPanel extends JPanel {
 			gbc_confirmEditButton.gridwidth = 4;
 			gbc_confirmEditButton.insets = new Insets(0, 0, 5, 5);
 			gbc_confirmEditButton.gridx = 3;
-			gbc_confirmEditButton.gridy = 11;
+			gbc_confirmEditButton.gridy = 17;
 			add(confirmEditButton, gbc_confirmEditButton);
 		}
 		isDigitalCheckBox.addChangeListener(e -> linkField.setEnabled(isDigitalCheckBox.isSelected()));
@@ -379,6 +563,11 @@ public class ViewRifPanel extends JPanel {
 				}
 			}
 		});
+	}
+
+	private void setIsConferenzaRadioButton(JRadioButton jRadioButton) {
+		this.isConferenzaRadioButton = jRadioButton;
+		isDataSetRadioButton.setEnabled(false);
 	}
 
 	public DatePicker getDatePicker() {
@@ -409,7 +598,9 @@ public class ViewRifPanel extends JPanel {
 	public JRadioButton getIsDataSetRadioButton() {
 		return isDataSetRadioButton;
 	}
-
+	public JRadioButton getIsConferenzaRadioButton() {
+		return isConferenzaRadioButton;
+	}
 	public void setIsDataSetRadioButton(JRadioButton isDataSetRadioButton) {
 		this.isDataSetRadioButton = isDataSetRadioButton;
 		isDataSetRadioButton.setEnabled(false);
@@ -452,9 +643,8 @@ public class ViewRifPanel extends JPanel {
 
 	public void setMyRifList(JList<String> myRifList) {
 		this.myRifList = myRifList;
-
 		myRifList.setForeground(Color.WHITE);
-
+		myRifList.setBackground(Color.BLACK);
 	}
 
 	public JTextField getTitleField() {
@@ -465,10 +655,6 @@ public class ViewRifPanel extends JPanel {
 		return descrPane;
 	}
 
-	public JTextPane getNotePane() {
-		return notePane;
-	}
-
 	public JTextField getLinkField() {
 		return linkField;
 	}
@@ -476,7 +662,34 @@ public class ViewRifPanel extends JPanel {
 	public JTextField getDoiField() {
 		return doiField;
 	}
-
+	public JTextField getPginiTextField()
+	{
+		return pginiTextField;
+	}
+	public JTextField getPgfniTextField()
+	{
+		return pgfinTextField;
+	}
+	public JTextField getLuogoTextField()
+	{
+		return luogoTextField;
+	}
+	public JTextField getEditoreTextField()
+	{
+		return editoreTextField;
+	}
+	public JTextField getEdizioneTextField()
+	{
+		return edizioneTextField;
+	}
+	public JTextField getISBNTextField()
+	{
+		return isbnTextField;
+	}
+	public JTextField getISNNTextField()
+	{
+		return isnnTextField;
+	}
 	private void setDoiField(JTextField jTextField) {
 		doiField = jTextField;
 		doiField.setEnabled(false);
@@ -491,10 +704,17 @@ public class ViewRifPanel extends JPanel {
 		isArticoloRadioButton.setEnabled(b);
 		isRisorsaRadioButton.setEnabled(b);
 		isDigitalCheckBox.setEnabled(b);
+		isConferenzaRadioButton.setEnabled(b);
 		descrPane.setEnabled(b);
 		datePicker.setEnabled(b);
-		notePane.setEnabled(b);
 		confirmEditButton.setEnabled(b);
+		editoreTextField.setEnabled(b);
+		isnnTextField.setEnabled(b);
+		pginiTextField.setEnabled(b);
+		pgfinTextField.setEnabled(b);
+		isbnTextField.setEnabled(b);
+		edizioneTextField.setEnabled(b);
+		luogoTextField.setEnabled(b);
 	}
 
 	public boolean isInputValid() {

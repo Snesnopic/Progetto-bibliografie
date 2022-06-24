@@ -230,7 +230,7 @@ public class CreaRifPanel extends JPanel {
 		gbc_isLibroRadioButton.gridy = 6;
 		add(isLibroRadioButton, gbc_isLibroRadioButton);
 
-		JRadioButton isRisorsaRadioButton = new JRadioButton("Risorsa on-line");
+		JRadioButton isRisorsaRadioButton = new JRadioButton("Rivista");
 		isRisorsaRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		isRisorsaRadioButton.setForeground(Color.WHITE);
 		isRisorsaRadioButton.setBackground(new Color(23, 33, 43));
@@ -241,7 +241,7 @@ public class CreaRifPanel extends JPanel {
 		gbc_isRisorsaRadioButton.gridy = 6;
 		add(isRisorsaRadioButton, gbc_isRisorsaRadioButton);
 
-		JRadioButton isDataSetRadioButton = new JRadioButton("Dataset");
+		JRadioButton isDataSetRadioButton = new JRadioButton("Fascicolo");
 		isDataSetRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 		isDataSetRadioButton.setForeground(Color.WHITE);
 		isDataSetRadioButton.setBackground(new Color(23, 33, 43));
@@ -251,6 +251,17 @@ public class CreaRifPanel extends JPanel {
 		gbc_isDataSetRadioButton.gridy = 6;
 		add(isDataSetRadioButton, gbc_isDataSetRadioButton);
 
+		JRadioButton isConferenzaRadioButton = new JRadioButton("Conferenza");
+		isConferenzaRadioButton.setBackground(new Color(23, 33, 43));
+		isConferenzaRadioButton.setForeground(Color.WHITE);
+		isConferenzaRadioButton.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
+		GridBagConstraints gbc_isConferenzaRadioButton = new GridBagConstraints();
+		gbc_isConferenzaRadioButton.anchor = GridBagConstraints.WEST;
+		gbc_isConferenzaRadioButton.insets = new Insets(0, 0, 5, 5);
+		gbc_isConferenzaRadioButton.gridx = 7;
+		gbc_isConferenzaRadioButton.gridy = 6;
+		add(isConferenzaRadioButton, gbc_isConferenzaRadioButton);
+		
 		JLabel noteLabel = new JLabel("Note autore");
 		noteLabel.setForeground(Color.WHITE);
 		noteLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
@@ -363,6 +374,7 @@ public class CreaRifPanel extends JPanel {
 		bottoniRadio.add(isRisorsaRadioButton);
 		bottoniRadio.add(isLibroRadioButton);
 		bottoniRadio.add(isArticoloRadioButton);
+		bottoniRadio.add(isConferenzaRadioButton);
 		doiField.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
