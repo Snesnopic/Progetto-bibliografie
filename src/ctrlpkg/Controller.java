@@ -58,10 +58,9 @@ public class Controller {
 		}
 	}
 
-	public void updateRiferimento(int id_rif, String titolo, String descr, String URL, Integer doi, Boolean isDigital,
-			String note, Date data, String tipo) {
+	public void updateRiferimento(int id_rif, String titolo, String descr, String URL, Integer doi, Boolean isDigital, Date data, String tipo) {
 		try {
-			Riferimento r = new Riferimento(id_rif, titolo, data, tipo, URL, doi, isDigital, descr, note);
+			Riferimento r = new Riferimento(id_rif, titolo, data, tipo, URL, doi, isDigital, descr);
 			RiferimentoDAO rDAO = new RiferimentoDAO();
 			rDAO.update(r);
 			JOptionPane.showMessageDialog(null, "Riferimento aggiornato correttamente!");
@@ -115,7 +114,7 @@ public class Controller {
 	}
 
 	public void creaRiferimento(String nomeRif, Date data, String tipo, String URL, Integer DOI, boolean dig,
-			String descr_rif, String descr_aut, ArrayList<Integer> autori, ArrayList<Integer> categorie,
+			String descr_rif, ArrayList<Integer> autori, ArrayList<Integer> categorie,
 			ArrayList<Integer> citazioni) {
 		try {
 			ResultSet rs = dbc.executeQuery("SELECT MAX(Id_riferimento) FROM riferimenti_biblio");
@@ -123,7 +122,7 @@ public class Controller {
 			int id_Rif = rs.getInt(1) + 1;
 			if (!autori.contains(retrieveID()))
 				autori.add(0, retrieveID());
-			Riferimento r = new Riferimento(id_Rif, nomeRif, data, tipo, URL, DOI, dig, descr_rif, descr_aut);
+			Riferimento r = new Riferimento(id_Rif, nomeRif, data, tipo, URL, DOI, dig, descr_rif);
 			RiferimentoDAO rDAO = new RiferimentoDAO();
 			rDAO.insert(r);
 			for (int i = 0; i < autori.size(); i++) {
@@ -274,7 +273,7 @@ public class Controller {
 			query = query.concat("AND tipo IN ('");
 			boolean multipleTypes = false;
 			if (tipi[0]) {
-				query = query.concat("Risorsa on-line'");
+				query = query.concat("Rivista'");
 				multipleTypes = true;
 			}
 			if (tipi[1]) {
@@ -286,13 +285,18 @@ public class Controller {
 			if (tipi[2]) {
 				if (multipleTypes)
 					query = query.concat(",'");
-				query = query.concat("Dataset'");
+				query = query.concat("Fascicolo'");
 				multipleTypes = true;
 			}
 			if (tipi[3]) {
 				if (multipleTypes)
 					query = query.concat(",'");
 				query = query.concat("Articolo'");
+			}
+			if (tipi[4]) {
+				if (multipleTypes)
+					query = query.concat(",'");
+				query = query.concat("Conferenza'");
 			}
 			query = query.concat(")");
 
@@ -436,7 +440,33 @@ public class Controller {
 			return null;
 		}
 	}
+	
+	public String getISNN(int id_rif)
+	{
+		try {
+			ResultSet rs = dbc.executeQuery("SELECT ISNN FROM riferimenti_biblio WHERE id_riferimento = " + id_rif);
+			rs.next();
+			return rs.getString(1);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+			return null;
+		}
+	}
 
+	public String getISBN(int id_rif)
+	{
+		try {
+			ResultSet rs = dbc.executeQuery("SELECT ISNN FROM riferimenti_biblio WHERE id_riferimento = " + id_rif);
+			rs.next();
+			return rs.getString(1);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+			return null;
+		}
+	}
+	
 	public String getURL(int id_rif) {
 		try {
 			ResultSet rs = dbc.executeQuery("SELECT url FROM riferimenti_biblio WHERE id_riferimento = " + id_rif);
@@ -462,18 +492,6 @@ public class Controller {
 		}
 	}
 
-	public String getNote(int id_rif) {
-		try {
-			ResultSet rs = dbc
-					.executeQuery("SELECT descr_autore FROM riferimenti_biblio WHERE id_riferimento = " + id_rif);
-			rs.next();
-			return rs.getString(1);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
-			return null;
-		}
-	}
 
 	public String[] getCategorie(boolean b) {
 		try {
