@@ -34,7 +34,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	public void update(Riferimento obj) throws SQLException {
 		String sql = "UPDATE riferimenti_biblio SET titolo_riferimento = '" + obj.getTitolo()
 				+ "', data_riferimento = '" + obj.getDataCreazione().toString() + "',on_line = '"
-				+ obj.getDigitale().toString() + "',tipo = '" + obj.getTipo() + "',url = ";
+				+ obj.getDigitale().toString() + "',Tipo = '" + obj.getTipo() + "',url = ";
 		if (Objects.isNull(obj.getURL()))
 			sql = sql.concat("NULL, doi = ");
 		else
@@ -44,7 +44,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 		else
 			sql = sql.concat("" + obj.getDOI() + ",");
 		sql = sql.concat(
-				"descr_riferimento = '" + obj.getDescrizione() + "',descr_autore = '" + obj.getDescr_autore() + "' ");
+				"descr_riferimento = '" + obj.getDescrizione() + "' ");
 		sql = sql.concat("WHERE id_riferimento = " + obj.getId_Rif());
 		dbc.execute(sql);
 	}
@@ -62,14 +62,14 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 			sql = sql.concat("NULL,");
 		else
 			sql = sql.concat("" + obj.getDOI() + ",");
-		sql = sql.concat("'" + obj.getDescrizione() + "','" + obj.getDescr_autore() + "')");
+		sql = sql.concat("'" + obj.getDescrizione() + "')");
 		dbc.execute(sql);
 	}
 
 	private Riferimento extract(ResultSet rs) throws SQLException {
 		return new Riferimento(rs.getInt("id_riferimento"), rs.getString("titolo_riferimento"),
 				rs.getDate("data_riferimento"), rs.getString("tipo"), rs.getString("url"), rs.getInt("doi"),
-				rs.getBoolean("on_line"), rs.getString("descr_riferimento"), rs.getString("descr_autore"));
+				rs.getBoolean("on_line"), rs.getString("descr_riferimento"));
 	}
 
 }
