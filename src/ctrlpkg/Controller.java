@@ -47,7 +47,7 @@ public class Controller {
 	public void register() {
 		try {
 			dbc = DBConnection.getInstance();
-			dbc.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici", "postgres", "admin");
+			dbc.getConnection();
 			ResultSet rs = dbc.executeQuery("SELECT MAX(id_utente) FROM utente");
 			rs.next();
 			rf = new RegisterFrame(this, rs.getInt(1) + 1);
@@ -145,7 +145,7 @@ public class Controller {
 	public void login(String user_ID) throws IOException {
 		try {
 			dbc = DBConnection.getInstance();
-			dbc.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici", "postgres", "admin");
+			dbc.getConnection();
 			uDAO = new UtenteDAO();
 			loginUser = uDAO.get("SELECT * FROM utente WHERE id_utente ='" + user_ID + "'");
 			if (Objects.isNull(loginUser))

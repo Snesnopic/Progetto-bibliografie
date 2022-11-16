@@ -16,8 +16,8 @@ public class DBConnection {
 		return instance;
 	}
 
-	public void getConnection(String url, String username, String password) throws SQLException {
-		cn = DriverManager.getConnection(url, username, password);
+	public void getConnection() throws SQLException {
+		cn = DriverManager.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici", "postgres", "admin");
 	}
 
 	public void closeConnection() throws SQLException {
