@@ -15,8 +15,13 @@ import java.util.Objects;
 public class LoginFrame extends JFrame {
 	private final JTextField IDField;
 
-	public LoginFrame(Controller c) throws IOException {
-		setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))));
+	public LoginFrame(Controller c) {
+		try {
+			setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))));
+		} catch (final IOException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error:\n" + e.getMessage());
+		}
 
 		setBackground(Color.WHITE);
 		setTitle("Login");

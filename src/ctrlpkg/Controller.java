@@ -25,7 +25,7 @@ public class Controller {
 	MainFrame mf;
 	RegisterFrame rf;
 
-	public Controller() throws Exception {
+	public Controller() {
 		lf = new LoginFrame(this);
 		lf.setVisible(true);
 		rDAO = RiferimentoDAO.getInstance();
@@ -34,12 +34,7 @@ public class Controller {
 	}
 
 	public static void main(final String[] args) {
-		try {
 			new Controller();
-		} catch (final Exception e) {
-			JOptionPane.showMessageDialog(null,
-					"Error:\n" + e.getMessage());
-		}
 	}
 
 	public void backToLogin() {
