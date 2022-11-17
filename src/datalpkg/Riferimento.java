@@ -22,7 +22,7 @@ public class Riferimento {
 					   final String URL, final Integer DOI, final Boolean digitale, final String descrizione) {
 		super();
 		this.id_Rif = id_Rif;
-		categorie = new ArrayList<>();
+		categorie = new ArrayList<>(0);
 		this.titolo = titolo;
 		this.dataCreazione = dataCreazione;
 		this.DOI = DOI;
@@ -97,51 +97,51 @@ public class Riferimento {
 	}
 
 	public String citazioniToString() {
-		String a = "";
+		final StringBuilder a = new StringBuilder();
 		for (int i = 0; i < cited.size(); i++) {
-			a = a + cited.get(i).titolo;
+			a.append(cited.get(i).titolo);
 			if (i != cited.size() - 1)
-				a = a + ",";
+				a.append(",");
 		}
-		return a;
+		return a.toString();
 	}
 
 	public String citazioniToString(final int ID) {
-		String a = "";
+		final StringBuilder a = new StringBuilder();
 		for (int i = 0; i < cited.size(); i++) {
 			final List<Utente> tempList = cited.get(i).autori;
 			if (tempList != null) {
 				for (int j = 0; j < tempList.size(); j++) {
 					if (ID == tempList.get(i).getUser_ID()) {
-						a = a + cited.get(i).titolo;
+						a.append(cited.get(i).titolo);
 						if (i != cited.size() - 1)
-							a = a + ",";
+							a.append(",");
 						j = tempList.size();
 					}
 				}
 			}
 		}
-		return a;
+		return a.toString();
 	}
 
 	public String autoriToString() {
-		String a = "";
+		final StringBuilder a = new StringBuilder();
 		for (int i = 0; i < autori.size(); i++) {
-			a = a + autori.get(i).nominativoCompletoToString();
+			a.append(autori.get(i).nominativoCompletoToString());
 			if (i != autori.size() - 1)
-				a = a + ",";
+				a.append(",");
 		}
-		return a;
+		return a.toString();
 	}
 
 	public String categorieToString() {
-		String a = "";
+		final StringBuilder a = new StringBuilder();
 		for (int i = 0; i < categorie.size(); i++) {
-			a = a + categorie.get(i).getNome() + " ";
+			a.append(categorie.get(i).getNome()).append(" ");
 			if (i != categorie.size() - 1)
-				a = a + ",";
+				a.append(",");
 		}
-		return a;
+		return a.toString();
 	}
 
 	public List<Riferimento> getCitedIn() {
