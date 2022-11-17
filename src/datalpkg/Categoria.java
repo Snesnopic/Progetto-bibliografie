@@ -6,7 +6,7 @@ public class Categoria {
 	private final int autore;
 	private int id_Generaliz;
 
-	public Categoria(int id_Cat, String nome, int autore, int generaliz) {
+	public Categoria(final int id_Cat, final String nome, final int autore, final int generaliz) {
 		super();
 		this.id_Cat = id_Cat;
 		this.nome = nome;
@@ -14,7 +14,7 @@ public class Categoria {
 		this.id_Generaliz = generaliz;
 	}
 
-	public Categoria(int id_Cat, String nome, int autore) {
+	public Categoria(final int id_Cat, final String nome, final int autore) {
 		super();
 		this.id_Cat = id_Cat;
 		this.nome = nome;

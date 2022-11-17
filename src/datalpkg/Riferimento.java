@@ -18,8 +18,8 @@ public class Riferimento {
 	private List<Riferimento> cited;
 	private List<Riferimento> citedIn;
 
-	public Riferimento(int id_Rif, String titolo, Date dataCreazione, String tipo, String URL, Integer DOI,
-			Boolean digitale, String descrizione) {
+	public Riferimento(final int id_Rif, final String titolo, final Date dataCreazione, final String tipo,
+					   final String URL, final Integer DOI, final Boolean digitale, final String descrizione) {
 		super();
 		this.id_Rif = id_Rif;
 		categorie = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Riferimento {
 		return titolo;
 	}
 
-	public void setTitolo(String titolo) {
+	public void setTitolo(final String titolo) {
 		this.titolo = titolo;
 	}
 
@@ -44,7 +44,7 @@ public class Riferimento {
 		return dataCreazione;
 	}
 
-	public void setDataCreazione(Date dataCreazione) {
+	public void setDataCreazione(final Date dataCreazione) {
 		this.dataCreazione = dataCreazione;
 	}
 
@@ -52,7 +52,7 @@ public class Riferimento {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(final String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -60,7 +60,7 @@ public class Riferimento {
 		return URL;
 	}
 
-	public void setURL(String URL) {
+	public void setURL(final String URL) {
 		this.URL = URL;
 	}
 
@@ -68,7 +68,7 @@ public class Riferimento {
 		return digitale;
 	}
 
-	public void setDigitale(Boolean digitale) {
+	public void setDigitale(final Boolean digitale) {
 		this.digitale = digitale;
 	}
 
@@ -76,7 +76,7 @@ public class Riferimento {
 		return categorie;
 	}
 
-	public void setCategorie(List<Categoria> categorie) {
+	public void setCategorie(final List<Categoria> categorie) {
 		this.categorie = categorie;
 	}
 
@@ -84,7 +84,7 @@ public class Riferimento {
 		return autori;
 	}
 
-	public void setAutori(List<Utente> autori) {
+	public void setAutori(final List<Utente> autori) {
 		this.autori = autori;
 	}
 
@@ -92,30 +92,30 @@ public class Riferimento {
 		return cited;
 	}
 
-	public void setCitazioni(List<Riferimento> citazioni) {
+	public void setCitazioni(final List<Riferimento> citazioni) {
 		this.cited = citazioni;
 	}
 
 	public String citazioniToString() {
 		String a = "";
 		for (int i = 0; i < cited.size(); i++) {
-			a = a.concat(cited.get(i).getTitolo());
+			a = a + cited.get(i).titolo;
 			if (i != cited.size() - 1)
-				a = a.concat(",");
+				a = a + ",";
 		}
 		return a;
 	}
 
-	public String citazioniToString(int ID) {
+	public String citazioniToString(final int ID) {
 		String a = "";
 		for (int i = 0; i < cited.size(); i++) {
-			List<Utente> tempList = cited.get(i).getAutori();
+			final List<Utente> tempList = cited.get(i).autori;
 			if (tempList != null) {
 				for (int j = 0; j < tempList.size(); j++) {
 					if (ID == tempList.get(i).getUser_ID()) {
-						a = a.concat(cited.get(i).getTitolo());
+						a = a + cited.get(i).titolo;
 						if (i != cited.size() - 1)
-							a = a.concat(",");
+							a = a + ",";
 						j = tempList.size();
 					}
 				}
@@ -127,9 +127,9 @@ public class Riferimento {
 	public String autoriToString() {
 		String a = "";
 		for (int i = 0; i < autori.size(); i++) {
-			a = a.concat(autori.get(i).nominativoCompletoToString());
+			a = a + autori.get(i).nominativoCompletoToString();
 			if (i != autori.size() - 1)
-				a = a.concat(",");
+				a = a + ",";
 		}
 		return a;
 	}
@@ -137,9 +137,9 @@ public class Riferimento {
 	public String categorieToString() {
 		String a = "";
 		for (int i = 0; i < categorie.size(); i++) {
-			a = a.concat(categorie.get(i).getNome() + " ");
+			a = a + categorie.get(i).getNome() + " ";
 			if (i != categorie.size() - 1)
-				a = a.concat(",");
+				a = a + ",";
 		}
 		return a;
 	}
@@ -148,7 +148,7 @@ public class Riferimento {
 		return citedIn;
 	}
 
-	public void setCitedIn(List<Riferimento> citedIn) {
+	public void setCitedIn(final List<Riferimento> citedIn) {
 		this.citedIn = citedIn;
 	}
 
@@ -156,7 +156,7 @@ public class Riferimento {
 		return id_Rif;
 	}
 
-	public void setId_Rif(int id_Rif) {
+	public void setId_Rif(final int id_Rif) {
 		this.id_Rif = id_Rif;
 	}
 
@@ -164,7 +164,7 @@ public class Riferimento {
 		return DOI;
 	}
 
-	public void setDOI(int dOI) {
+	public void setDOI(final int dOI) {
 		DOI = dOI;
 	}
 
@@ -172,7 +172,7 @@ public class Riferimento {
 		return descrizione;
 	}
 
-	public void setDescrizione(String descrizione) {
+	public void setDescrizione(final String descrizione) {
 		this.descrizione = descrizione;
 	}
 

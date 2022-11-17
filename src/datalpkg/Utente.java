@@ -9,7 +9,7 @@ public class Utente {
 	private final Date inizio;
 	private final Date fine;
 
-	public Utente(String nome, String cognome, int ID, Date inizio, Date fine) {
+	public Utente(final String nome, final String cognome, final int ID, final Date inizio, final Date fine) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
@@ -31,7 +31,7 @@ public class Utente {
 	}
 
 	public String nominativoCompletoToString() {
-		return this.getNome() + " " + this.getCognome();
+		return this.nome + " " + this.cognome;
 	}
 
 	public Date getInizio() {
