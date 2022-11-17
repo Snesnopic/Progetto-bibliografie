@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class RegisterFrame extends JFrame {
 	private final JTextField nameTextField;
@@ -13,7 +14,7 @@ public class RegisterFrame extends JFrame {
 
 	public RegisterFrame(Controller c, int ID) throws IOException {
 		getContentPane().setBackground(new Color(23, 33, 43));
-		setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
+		setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))));
 		setTitle("Registrati");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
