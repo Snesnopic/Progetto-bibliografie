@@ -3,7 +3,7 @@ package ctrlpkg;
 import java.sql.*;
 
 public class DBConnection {
-	private static DBConnection instance = null;
+	private static DBConnection instance;
 	private Connection cn;
 	private Statement st;
 
@@ -24,12 +24,12 @@ public class DBConnection {
 		cn.close();
 	}
 
-	public ResultSet executeQuery(String query) throws SQLException {
+	public ResultSet executeQuery(final String query) throws SQLException {
 		st = cn.createStatement();
 		return st.executeQuery(query);
 	}
 
-	public void execute(String query) throws SQLException {
+	public void execute(final String query) throws SQLException {
 		st = cn.createStatement();
 		st.execute(query);
 	}
