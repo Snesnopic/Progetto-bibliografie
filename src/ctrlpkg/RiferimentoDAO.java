@@ -49,7 +49,7 @@ public class RiferimentoDAO implements DAO<Riferimento> {
 	}
 
 	public Riferimento getByName(String name) throws SQLException{
-		ResultSet rs = dbc.executeQuery("SELECT id_riferimento FROM riferimenti_biblio WHERE titolo_riferimento = '" + name + "'");
+		ResultSet rs = dbc.executeQuery("SELECT * FROM riferimenti_biblio WHERE titolo_riferimento = '" + name + "'");
 		if (rs.next())
 			return extract(rs);
 		else
