@@ -1,4 +1,4 @@
-package ctrlpkg;
+package daopkg;
 
 import datalpkg.Riferimento;
 import java.sql.ResultSet;

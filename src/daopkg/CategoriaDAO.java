@@ -1,4 +1,4 @@
-package ctrlpkg;
+package daopkg;
 
 import datalpkg.Categoria;
 

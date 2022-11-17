@@ -1,4 +1,4 @@
-package ctrlpkg;
+package daopkg;
 
 import javax.swing.*;
 import java.sql.*;

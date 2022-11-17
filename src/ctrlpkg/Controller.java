@@ -1,5 +1,8 @@
 package ctrlpkg;
 
+import daopkg.CategoriaDAO;
+import daopkg.RiferimentoDAO;
+import daopkg.UtenteDAO;
 import datalpkg.Categoria;
 import datalpkg.Riferimento;
 import datalpkg.Utente;
