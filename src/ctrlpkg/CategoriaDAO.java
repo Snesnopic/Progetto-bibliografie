@@ -2,8 +2,6 @@ package ctrlpkg;
 
 import datalpkg.Categoria;
 import datalpkg.Riferimento;
-
-import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
