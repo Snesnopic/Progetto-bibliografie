@@ -7,7 +7,6 @@ import guipkg.LoginFrame;
 import guipkg.MainFrame;
 import guipkg.RegisterFrame;
 import javax.swing.*;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ public class Controller {
 	RiferimentoDAO rDAO;
 	CategoriaDAO cDAO;
 	Utente loginUser;
-	DBConnection dbc;
 	LoginFrame lf;
 	MainFrame mf;
 	RegisterFrame rf;
@@ -48,8 +46,6 @@ public class Controller {
 
 	public void register() {
 		try {
-			dbc = DBConnection.getInstance();
-			dbc.getConnection();
 			rf = new RegisterFrame(this, uDAO.getNextId());
 			lf.setVisible(false);
 			rf.setVisible(true);
@@ -120,8 +116,6 @@ public class Controller {
 
 	public void login(final String user_ID) {
 		try {
-			dbc = DBConnection.getInstance();
-			dbc.getConnection();
 			loginUser = uDAO.get(Integer.parseInt(user_ID));
 			if (Objects.isNull(loginUser))
 				JOptionPane.showMessageDialog(null, "Login fallito");
@@ -138,12 +132,7 @@ public class Controller {
 	}
 
 	public void logout() {
-		try {
-			dbc.closeConnection();
-		} catch (final Exception e) {
-			JOptionPane.showMessageDialog(null,
-					"Error:\n" + e.getMessage());
-		}
+		uDAO.closeResource();	//disconnette il database
 		mf.setVisible(false);
 		lf.emptyFields();
 		lf.setVisible(true);
