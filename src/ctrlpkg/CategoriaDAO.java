@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CategoriaDAO implements DAO<Categoria> {
 	private final DBConnection dbc = DBConnection.getInstance();
-	private static CategoriaDAO instance = null;
+	private static CategoriaDAO instance;
 	private CategoriaDAO(){
 
 	}
@@ -21,8 +21,8 @@ public class CategoriaDAO implements DAO<Categoria> {
 
 	@Override
 	public List<Categoria> getAll() throws SQLException {
-		ResultSet rs = dbc.executeQuery("SELECT * FROM categoria ORDER BY id_categoria ASC");
-		List<Categoria> list = new ArrayList<>();
+		final ResultSet rs = dbc.executeQuery("SELECT * FROM categoria ORDER BY id_categoria ASC");
+		final List<Categoria> list = new ArrayList<>();
 		while (rs.next()) {
 			list.add(extract(rs));
 		}
@@ -30,31 +30,30 @@ public class CategoriaDAO implements DAO<Categoria> {
 	}
 
 	@Override
-	public Categoria get(int id) throws SQLException {
-		ResultSet rs = dbc.executeQuery("SELECT * FROM categoria WHERE id_categoria = " + id);
+	public Categoria get(final int id) throws SQLException {
+		final ResultSet rs = dbc.executeQuery("SELECT * FROM categoria WHERE id_categoria = " + id);
 		if (rs.next())
 			return extract(rs);
 		else
 			return null;
 	}
-	public List<Categoria> getByRif(Riferimento r) throws SQLException {
-		ResultSet rs = dbc.executeQuery("SELECT categoria.* FROM categoria NATURAL JOIN associativa_riferimenti_categoria WHERE id_riferimento = "+ r.getId_Rif() );
-		List<Categoria> list = new ArrayList<>();
+	public List<Categoria> getByRif(final Riferimento r) throws SQLException {
+		final ResultSet rs = dbc.executeQuery("SELECT categoria.* FROM categoria NATURAL JOIN associativa_riferimenti_categoria WHERE id_riferimento = "+ r.getId_Rif() );
+		final List<Categoria> list = new ArrayList<>();
 		while (rs.next()) {
 			list.add(extract(rs));
 		}
 		return list;
 	}
 
-	public String getSubCatCodes(String nomeCat) throws SQLException {
-		ResultSet rs;
-		rs = dbc.executeQuery("SELECT sub_cat(" + getByName(nomeCat) + ")");
+	public String getSubCatCodes(final String nomeCat) throws SQLException {
+		final ResultSet rs = dbc.executeQuery("SELECT sub_cat(" + getByName(nomeCat) + ")");
 		rs.next();
 		return rs.getString(1);
 	}
 
-	public Categoria getByName(String nomeCat) throws SQLException {
-		ResultSet rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '" + nomeCat + "'");
+	public Categoria getByName(final String nomeCat) throws SQLException {
+		final ResultSet rs = dbc.executeQuery("SELECT id_categoria FROM categoria WHERE descr_categoria = '" + nomeCat + "'");
 		if (rs.next())
 			return extract(rs);
 		else
@@ -62,30 +61,29 @@ public class CategoriaDAO implements DAO<Categoria> {
 	}
 	public int getNextId() throws SQLException
 	{
-		ResultSet rs = dbc.executeQuery("SELECT MAX(id_categoria) FROM categoria");
+		final ResultSet rs = dbc.executeQuery("SELECT MAX(id_categoria) FROM categoria");
 		rs.next();
 		return rs.getInt(1) + 1;
 	}
 	@Override
-	public void update(Categoria obj) throws SQLException {
-		String sql = "UPDATE categoria SET descr_categoria = '" + obj.getNome() + "',id_super_categoria = "
-				+ obj.getGeneraliz() + ",id_utente = " + obj.getAutore() + " WHERE id_categoria = " + obj.getId_Cat();
-		dbc.execute(sql);
+	public void update(final Categoria obj) throws SQLException {
+		dbc.execute("UPDATE categoria SET descr_categoria = '" + obj.getNome() + "',id_super_categoria = "
+				+ obj.getGeneraliz() + ",id_utente = " + obj.getAutore() + " WHERE id_categoria = " + obj.getId_Cat());
 	}
 
 	@Override
-	public void insert(Categoria obj) throws SQLException {
+	public void insert(final Categoria obj) throws SQLException {
 		String sql = "INSERT INTO categoria VALUES(" + obj.getId_Cat() + ",'" + obj.getNome() + "'";
 		if (obj.getGeneraliz() == 0)
-			sql = sql.concat(",null");
+			sql = sql + ",null";
 		else {
-			sql = sql.concat("," + obj.getGeneraliz());
+			sql = sql + "," + obj.getGeneraliz();
 		}
-		sql = sql.concat("," + obj.getAutore() + ")");
+		sql = sql + "," + obj.getAutore() + ")";
 		dbc.execute(sql);
 	}
 
-	private Categoria extract(ResultSet rs) throws SQLException {
+	private static Categoria extract(final ResultSet rs) throws SQLException {
 		return new Categoria(rs.getInt("id_categoria"), rs.getString("descr_categoria"), rs.getInt("id_utente"),
 				rs.getInt("id_super_categoria"));
 	}
