@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Controller {
+	public static final String[] emptyStringArray = new String[0];
 	UtenteDAO uDAO;
 	RiferimentoDAO rDAO;
 	CategoriaDAO cDAO;
@@ -32,10 +33,10 @@ public class Controller {
 		cDAO = CategoriaDAO.getInstance();
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
 			new Controller();
-		} catch (Throwable a) {
+		} catch (final Throwable a) {
 			JOptionPane.showMessageDialog(null, "Errore: " + a.getMessage());
 		}
 	}
@@ -52,63 +53,64 @@ public class Controller {
 			rf = new RegisterFrame(this, uDAO.getNextId());
 			lf.setVisible(false);
 			rf.setVisible(true);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
 		}
 	}
 
-	public void updateRiferimento(int id_rif, String titolo, String descr, String URL, Integer doi, Boolean isDigital, Date data, String tipo) {
+	public void updateRiferimento(final int id_rif, final String titolo, final String descr, final String URL,
+								  final Integer doi, final Boolean isDigital, final Date data, final String tipo) {
 		try {
-			Riferimento r = new Riferimento(id_rif, titolo, data, tipo, URL, doi, isDigital, descr);
+			final Riferimento r = new Riferimento(id_rif, titolo, data, tipo, URL, doi, isDigital, descr);
 			rDAO.update(r);
 			JOptionPane.showMessageDialog(null, "Riferimento aggiornato correttamente!");
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
 		}
 	}
 
-	public void creaUtente(int user_ID, String nome, String cognome) {
+	public void creaUtente(final int user_ID, final String nome, final String cognome) {
 		try {
-			Utente u = new Utente(nome, cognome, user_ID, new Date(System.currentTimeMillis()), null);
+			final Utente u = new Utente(nome, cognome, user_ID, new Date(System.currentTimeMillis()), null);
 			uDAO.insert(u);
 			JOptionPane.showMessageDialog(null, "Utente creato!");
 			backToLogin();
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
 	}
 
-	public void deleteRiferimento(int user_ID, String nomeRif) {
+	public void deleteRiferimento(final int user_ID, final String nomeRif) {
 		try {
 				rDAO.delete(RetrieveRiferimento(nomeRif),user_ID);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
 	}
 
-	public int retrieveCodiceCategoria(String nomeCat) throws SQLException {
+	public int retrieveCodiceCategoria(final String nomeCat) throws SQLException {
 		return cDAO.getByName(nomeCat).getId_Cat();
 	}
 
-	public void creaRiferimento(String nomeRif, Date data, String tipo, String URL, Integer DOI, boolean dig,
-			String descr_rif, ArrayList<Integer> autori, ArrayList<Integer> categorie,
-			ArrayList<Integer> citazioni) {
+	public void creaRiferimento(final String nomeRif, final Date data, final String tipo, final String URL,
+								final Integer DOI, final boolean dig, final String descr_rif, final List<Integer> autori
+			,final Iterable<Integer> categorie,final Iterable<Integer> citazioni) {
 		try {
-			int id_Rif = rDAO.getNextId();
+			final int id_Rif = rDAO.getNextId();
 			if (!autori.contains(retrieveID()))
 				autori.add(0, retrieveID());
-			Riferimento r = new Riferimento(id_Rif, nomeRif, data, tipo, URL, DOI, dig, descr_rif);
+			final Riferimento r = new Riferimento(id_Rif, nomeRif, data, tipo, URL, DOI, dig, descr_rif);
 			rDAO.insert(r,autori,categorie,citazioni);
 			JOptionPane.showMessageDialog(null, "Riferimento creato!");
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
 	}
 
-	public void login(String user_ID) throws IOException {
+	public void login(final String user_ID) throws IOException {
 		try {
 			dbc = DBConnection.getInstance();
 			dbc.getConnection();
@@ -121,7 +123,7 @@ public class Controller {
 				lf.setVisible(false);
 				mf.setVisible(true);
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
@@ -130,7 +132,7 @@ public class Controller {
 	public void logout() {
 		try {
 			dbc.closeConnection();
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
@@ -151,20 +153,20 @@ public class Controller {
 		return loginUser.getUser_ID();
 	}
 
-	public List<Riferimento> retrieveRiferimenti(int ID) {
+	public List<Riferimento> retrieveRiferimenti(final int ID) {
 		try {
 			return rDAO.getByUser(ID);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
 		}
 	}
 
-	public Riferimento fillCategorie(Riferimento r) {
+	public Riferimento fillCategorie(final Riferimento r) {
 		try {
 			r.setCategorie(cDAO.getByRif(r));
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
@@ -172,10 +174,10 @@ public class Controller {
 		return r;
 	}
 
-	public Riferimento fillAutori(Riferimento r) {
+	public Riferimento fillAutori(final Riferimento r) {
 		try {
 			r.setAutori(uDAO.getByRif(r));
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
@@ -183,31 +185,31 @@ public class Controller {
 		return r;
 	}
 
-	public List<Riferimento> retrieveCitazioni(Riferimento r) {
+	public List<Riferimento> retrieveCitazioni(final Riferimento r) {
 		try {
 			return rDAO.getByRif(r);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
 		}
 	}
 
-	public Object[][] RicercaToObjectMatrix(String testo, String categoria, boolean[] tipi, String filtro) {
+	public Object[][] RicercaToObjectMatrix(final String testo, final String categoria, final boolean[] tipi, final String filtro) {
 
 		try {
-			List<Riferimento> risultati = rDAO.getBySearch(testo, categoria, tipi, filtro);
+			final List<Riferimento> risultati = rDAO.getBySearch(testo, categoria, tipi, filtro);
 			return RiferimentiToObjectMatrix(risultati, risultati.size());
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
 		}
 	}
 
-	public void creaCategoria(String nomeCat, String nomeSuperCat, int user_ID) {
+	public void creaCategoria(final String nomeCat, final String nomeSuperCat, final int user_ID) {
 		try {
-			Categoria c;
+			final Categoria c;
 			if (Objects.isNull(nomeSuperCat))
 				c = new Categoria(cDAO.getNextId(), nomeCat, user_ID);
 			else {
@@ -216,7 +218,7 @@ public class Controller {
 
 			cDAO.insert(c);
 			JOptionPane.showMessageDialog(null, "Categoria creata!");
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 		}
@@ -224,14 +226,14 @@ public class Controller {
 
 	public String[] getRiferimenti() {
 		try {
-			List<Riferimento> list = rDAO.getAll();
-			ArrayList<String> strings = new ArrayList<>();
-			for(Riferimento r: list)
+			final List<Riferimento> list = rDAO.getAll();
+			final ArrayList<String> strings = new ArrayList<>(list.size());
+			for(final Riferimento r: list)
 			{
 				strings.add(r.getTitolo());
 			}
-			return strings.toArray(new String[strings.size()]);
-		} catch (SQLException e) {
+			return strings.toArray(emptyStringArray);
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
@@ -240,15 +242,15 @@ public class Controller {
 
 	public String[] getRiferimentiByUser() {
 		try {
-			List<Riferimento> arrRiferimenti = rDAO.getByUser(loginUser.getUser_ID());
-			ArrayList<String> strings = new ArrayList<>();
-			for(Riferimento r : arrRiferimenti)
+			final List<Riferimento> arrRiferimenti = rDAO.getByUser(loginUser.getUser_ID());
+			final ArrayList<String> strings = new ArrayList<>(arrRiferimenti.size());
+			for(final Riferimento r : arrRiferimenti)
 			{
 				strings.add(r.getTitolo());
 			}
 
-			return strings.toArray(new String[arrRiferimenti.size()]);
-		} catch (SQLException e) {
+			return strings.toArray(emptyStringArray);
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
@@ -257,25 +259,25 @@ public class Controller {
 
 	public String[] getUtenti() {
 		try {
-			List<Utente> arrUtenti = uDAO.getAll();
-			ArrayList<String> strings = new ArrayList<>();
-			for(Utente u: arrUtenti)
+			final List<Utente> arrUtenti = uDAO.getAll();
+			final ArrayList<String> strings = new ArrayList<>(arrUtenti.size());
+			for(final Utente u: arrUtenti)
 			{
 				strings.add(u.getNome() + " " + u.getCognome());
 			}
-			return strings.toArray(new String[arrUtenti.size()]);
+			return strings.toArray(emptyStringArray);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
 		}
 	}
 
-	public Riferimento RetrieveRiferimento(String nome) {
+	public Riferimento RetrieveRiferimento(final String nome) {
 		try {
 			return rDAO.getByName(nome);
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
@@ -283,27 +285,28 @@ public class Controller {
 	}
 
 
-	public String[] getCategorie(boolean b) {
+	public String[] getCategorie(final boolean b) {
 		try {
-			ArrayList<String> strings = new ArrayList<>();
+
+			final List<Categoria> list = cDAO.getAll();
+
+			final ArrayList<String> strings = new ArrayList<>(list.size());
 			if (b)
 				strings.add("Qualsiasi");
-			List<Categoria> list = cDAO.getAll();
-
-			for(Categoria c : list)
+			for(final Categoria c : list)
 			{
 				strings.add(c.getNome());
 			}
-			return strings.toArray(new String[strings.size()]);
-		} catch (SQLException e) {
+			return strings.toArray(emptyStringArray);
+		} catch (final SQLException e) {
 			JOptionPane.showMessageDialog(null,
 					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
 			return null;
 		}
 	}
 
-	public Object[][] RiferimentiToObjectMatrix(List<Riferimento> listaRiferimenti, int righe) {
-		Object[][] data = new Object[righe][7];
+	public Object[][] RiferimentiToObjectMatrix(final List<Riferimento> listaRiferimenti, final int righe) {
+		final Object[][] data = new Object[righe][7];
 		for (int i = 0; i < listaRiferimenti.size() && i < righe; i++) {
 			listaRiferimenti.set(i, this.fillAutori(listaRiferimenti.get(i)));
 			listaRiferimenti.set(i, this.fillCategorie(listaRiferimenti.get(i)));
@@ -320,11 +323,11 @@ public class Controller {
 		return data;
 	}
 
-	public Object[][] CitazioniToObjectMatrix(List<Riferimento> listaRiferimenti, int righe) {
-		Object[][] data = new Object[righe][8];
+	public Object[][] CitazioniToObjectMatrix(final List<Riferimento> listaRiferimenti, final int righe) {
+		final Object[][] data = new Object[righe][8];
 		int fillTemp = 0;
 		for (int i = 0; i < listaRiferimenti.size() && fillTemp < righe; i++) {
-			List<Riferimento> citTemp = retrieveCitazioni(listaRiferimenti.get(i));
+			final List<Riferimento> citTemp = retrieveCitazioni(listaRiferimenti.get(i));
 			for (int j = 0; j < citTemp.size() && fillTemp < righe; j++) {
 				citTemp.set(j, this.fillAutori(citTemp.get(j)));
 				citTemp.set(j, this.fillCategorie(citTemp.get(j)));
