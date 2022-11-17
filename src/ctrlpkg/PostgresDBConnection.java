@@ -3,18 +3,18 @@ package ctrlpkg;
 import javax.swing.*;
 import java.sql.*;
 
-public class DBConnection {
-	private static DBConnection instance;
+public class PostgresDBConnection {
+	private static PostgresDBConnection instance;
 	private Connection cn;
 	private Statement st;
 
-	private DBConnection() {
+	private PostgresDBConnection() {
 		getConnection();
 	}
 
-	public static DBConnection getInstance() {
+	public static PostgresDBConnection getInstance() {
 		if (instance == null)
-			instance = new DBConnection();
+			instance = new PostgresDBConnection();
 		return instance;
 	}
 

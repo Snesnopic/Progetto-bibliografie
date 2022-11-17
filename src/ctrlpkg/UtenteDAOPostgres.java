@@ -12,10 +12,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class UtenteDAOPostgres implements UtenteDAO {
-    private final DBConnection dbc;
+    private final PostgresDBConnection dbc;
     private static UtenteDAOPostgres instance;
     UtenteDAOPostgres() {
-        dbc = DBConnection.getInstance();
+        dbc = PostgresDBConnection.getInstance();
     }
     public static UtenteDAOPostgres getInstance() {
         if (instance == null)

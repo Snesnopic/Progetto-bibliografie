@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class RiferimentoDAOPostgres implements RiferimentoDAO {
-    private final DBConnection dbc;
+    private final PostgresDBConnection dbc;
     private static RiferimentoDAOPostgres instance;
     private RiferimentoDAOPostgres() {
-        dbc = DBConnection.getInstance();
+        dbc = PostgresDBConnection.getInstance();
     }
     public static RiferimentoDAOPostgres getInstance() {
         if (instance == null)

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaDAOPostgres implements CategoriaDAO {
-    private final DBConnection dbc;
+    private final PostgresDBConnection dbc;
     private static CategoriaDAOPostgres instance;
     CategoriaDAOPostgres(){
-        dbc = DBConnection.getInstance();
+        dbc = PostgresDBConnection.getInstance();
     }
     public static CategoriaDAOPostgres getInstance() {
         if (instance == null)
