@@ -18,7 +18,7 @@
     <orderEntry type="module-library" exported="">
       <library name="postgresql-42.3.1.jar">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/postgresql-42.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/postgresql-42.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -33,6 +33,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="library" name="libs" level="project" />
   </component>
 </module>
