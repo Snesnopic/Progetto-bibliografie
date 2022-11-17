@@ -69,9 +69,9 @@ public class LoginFrame extends JFrame {
 					IDField.setText(IDField.getText().toUpperCase());
 					try {
 						c.login(IDField.getText());
-
-					} catch (HeadlessException | IOException e1) {
-						JOptionPane.showMessageDialog(null, "Errore: " + e1.getMessage());
+					} catch (final Exception exc) {
+						JOptionPane.showMessageDialog(null,
+								"Error:\n" + exc.getMessage());
 					}
 				}
 			}

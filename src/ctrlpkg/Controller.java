@@ -9,7 +9,6 @@ import guipkg.RegisterFrame;
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class Controller {
 	MainFrame mf;
 	RegisterFrame rf;
 
-	public Controller() throws IOException {
+	public Controller() throws Exception {
 		lf = new LoginFrame(this);
 		lf.setVisible(true);
 		rDAO = RiferimentoDAO.getInstance();
@@ -36,8 +35,9 @@ public class Controller {
 	public static void main(final String[] args) {
 		try {
 			new Controller();
-		} catch (final Throwable a) {
-			JOptionPane.showMessageDialog(null, "Errore: " + a.getMessage());
+		} catch (final Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Error:\n" + e.getMessage());
 		}
 	}
 
@@ -54,7 +54,8 @@ public class Controller {
 			lf.setVisible(false);
 			rf.setVisible(true);
 		} catch (final Exception e) {
-			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"Error:\n" + e.getMessage());
 		}
 	}
 
@@ -65,7 +66,8 @@ public class Controller {
 			rDAO.update(r);
 			JOptionPane.showMessageDialog(null, "Riferimento aggiornato correttamente!");
 		} catch (final Exception e) {
-			JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"Error:\n" + e.getMessage());
 		}
 	}
 
@@ -75,23 +77,29 @@ public class Controller {
 			uDAO.insert(u);
 			JOptionPane.showMessageDialog(null, "Utente creato!");
 			backToLogin();
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 	}
 
 	public void deleteRiferimento(final int user_ID, final String nomeRif) {
 		try {
 				rDAO.delete(RetrieveRiferimento(nomeRif),user_ID);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 	}
 
-	public int retrieveCodiceCategoria(final String nomeCat) throws SQLException {
-		return cDAO.getByName(nomeCat).getId_Cat();
+	public int retrieveCodiceCategoria(final String nomeCat) {
+		try {
+			return cDAO.getByName(nomeCat).getId_Cat();
+		} catch (final Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Error:\n" + e.getMessage());
+			return 0;
+		}
 	}
 
 	public void creaRiferimento(final String nomeRif, final Date data, final String tipo, final String URL,
@@ -104,13 +112,13 @@ public class Controller {
 			final Riferimento r = new Riferimento(id_Rif, nomeRif, data, tipo, URL, DOI, dig, descr_rif);
 			rDAO.insert(r,autori,categorie,citazioni);
 			JOptionPane.showMessageDialog(null, "Riferimento creato!");
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 	}
 
-	public void login(final String user_ID) throws IOException {
+	public void login(final String user_ID) {
 		try {
 			dbc = DBConnection.getInstance();
 			dbc.getConnection();
@@ -123,18 +131,18 @@ public class Controller {
 				lf.setVisible(false);
 				mf.setVisible(true);
 			}
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 	}
 
 	public void logout() {
 		try {
 			dbc.closeConnection();
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 		mf.setVisible(false);
 		lf.emptyFields();
@@ -156,9 +164,9 @@ public class Controller {
 	public List<Riferimento> retrieveRiferimenti(final int ID) {
 		try {
 			return rDAO.getByUser(ID);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -166,9 +174,9 @@ public class Controller {
 	public Riferimento fillCategorie(final Riferimento r) {
 		try {
 			r.setCategorie(cDAO.getByRif(r));
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 		return r;
@@ -177,9 +185,9 @@ public class Controller {
 	public Riferimento fillAutori(final Riferimento r) {
 		try {
 			r.setAutori(uDAO.getByRif(r));
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 		return r;
@@ -188,9 +196,9 @@ public class Controller {
 	public List<Riferimento> retrieveCitazioni(final Riferimento r) {
 		try {
 			return rDAO.getByRif(r);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -200,9 +208,9 @@ public class Controller {
 		try {
 			final List<Riferimento> risultati = rDAO.getBySearch(testo, categoria, tipi, filtro);
 			return RiferimentiToObjectMatrix(risultati, risultati.size());
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -218,9 +226,9 @@ public class Controller {
 
 			cDAO.insert(c);
 			JOptionPane.showMessageDialog(null, "Categoria creata!");
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 		}
 	}
 
@@ -233,9 +241,9 @@ public class Controller {
 				strings.add(r.getTitolo());
 			}
 			return strings.toArray(emptyStringArray);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -250,9 +258,9 @@ public class Controller {
 			}
 
 			return strings.toArray(emptyStringArray);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -267,9 +275,9 @@ public class Controller {
 			}
 			return strings.toArray(emptyStringArray);
 		}
-		catch (final SQLException e) {
+		catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -277,9 +285,9 @@ public class Controller {
 	public Riferimento RetrieveRiferimento(final String nome) {
 		try {
 			return rDAO.getByName(nome);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -298,9 +306,9 @@ public class Controller {
 				strings.add(c.getNome());
 			}
 			return strings.toArray(emptyStringArray);
-		} catch (final SQLException e) {
+		} catch (final Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+					"Error:\n" + e.getMessage());
 			return null;
 		}
 	}
@@ -312,15 +320,19 @@ public class Controller {
 			listaRiferimenti.set(i, this.fillCategorie(listaRiferimenti.get(i)));
 		}
 		for (int i = 0; i < listaRiferimenti.size() && i < righe; i++) {
-			data[i][0] = listaRiferimenti.get(i).getTitolo();
-			data[i][1] = listaRiferimenti.get(i).autoriToString();
-			data[i][2] = listaRiferimenti.get(i).getDataCreazione();
-			data[i][3] = listaRiferimenti.get(i).getURL();
-			data[i][4] = listaRiferimenti.get(i).getDOI();
-			data[i][5] = listaRiferimenti.get(i).categorieToString();
-			data[i][6] = listaRiferimenti.get(i).getTipo();
+			fillMatrixWithRiferimenti(data, i, listaRiferimenti.get(i));
 		}
 		return data;
+	}
+
+	private static void fillMatrixWithRiferimenti(final Object[][] data, final int i, final Riferimento riferimento) {
+		data[i][0] = riferimento.getTitolo();
+		data[i][1] = riferimento.autoriToString();
+		data[i][2] = riferimento.getDataCreazione();
+		data[i][3] = riferimento.getURL();
+		data[i][4] = riferimento.getDOI();
+		data[i][5] = riferimento.categorieToString();
+		data[i][6] = riferimento.getTipo();
 	}
 
 	public Object[][] CitazioniToObjectMatrix(final List<Riferimento> listaRiferimenti, final int righe) {
@@ -331,13 +343,7 @@ public class Controller {
 			for (int j = 0; j < citTemp.size() && fillTemp < righe; j++) {
 				citTemp.set(j, this.fillAutori(citTemp.get(j)));
 				citTemp.set(j, this.fillCategorie(citTemp.get(j)));
-				data[fillTemp][0] = citTemp.get(j).getTitolo();
-				data[fillTemp][1] = citTemp.get(j).autoriToString();
-				data[fillTemp][2] = citTemp.get(j).getDataCreazione();
-				data[fillTemp][3] = citTemp.get(j).getURL();
-				data[fillTemp][4] = citTemp.get(j).getDOI();
-				data[fillTemp][5] = citTemp.get(j).categorieToString();
-				data[fillTemp][6] = citTemp.get(j).getTipo();
+				fillMatrixWithRiferimenti(data, fillTemp, citTemp.get(j));
 				data[fillTemp][7] = listaRiferimenti.get(i).getTitolo();
 				fillTemp = fillTemp + 1;
 			}
