@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<T> {
-	List<T> getAll(String sql) throws SQLException;
+	List<T> getAll() throws SQLException;
 
-	T get(String sql) throws SQLException;
+	T get(int id) throws SQLException;
 
 	void update(T obj) throws SQLException;
 

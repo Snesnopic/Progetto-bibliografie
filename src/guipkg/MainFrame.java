@@ -1,6 +1,7 @@
 package guipkg;
 
 import ctrlpkg.Controller;
+import datalpkg.Riferimento;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -92,7 +93,7 @@ public class MainFrame extends JFrame {
 		sidePanel.getCreaRifButton().addActionListener(e -> {
 			if(!(currentPanel instanceof CreaRifPanel))
 			{
-			CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false), c.getCitazioni());
+			CreaRifPanel creaRifPanel = new CreaRifPanel(c.getUtenti(), c.getCategorie(false), c.getRiferimenti());
 			JScrollPane scrollable = new JScrollPane(creaRifPanel);
 			currentPanel.setVisible(false);
 			currentPanel = creaRifPanel;
@@ -136,7 +137,7 @@ public class MainFrame extends JFrame {
 				        mainPanel.remove(d);
 				    }
 				}
-			ViewRifPanel viewRifPanel = new ViewRifPanel(c.getRiferimenti());
+			ViewRifPanel viewRifPanel = new ViewRifPanel(c.getRiferimentiByUser());
 			currentPanel.setVisible(false);
 			currentPanel = viewRifPanel;
 			mainPanel.add(currentPanel);
@@ -150,7 +151,7 @@ public class MainFrame extends JFrame {
 						"Conferma eliminazione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (result == JOptionPane.YES_OPTION) {
 					c.deleteRiferimento(c.retrieveID(), viewRifPanel.getMyRifList().getSelectedValue());
-					viewRifPanel.getMyRifList().setListData(c.getRiferimenti());
+					viewRifPanel.getMyRifList().setListData(c.getRiferimentiByUser());
 					welcomePanel.refreshRifTable(c.RiferimentiToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
 					welcomePanel.refreshCitTable(c.CitazioniToObjectMatrix(c.retrieveRiferimenti(c.retrieveID()), 5));
 				}
@@ -160,15 +161,15 @@ public class MainFrame extends JFrame {
 				if (viewRifPanel.getMyRifList().isSelectionEmpty())
 					JOptionPane.showMessageDialog(null, "Errore di input");
 				else {
-					id_rif = c.RetrieveCodiceRiferimento(viewRifPanel.getMyRifList().getSelectedValue());
+					Riferimento r = c.RetrieveRiferimento(viewRifPanel.getMyRifList().getSelectedValue());
 					viewRifPanel.getTitleField().setText(viewRifPanel.getMyRifList().getSelectedValue());
-					viewRifPanel.getDescrPane().setText(c.getDescrizione(id_rif));
-					viewRifPanel.getLinkField().setText(c.getURL(id_rif));
-					viewRifPanel.getIsDigitalCheckBox().setSelected(c.getOnline(id_rif));
-					viewRifPanel.getDoiField().setText(c.getDOI(id_rif).toString());
-					viewRifPanel.getDatePicker().setDate(c.getData(id_rif).toLocalDate());
+					viewRifPanel.getDescrPane().setText(r.getDescrizione());
+					viewRifPanel.getLinkField().setText(r.getURL());
+					viewRifPanel.getIsDigitalCheckBox().setSelected(r.getDigitale());
+					viewRifPanel.getDoiField().setText(r.getDOI().toString());
+					viewRifPanel.getDatePicker().setDate(r.getDataCreazione().toLocalDate());
 					viewRifPanel.getBottoniRadio().clearSelection();
-					switch (c.getTipo(id_rif)) {
+					switch (r.getTipo()) {
 					case "Articolo":
 						viewRifPanel.getIsArticoloRadioButton().setSelected(true);
 						break;

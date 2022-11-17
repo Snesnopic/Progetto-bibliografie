@@ -1,5 +1,6 @@
 package ctrlpkg;
 
+import datalpkg.Riferimento;
 import datalpkg.Utente;
 
 import java.sql.ResultSet;
@@ -11,10 +12,19 @@ import java.util.Objects;
 
 public class UtenteDAO implements DAO<Utente> {
 	private final DBConnection dbc = DBConnection.getInstance();
+	private static UtenteDAO instance = null;
+	private UtenteDAO() {
+
+	}
+	public static UtenteDAO getInstance() {
+		if (instance == null)
+			instance = new UtenteDAO();
+		return instance;
+	}
 
 	@Override
-	public List<Utente> getAll(String sql) throws SQLException {
-		ResultSet rs = dbc.executeQuery(sql);
+	public List<Utente> getAll() throws SQLException {
+		ResultSet rs = dbc.executeQuery("SELECT * FROM utente");
 		List<Utente> list = new ArrayList<>();
 		while (rs.next()) {
 			list.add(extract(rs));
@@ -23,12 +33,28 @@ public class UtenteDAO implements DAO<Utente> {
 	}
 
 	@Override
-	public Utente get(String sql) throws SQLException {
-		ResultSet rs = dbc.executeQuery(sql);
+	public Utente get(int id) throws SQLException {
+		ResultSet rs = dbc.executeQuery("SELECT * FROM utente WHERE id_utente = " + id);
 		if (rs.next())
 			return extract(rs);
 		else
 			return null;
+	}
+
+	public List<Utente> getByRif(Riferimento r) throws SQLException {
+		ResultSet rs = dbc.executeQuery("SELECT utente.* FROM utente NATURAL JOIN autore_riferimento WHERE id_riferimento = " + r.getId_Rif());
+		List<Utente> list = new ArrayList<>();
+		while (rs.next()) {
+			list.add(extract(rs));
+		}
+		return list;
+	}
+
+	public int getNextId() throws SQLException
+	{
+		ResultSet rs = dbc.executeQuery("SELECT MAX(id_utente) FROM utente");
+		rs.next();
+		return rs.getInt(1) + 1;
 	}
 
 	@Override
