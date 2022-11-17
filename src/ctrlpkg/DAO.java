@@ -1,15 +1,19 @@
 package ctrlpkg;
 
-import java.sql.SQLException;
+import datalpkg.Riferimento;
 import java.util.List;
 
 public interface DAO<T> {
-	List<T> getAll() throws SQLException;
+	List<T> getAll() throws Exception;
 
-	T get(int id) throws SQLException;
+	T get(int id) throws Exception;
 
-	void update(T obj) throws SQLException;
+	List<T> getByRif(Riferimento r) throws Exception;
 
-	void insert(T obj) throws SQLException;
+	int getNextId() throws Exception;
+
+	void update(T obj) throws Exception;
+
+	void insert(T obj) throws Exception;
 
 }
