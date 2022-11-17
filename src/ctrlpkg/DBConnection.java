@@ -1,5 +1,6 @@
 package ctrlpkg;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class DBConnection {
@@ -8,6 +9,7 @@ public class DBConnection {
 	private Statement st;
 
 	private DBConnection() {
+		getConnection();
 	}
 
 	public static DBConnection getInstance() {
@@ -16,12 +18,26 @@ public class DBConnection {
 		return instance;
 	}
 
-	public void getConnection() throws SQLException {
+	public void getConnection(){
+		try
+		{
 		cn = DriverManager.getConnection("jdbc:postgresql://localhost/Gestione_Riferimenti_Bibliografici", "postgres", "admin");
+		}
+		catch (final SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+		}
 	}
 
-	public void closeConnection() throws SQLException {
-		cn.close();
+	public void closeConnection(){
+		try
+		{
+			cn.close();
+		}
+		catch (final SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"DB Error:\n" + e.getMessage() + "\nCodice errore: " + e.getErrorCode());
+		}
 	}
 
 	public ResultSet executeQuery(final String query) throws SQLException {
