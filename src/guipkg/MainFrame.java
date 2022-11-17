@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class MainFrame extends JFrame {
 
@@ -16,7 +17,7 @@ public class MainFrame extends JFrame {
 	private Integer id_rif;
 
 	public MainFrame(Controller c) throws IOException {
-		setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
+		setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))));
 		setTitle("Pagina principale");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 0, 1280, 720);
