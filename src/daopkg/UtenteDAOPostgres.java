@@ -67,7 +67,6 @@ public class UtenteDAOPostgres implements UtenteDAO {
     }
     @Override
     public void insert(final Utente obj) throws SQLException {
-        // TODO Auto-generated method stub
         String sql = "INSERT INTO utente VALUES(" + obj.getUser_ID() + ",'" + obj.getNome() + "','" + obj.getCognome()
                 + "','" + new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(obj.getInizio()) + "',";
         if (Objects.isNull(obj.getFine()))
