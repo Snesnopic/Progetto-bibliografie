@@ -10,20 +10,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginFrame extends JFrame {
-	private final JPanel loginWindow;
 	private final JTextField IDField;
 
 	public LoginFrame(Controller c) throws IOException {
-		setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
+		setIconImage(ImageIO.read(Objects.requireNonNull(getClass().getResource("/logo.png"))));
 
 		setBackground(Color.WHITE);
 		setTitle("Login");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
 
-		loginWindow = new JPanel();
+		JPanel loginWindow = new JPanel();
 		loginWindow.setBackground(new Color(23, 33, 43));
 		setContentPane(loginWindow);
 		GridBagLayout gbl_loginWindow = new GridBagLayout();
