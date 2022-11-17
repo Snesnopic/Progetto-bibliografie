@@ -162,6 +162,7 @@ public class MainFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "Errore di input");
 				else {
 					Riferimento r = c.RetrieveRiferimento(viewRifPanel.getMyRifList().getSelectedValue());
+					id_rif = r.getId_Rif();
 					viewRifPanel.getTitleField().setText(viewRifPanel.getMyRifList().getSelectedValue());
 					viewRifPanel.getDescrPane().setText(r.getDescrizione());
 					viewRifPanel.getLinkField().setText(r.getURL());
