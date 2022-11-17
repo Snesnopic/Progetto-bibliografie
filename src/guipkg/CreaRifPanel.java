@@ -456,10 +456,6 @@ public class CreaRifPanel extends JPanel {
 		this.datePicker = datePicker;
 	}
 
-	public JTextPane getNotePane() {
-		return notePane;
-	}
-
 	public void setNotePane(JTextPane notePane) {
 		this.notePane = notePane;
 	}
@@ -489,15 +485,14 @@ public class CreaRifPanel extends JPanel {
 	}
 
 	public ArrayList<Integer> getSelectedUsers() {
-		int[] selectedIx = autoriList.getSelectedIndices();
-		for (int i = 0; i < selectedIx.length; i++) {
-			selectedIx[i]++;
-		}
-		List<Integer> tempList = Arrays.stream(selectedIx).boxed().toList();
-		return new ArrayList<>(tempList);
+		return getIntegers(autoriList);
 	}
 
 	public ArrayList<Integer> getSelectedCategories() {
+		return getIntegers(categorieList);
+	}
+
+	private ArrayList<Integer> getIntegers(JList<String> categorieList) {
 		int[] selectedIx = categorieList.getSelectedIndices();
 		for (int i = 0; i < selectedIx.length; i++) {
 			selectedIx[i]++;
@@ -507,12 +502,7 @@ public class CreaRifPanel extends JPanel {
 	}
 
 	public ArrayList<Integer> getSelectedCitazioni() {
-		int[] selectedIx = citazioniList.getSelectedIndices();
-		for (int i = 0; i < selectedIx.length; i++) {
-			selectedIx[i]++;
-		}
-		List<Integer> tempList = Arrays.stream(selectedIx).boxed().toList();
-		return new ArrayList<>(tempList);
+		return getIntegers(citazioniList);
 	}
 
 	public void setCitazioniList(JList<String> citazioniList) {
