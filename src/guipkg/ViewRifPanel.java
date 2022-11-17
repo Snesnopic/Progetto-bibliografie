@@ -27,20 +27,13 @@ public class ViewRifPanel extends JPanel {
 	private final JTextPane descrPane;
 	private final JTextField linkField;
 	private JTextField doiField;
-	private JLabel editoreLabel;
-	private JLabel isnnLabel;
-	private JLabel isbnLabel;
-	private JLabel pginiLabel;
-	private JLabel pgfinLabel;
-	private JLabel luogoLabel;
-	private JLabel edizioneLabel;
-	private JTextField editoreTextField;
-	private JTextField edizioneTextField;
-	private JTextField luogoTextField;
-	private JTextField isbnTextField;
-	private JTextField pginiTextField;
-	private JTextField pgfinTextField;
-	private JTextField isnnTextField;
+	private final JTextField editoreTextField;
+	private final JTextField edizioneTextField;
+	private final JTextField luogoTextField;
+	private final JTextField isbnTextField;
+	private final JTextField pginiTextField;
+	private final JTextField pgfinTextField;
+	private final JTextField isnnTextField;
 
 	public ViewRifPanel(String[] riferimenti) {
 		setBackground(new Color(23, 33, 43));
@@ -359,7 +352,7 @@ public class ViewRifPanel extends JPanel {
 			add(isConferenzaRadioButton, gbc_isConferenzaRadioButton);
 		}
 		{
-			editoreLabel = new JLabel("Editore");
+			JLabel editoreLabel = new JLabel("Editore");
 			editoreLabel.setForeground(Color.WHITE);
 			editoreLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_editoreLabel = new GridBagConstraints();
@@ -385,7 +378,7 @@ public class ViewRifPanel extends JPanel {
 			editoreTextField.setColumns(10);
 		}
 		{
-			edizioneLabel = new JLabel("Edizione");
+			JLabel edizioneLabel = new JLabel("Edizione");
 			edizioneLabel.setForeground(Color.WHITE);
 			edizioneLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_edizioneLabel = new GridBagConstraints();
@@ -411,7 +404,7 @@ public class ViewRifPanel extends JPanel {
 			edizioneTextField.setColumns(10);
 		}
 		{
-			luogoLabel = new JLabel("Luogo");
+			JLabel luogoLabel = new JLabel("Luogo");
 			luogoLabel.setForeground(Color.WHITE);
 			luogoLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_luogoLabel = new GridBagConstraints();
@@ -437,7 +430,7 @@ public class ViewRifPanel extends JPanel {
 			luogoTextField.setColumns(10);
 		}
 		{
-			isbnLabel = new JLabel("ISBN");
+			JLabel isbnLabel = new JLabel("ISBN");
 			isbnLabel.setForeground(Color.WHITE);
 			isbnLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_isbnLabel = new GridBagConstraints();
@@ -463,7 +456,7 @@ public class ViewRifPanel extends JPanel {
 			isbnTextField.setColumns(10);
 		}
 		{
-			pginiLabel = new JLabel("Pag. Inizio");
+			JLabel pginiLabel = new JLabel("Pag. Inizio");
 			pginiLabel.setForeground(Color.WHITE);
 			pginiLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_pginiLabel = new GridBagConstraints();
@@ -489,7 +482,7 @@ public class ViewRifPanel extends JPanel {
 			pginiTextField.setColumns(10);
 		}
 		{
-			pgfinLabel = new JLabel("Pag. Fine");
+			JLabel pgfinLabel = new JLabel("Pag. Fine");
 			pgfinLabel.setForeground(Color.WHITE);
 			pgfinLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_pgfinLabel = new GridBagConstraints();
@@ -515,7 +508,7 @@ public class ViewRifPanel extends JPanel {
 			pgfinTextField.setColumns(10);
 		}
 		{
-			isnnLabel = new JLabel("ISNN");
+			JLabel isnnLabel = new JLabel("ISNN");
 			isnnLabel.setForeground(Color.WHITE);
 			isnnLabel.setFont(new Font("Yu Gothic UI", Font.PLAIN, 16));
 			GridBagConstraints gbc_isnnLabel = new GridBagConstraints();
@@ -658,37 +651,8 @@ public class ViewRifPanel extends JPanel {
 	public JTextField getLinkField() {
 		return linkField;
 	}
-
 	public JTextField getDoiField() {
 		return doiField;
-	}
-	public JTextField getPginiTextField()
-	{
-		return pginiTextField;
-	}
-	public JTextField getPgfniTextField()
-	{
-		return pgfinTextField;
-	}
-	public JTextField getLuogoTextField()
-	{
-		return luogoTextField;
-	}
-	public JTextField getEditoreTextField()
-	{
-		return editoreTextField;
-	}
-	public JTextField getEdizioneTextField()
-	{
-		return edizioneTextField;
-	}
-	public JTextField getISBNTextField()
-	{
-		return isbnTextField;
-	}
-	public JTextField getISNNTextField()
-	{
-		return isnnTextField;
 	}
 	private void setDoiField(JTextField jTextField) {
 		doiField = jTextField;
